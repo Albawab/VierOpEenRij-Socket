@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# CS0162: Unreachable code detected
+dotnet_diagnostic.CS0162.severity = none
+
+# SA1618: Generic type parameters should be documented
+dotnet_diagnostic.SA1618.severity = none

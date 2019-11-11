@@ -1,0 +1,8 @@
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\bin\Release\netstandard2.0\HenE.GameVOPR.deps.json
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\bin\Release\netstandard2.0\HenE.GameVOPR.dll
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\bin\Release\netstandard2.0\HenE.GameVOPR.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\obj\Release\netstandard2.0\GameVOPR.csprojAssemblyReference.cache
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\obj\Release\netstandard2.0\GameVOPR.AssemblyInfoInputs.cache
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\obj\Release\netstandard2.0\GameVOPR.AssemblyInfo.cs
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\obj\Release\netstandard2.0\HenE.GameVOPR.dll
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\obj\Release\netstandard2.0\HenE.GameVOPR.pdb
