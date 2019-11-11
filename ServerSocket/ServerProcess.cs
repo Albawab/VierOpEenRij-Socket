@@ -79,11 +79,10 @@ namespace HenE.ServerSocket
                     // Echo the data back to the client.
                     Send(socket, "bye");
                 }
-                else
-                {
-                    // Not all data received. Get more.
-                    socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
-                }
+                Send(socket, "bye2");
+                // Not all data received. Get more.
+                socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, ReadCallback, socket);
+                
             }
         }
 

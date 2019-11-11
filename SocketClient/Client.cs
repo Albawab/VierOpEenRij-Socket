@@ -50,7 +50,6 @@ namespace HenE.SocketClient
 
             // stuur het berichtje naar de server.
             this.clientSocket.Send(buffer);
-            this.clientSocket.Send(buffer);
         }
 
         /// <summary>
@@ -67,9 +66,12 @@ namespace HenE.SocketClient
                     attempts++;
 
                     this.clientSocket.Connect(IPAddress.Loopback, 5000);
+
                     this.Send(this.clientSocket, "Hello");
                     this.Receive();
+
                 }
+
                 catch (SocketException)
                 {
                     // Als de cliént niet met de server kan aansluiten.
@@ -116,7 +118,7 @@ namespace HenE.SocketClient
             }
         }
 
-        private void Send(Socket client, string data)
+        public void Send(Socket client, string data)
         {
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
