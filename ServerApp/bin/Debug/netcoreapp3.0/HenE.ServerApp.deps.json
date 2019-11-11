@@ -21,9 +21,15 @@
           "ConnectionHelper.dll": {}
         }
       },
+      "HenE.GameVOPR/1.0.0": {
+        "runtime": {
+          "HenE.GameVOPR.dll": {}
+        }
+      },
       "HenE.ServerSocket/1.0.0": {
         "dependencies": {
-          "ConnectionHelper": "1.0.0"
+          "ConnectionHelper": "1.0.0",
+          "HenE.GameVOPR": "1.0.0"
         },
         "runtime": {
           "HenE.ServerSocket.dll": {}
@@ -45,6 +51,11 @@
       "hashPath": "stylecop.analyzers.1.1.118.nupkg.sha512"
     },
     "ConnectionHelper/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HenE.GameVOPR/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

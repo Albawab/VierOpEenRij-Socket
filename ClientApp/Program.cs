@@ -21,10 +21,9 @@ namespace HenE.ClientApp
             Client client = new Client(clientSocket);
             client.Connect();
 
-            client.Send(clientSocket, "Hello2");
-            /*            string naam = "A";
-                        int dimension = 4;
-                        client.VerzoekOmStartenSpel(naam, dimension, clientSocket);*/
+            string naam = "A";
+            int dimension = 4;
+            client.VerzoekOmStartenSpel(naam, dimension, clientSocket);
             Console.ReadLine();
         }
     }

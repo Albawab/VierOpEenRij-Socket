@@ -8,6 +8,7 @@ namespace HenE.GameVierOpEenRij
     using HenE.VierOPEenRij;
     using HenE.VierOPEenRij.Enum;
     using HenE.VierOPEenRij.Interface;
+    using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
     /// gaat de stream die van een speler komt behandlen.
@@ -60,7 +61,7 @@ namespace HenE.GameVierOpEenRij
             // nu hebben we de naam van de speler en de situatie als string.
             // We gaan de situatie verandert tot een enum.
 
-            this.game.HandlSpeler(opgeknipt[0], EnumHepler.EnumConvert<Status>(opgeknipt[1]), opgeknipt[2]);
+            this.game.HandlSpeler(opgeknipt[0], EnumHepler.EnumConvert<Commandos>(opgeknipt[1]), opgeknipt[2]);
             this.HandlHetSpel();
         }
 

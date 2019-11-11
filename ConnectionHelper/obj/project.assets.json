@@ -185,11 +185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj",
+      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ConnectionHelper\\ConnectionHelper.csproj",
       "projectName": "ConnectionHelper",
-      "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj",
+      "projectPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ConnectionHelper\\ConnectionHelper.csproj",
       "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\obj\\",
+      "outputPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ConnectionHelper\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

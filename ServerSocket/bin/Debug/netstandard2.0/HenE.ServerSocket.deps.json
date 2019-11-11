@@ -10,6 +10,7 @@
       "HenE.ServerSocket/1.0.0": {
         "dependencies": {
           "ConnectionHelper": "1.0.0",
+          "HenE.GameVOPR": "1.0.0",
           "NETStandard.Library": "2.0.3",
           "StyleCop.Analyzers": "1.1.118"
         },
@@ -27,6 +28,11 @@
       "ConnectionHelper/1.0.0": {
         "runtime": {
           "ConnectionHelper.dll": {}
+        }
+      },
+      "HenE.GameVOPR/1.0.0": {
+        "runtime": {
+          "HenE.GameVOPR.dll": {}
         }
       }
     }
@@ -59,6 +65,11 @@
       "hashPath": "stylecop.analyzers.1.1.118.nupkg.sha512"
     },
     "ConnectionHelper/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HenE.GameVOPR/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

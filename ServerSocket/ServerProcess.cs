@@ -10,6 +10,9 @@ namespace HenE.ServerSocket
     using System.Net.Sockets;
     using System.Text;
     using ConnectionHelper;
+    using HenE.GameVierOpEenRij;
+    using HenE.VierOPEenRij.Interface;
+
     /// <summary>
     /// class om nieuwe server te creëren.
     /// stuurt mesaage naar de cliet.
@@ -20,6 +23,7 @@ namespace HenE.ServerSocket
         private readonly byte[] buffer = new byte[1000];
         private Socket serverSocket = null;
         private List<Socket> clienten = new List<Socket>();
+        ICanHandelen handler = new Handler();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerProcess"/> class.
@@ -38,24 +42,36 @@ namespace HenE.ServerSocket
         {
             Console.WriteLine("Setting up server....");
             this.serverSocket.Bind(new IPEndPoint(IPAddress.Any, 5000));
-            this.serverSocket.Listen(3);
+            this.serverSocket.Listen(100);
             this.serverSocket.BeginAccept(new AsyncCallback(this.AcceptCallback), this.serverSocket);
-
         }
 
         /// <summary>
-        /// Accepteert een clietn.
+        /// behanelt het berichtje die uit een cleint wordt gestuurd.
         /// </summary>
-        /// <param name="aR">De callback result.</param>
-        private void AcceptCallback(IAsyncResult aR)
+        /// <param name="message">De bericht.</param>
+        /// <param name="socket">De client.</param>
+        public override void ProcessStream(string message, Socket socket)
         {
-            Socket socket = this.serverSocket.EndAccept(aR);
-            this.clienten.Add(socket);
-            Console.WriteLine("Client connected.");
-
-            socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
+            string[] opgeknipt = message.Split(new char[] { '%' });
+            switch (opgeknipt[1])
+            {
+                case "VerzoekTotDeelnemenSpel":
+                   // this.Send(socket, message);
+                    this.handler.StreamOntvanger(message);
+                    break;
+                case "Lolo":
+                    Console.WriteLine("Lolo");
+                    break;
+                default:
+                    break;
+            }
         }
 
+        /// <summary>
+        /// Read a message form a client.
+        /// </summary>
+        /// <param name="ar">result.</param>
         public void ReadCallback(IAsyncResult ar)
         {
             string content = string.Empty;
@@ -67,39 +83,56 @@ namespace HenE.ServerSocket
 
             if (bytesRead > 0)
             {
-
                 content = Encoding.ASCII.GetString(this.buffer, 0, bytesRead);
-                if (content.IndexOf("Hello") > -1)
+                if (content.IndexOf(content) > -1)
                 {
                     // All the data has been read from the
                     // client. Display it on the console.
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                        content.Length, content);
-
-                    // Echo the data back to the client.
-                    Send(socket, "bye");
+                    this.ProcessStream(content, socket);
                 }
-                Send(socket, "bye2");
+
                 // Not all data received. Get more.
-                socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, ReadCallback, socket);
-                
+                socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
             }
         }
 
-        private static void Send(Socket handler, string data)
+        /// <summary>
+        /// Accepteert een clietn.
+        /// </summary>
+        /// <param name="aR">The result.</param>
+        private void AcceptCallback(IAsyncResult aR)
+        {
+            Socket socket = this.serverSocket.EndAccept(aR);
+            this.clienten.Add(socket);
+            Console.WriteLine("Client connected.");
+
+            socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
+            this.serverSocket.BeginAccept(this.AcceptCallback, null);
+        }
+
+        /// <summary>
+        /// Stuurt een bericht naar een client.
+        /// </summary>
+        /// <param name="handler">De client.</param>
+        /// <param name="data">Het berichtje.</param>
+        private void Send(Socket handler, string data)
         {
             // Convert the string data to byte data using ASCII encoding.
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
             // Begin sending the data to the remote device.
-            handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler);
+            handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(this.SendCallback), handler);
         }
 
-        private static void SendCallback(IAsyncResult ar)
+        /// <summary>
+        /// Laat weten dat de client heeft een bericht ontvang.
+        /// </summary>
+        /// <param name="ar">the result.</param>
+        private void SendCallback(IAsyncResult ar)
         {
             try
             {
-                // Retrieve the socket from the state object.
+                // Retrieve the socket from the object.
                 Socket handler = (Socket)ar.AsyncState;
 
                 // Complete sending the data to the remote device.
@@ -108,24 +141,10 @@ namespace HenE.ServerSocket
 
 /*                handler.Shutdown(SocketShutdown.Both);
                 handler.Close();*/
-
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-            }
-        }
-
-        public override void ProcessStream(string message, Socket socket)
-        {
-            string[] opgeknipt = message.Split(new char[] { '%' });
-            switch (message)
-            {
-                case "Hello":
-                    Console.WriteLine("Hoi");
-                    break;
-                default:
-                    break;
             }
         }
     }

@@ -15,11 +15,22 @@
           "bin/placeholder/ConnectionHelper.dll": {}
         }
       },
+      "HenE.GameVOPR/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/HenE.GameVOPR.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HenE.GameVOPR.dll": {}
+        }
+      },
       "HenE.ServerSocket/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "ConnectionHelper": "1.0.0"
+          "ConnectionHelper": "1.0.0",
+          "HenE.GameVOPR": "1.0.0"
         },
         "compile": {
           "bin/placeholder/HenE.ServerSocket.dll": {}
@@ -61,6 +72,11 @@
       "path": "../ConnectionHelper/ConnectionHelper.csproj",
       "msbuildProject": "../ConnectionHelper/ConnectionHelper.csproj"
     },
+    "HenE.GameVOPR/1.0.0": {
+      "type": "project",
+      "path": "../GameVOPR/GameVOPR.csproj",
+      "msbuildProject": "../GameVOPR/GameVOPR.csproj"
+    },
     "HenE.ServerSocket/1.0.0": {
       "type": "project",
       "path": "../ServerSocket/ServerSocket.csproj",
@@ -80,11 +96,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ServerApp\\ServerApp.csproj",
+      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ServerApp\\ServerApp.csproj",
       "projectName": "HenE.ServerApp",
-      "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ServerApp\\ServerApp.csproj",
+      "projectPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ServerApp\\ServerApp.csproj",
       "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ServerApp\\obj\\",
+      "outputPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ServerApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -103,8 +119,8 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ServerSocket\\ServerSocket.csproj": {
-              "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ServerSocket\\ServerSocket.csproj"
+            "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ServerSocket\\ServerSocket.csproj": {
+              "projectPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ServerSocket\\ServerSocket.csproj"
             }
           }
         }

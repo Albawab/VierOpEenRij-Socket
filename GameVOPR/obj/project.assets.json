@@ -214,11 +214,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\GameVOPR\\GameVOPR.csproj",
+      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj",
       "projectName": "HenE.GameVOPR",
-      "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\GameVOPR\\GameVOPR.csproj",
+      "projectPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj",
       "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\GameVOPR\\obj\\",
+      "outputPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\GameVOPR\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

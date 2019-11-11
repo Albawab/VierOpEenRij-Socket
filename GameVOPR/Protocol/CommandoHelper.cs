@@ -19,7 +19,7 @@ namespace HenE.GameVOPR.Protocol
         /// <returns>De zien die naar de server gaat sturen met de commando , de naam en de dimension.</returns>
         public static string CreëertVerzoekTotDeelnameSpelComando(string naam, int dimension)
         {
-            return string.Format($"{Commandos.VerzoekTotDeelnemenSpel.ToString()}%{naam}%{dimension}");
+            return string.Format($"{naam}%{Commandos.VerzoekTotDeelnemenSpel.ToString()}%{dimension}");
         }
     }
 }

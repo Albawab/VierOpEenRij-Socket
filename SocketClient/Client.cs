@@ -66,12 +66,8 @@ namespace HenE.SocketClient
                     attempts++;
 
                     this.clientSocket.Connect(IPAddress.Loopback, 5000);
-
-                    this.Send(this.clientSocket, "Hello");
                     this.Receive();
-
                 }
-
                 catch (SocketException)
                 {
                     // Als de cliént niet met de server kan aansluiten.
@@ -84,6 +80,45 @@ namespace HenE.SocketClient
             Console.WriteLine("Connected");
         }
 
+        /// <summary>
+        /// Handelt de bericht die uit de server komt.
+        /// </summary>
+        /// <param name="message">het berichtje die uit de server komt.</param>
+        /// <param name="socket">De client.</param>
+        public override void ProcessStream(string message, Socket socket)
+        {
+            switch (message)
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// stuurt een berichtje naar de server dat de speler wil speln.
+        /// </summary>
+        /// <param name="naam">De naam van de speler.</param>
+        /// <param name="dimension">De dimension van het speelvlak.</param>
+        /// <param name="socket">De client.</param>
+        public void VerzoekOmStartenSpel(string naam, int dimension, Socket socket)
+        {
+            string message = CommandoHelper.CreëertVerzoekTotDeelnameSpelComando(naam, dimension);
+            this.Send(this.clientSocket, message);
+        }
+
+        /// <summary>
+        /// Stuurt een berichtje naar de server.
+        /// </summary>
+        /// <param name="client">De client.</param>
+        /// <param name="data">De melding.</param>
+        public void Send(Socket client, string data)
+        {
+            byte[] byteData = Encoding.ASCII.GetBytes(data);
+            client.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(this.SendCallback), client);
+        }
+
+        /// <summary>
+        /// Ontvangt een bericht.
+        /// </summary>
         private void Receive()
         {
             try
@@ -106,8 +141,9 @@ namespace HenE.SocketClient
 
                 if (bytesRead > 0)
                 {
-                    string text = Encoding.ASCII.GetString(this.buffer, 0, bytesRead);
-                    Console.WriteLine(text);
+                    string message = Encoding.ASCII.GetString(this.buffer, 0, bytesRead);
+                    this.ProcessStream(message, this.clientSocket);
+
                     // Get the rest of the data.
                     this.clientSocket.BeginReceive(this.buffer, 0, this.buffer.Length, 0, new AsyncCallback(this.ReceiveCallback), this.clientSocket);
                 }
@@ -118,14 +154,10 @@ namespace HenE.SocketClient
             }
         }
 
-        public void Send(Socket client, string data)
-        {
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
-
-            client.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(this.SendCallback), client);
-
-        }
-
+        /// <summary>
+        /// laat weten dat de server heeft een berichtje ontvangen.
+        /// </summary>
+        /// <param name="ar">The result.</param>
         private void SendCallback(IAsyncResult ar)
         {
             try
@@ -144,25 +176,6 @@ namespace HenE.SocketClient
             {
                 Console.WriteLine(e.ToString());
             }
-        }
-
-        public override void ProcessStream(string message, Socket socket)
-        {
-            switch (message)
-            {
-            }
-        }
-
-        /// <summary>
-        /// stuurt een berichtje naar de server dat de speler wil speln.
-        /// </summary>
-        /// <param name="naam">De naam van de speler.</param>
-        /// <param name="dimension">De dimension van het speelvlak.</param>
-        /// <param name="socket">De client.</param>
-        public void VerzoekOmStartenSpel(string naam, int dimension, Socket socket)
-        {
-            string message = CommandoHelper.CreëertVerzoekTotDeelnameSpelComando(naam, dimension);
-            this.SendMessageToServer(message);
         }
     }
 }

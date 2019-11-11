@@ -9,6 +9,7 @@ namespace HenE.VierOPEenRij
     using HenE.GameVOPR;
     using HenE.VierOPEenRij.Enum;
     using HenE.VierOPEenRij.Interface;
+    using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
     /// Gaat over het spel.
@@ -86,9 +87,9 @@ namespace HenE.VierOPEenRij
         /// Verandert de situatie van een speler.
         /// </summary>
         /// <param name="naam">De naam van een nieuwe speler.</param>
-        /// <param name="status">De situatie van een speler.</param>
+        /// <param name="commandos">De commandos die uit de speler komt.</param>
         /// <param name="teken">Het teken die de speler zal gepruiken.</param>
-        public void HandlSpeler(string naam, Status status, string teken)
+        public void HandlSpeler(string naam, Commandos commandos, string teken)
         {
             Speler speler;
             if (naam == "Computer")
@@ -104,9 +105,6 @@ namespace HenE.VierOPEenRij
             Teken tekenVanSpeler = EnumHepler.EnumConvert<Teken>(teken);
             this.GeeftTeken(speler, tekenVanSpeler);
             this.HuidigeSpeler = speler;
-
-            // Chang the status of the speler.
-            speler.ChangeStatus(status);
         }
 
         /// <summary>

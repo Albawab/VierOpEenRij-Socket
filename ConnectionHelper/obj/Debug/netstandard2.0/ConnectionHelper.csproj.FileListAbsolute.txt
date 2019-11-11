@@ -6,3 +6,10 @@ C:\Users\Abdul\Desktop\VierOpEenRij\ConnectionHelper\obj\Debug\netstandard2.0\Co
 C:\Users\Abdul\Desktop\VierOpEenRij\ConnectionHelper\obj\Debug\netstandard2.0\ConnectionHelper.AssemblyInfo.cs
 C:\Users\Abdul\Desktop\VierOpEenRij\ConnectionHelper\obj\Debug\netstandard2.0\ConnectionHelper.dll
 C:\Users\Abdul\Desktop\VierOpEenRij\ConnectionHelper\obj\Debug\netstandard2.0\ConnectionHelper.pdb
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ConnectionHelper\bin\Debug\netstandard2.0\ConnectionHelper.deps.json
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ConnectionHelper\bin\Debug\netstandard2.0\ConnectionHelper.dll
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ConnectionHelper\bin\Debug\netstandard2.0\ConnectionHelper.pdb
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ConnectionHelper\obj\Debug\netstandard2.0\ConnectionHelper.AssemblyInfoInputs.cache
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ConnectionHelper\obj\Debug\netstandard2.0\ConnectionHelper.AssemblyInfo.cs
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ConnectionHelper\obj\Debug\netstandard2.0\ConnectionHelper.dll
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ConnectionHelper\obj\Debug\netstandard2.0\ConnectionHelper.pdb

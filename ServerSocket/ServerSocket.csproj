@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConnectionHelper\ConnectionHelper.csproj" />
+    <ProjectReference Include="..\GameVOPR\GameVOPR.csproj" />
   </ItemGroup>
 
 </Project>
