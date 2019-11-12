@@ -4,9 +4,6 @@
 
 namespace HenE.VierOPEenRij
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
     using HenE.VierOPEenRij.Enum;
 
     /// <summary>

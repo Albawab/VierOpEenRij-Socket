@@ -17,5 +17,15 @@ namespace HenE.VierOPEenRij.Protocol
         /// Zoek naar andre speler.
         /// </summary>
         VerzoekTotDeelnemenSpel,
+
+        /// <summary>
+        /// Als de speler moet wachten.
+        /// </summary>
+        Wachten,
+
+        /// <summary>
+        /// Als de speler wil tegen de computer spelen.
+        /// </summary>
+        SpeelTegenComputer,
     }
 }

@@ -32,3 +32,5 @@ C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\obj\Debug\netcoreapp3.
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\obj\Debug\netcoreapp3.0\HenE.ServerApp.pdb
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\HenE.GameVOPR.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\HenE.GameVOPR.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij\ServerApp\bin\Debug\netcoreapp3.0\HenE.GameVOPR.dll
+C:\Users\Abdul\Desktop\VierOpEenRij\ServerApp\bin\Debug\netcoreapp3.0\HenE.GameVOPR.pdb

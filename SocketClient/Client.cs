@@ -9,26 +9,21 @@ namespace HenE.SocketClient
     using System.Net.Sockets;
     using System.Text;
     using System.Threading;
-    using ConnectionHelper;
+    using HenE.ConnectionHelper;
     using HenE.GameVOPR.Protocol;
+    using HenE.VierOPEenRij.Enum;
+    using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
     /// class om nieuwe client te creëren.
     /// stuurt mesaage naar de server.
     /// Ontvangt mesaage vanuit de server.
     /// </summary>
-    public class Client : Conaction
+    public class Client : Communicate
     {
         private readonly byte[] buffer = new byte[1000];
         private Socket clientSocket = null;
-        private ManualResetEvent connectDone =
-        new ManualResetEvent(false);
-
-        private ManualResetEvent sendDone =
-            new ManualResetEvent(false);
-
-        private ManualResetEvent receiveDone =
-            new ManualResetEvent(false);
+        int dimension = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
@@ -37,19 +32,6 @@ namespace HenE.SocketClient
         public Client(Socket client)
         {
             this.clientSocket = client;
-        }
-
-        /// <summary>
-        /// Stuur een berichtje naar de server.
-        /// </summary>
-        /// <param name="berichtje">Het berichtje die naar de server wordt gestuurd.</param>
-        public void SendMessageToServer(string berichtje)
-        {
-            // change het berichtje tot een byte array.
-            byte[] buffer = Encoding.ASCII.GetBytes(berichtje);
-
-            // stuur het berichtje naar de server.
-            this.clientSocket.Send(buffer);
         }
 
         /// <summary>
@@ -87,33 +69,47 @@ namespace HenE.SocketClient
         /// <param name="socket">De client.</param>
         public override void ProcessStream(string message, Socket socket)
         {
-            switch (message)
-            {
+            string[] opgeknipt = message.Split(new char[] { '%' });
 
+            Events events = EnumHelperl.EnumConvert<Events>(opgeknipt[0]);
+
+            switch (events)
+            {
+                case Events.Gecreeerd:
+                    Console.WriteLine("Je moet wachte.");
+                    if (this.WilTegenComputerSpeln())
+                    {
+                        this.SpeelTegenComputerCommando();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Je Moet op anderen speler wachten.");
+                    }
+
+                    break;
             }
         }
 
         /// <summary>
-        /// stuurt een berichtje naar de server dat de speler wil speln.
+        /// stuurt een berichtje naar de server dat de speler wil spelen.
         /// </summary>
         /// <param name="naam">De naam van de speler.</param>
         /// <param name="dimension">De dimension van het speelvlak.</param>
         /// <param name="socket">De client.</param>
         public void VerzoekOmStartenSpel(string naam, int dimension, Socket socket)
         {
-            string message = CommandoHelper.CreëertVerzoekTotDeelnameSpelComando(naam, dimension);
+            this.dimension = dimension;
+            string message = CommandoHelper.CreëertVerzoekTotDeelnameSpelCommando(naam, dimension);
             this.Send(this.clientSocket, message);
         }
 
         /// <summary>
-        /// Stuurt een berichtje naar de server.
+        /// Stuurt een bericht naar de server dat de speler wil tegen de computer spelen.
         /// </summary>
-        /// <param name="client">De client.</param>
-        /// <param name="data">De melding.</param>
-        public void Send(Socket client, string data)
+        private void SpeelTegenComputerCommando()
         {
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
-            client.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(this.SendCallback), client);
+            string message = CommandoHelper.CreeertSpeelTegenComputerCommando(this.dimension);
+            this.Send(this.clientSocket, message);
         }
 
         /// <summary>
@@ -132,6 +128,10 @@ namespace HenE.SocketClient
             }
         }
 
+        /// <summary>
+        /// Read the data.
+        /// </summary>
+        /// <param name="ar">Result ar.</param>
         private void ReceiveCallback(IAsyncResult ar)
         {
             try
@@ -143,39 +143,48 @@ namespace HenE.SocketClient
                 {
                     string message = Encoding.ASCII.GetString(this.buffer, 0, bytesRead);
                     this.ProcessStream(message, this.clientSocket);
-
-                    // Get the rest of the data.
-                    this.clientSocket.BeginReceive(this.buffer, 0, this.buffer.Length, 0, new AsyncCallback(this.ReceiveCallback), this.clientSocket);
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
+
+            // Wachten op een nieuwe bericht.
+            this.clientSocket.BeginReceive(this.buffer, 0, this.buffer.Length, 0, new AsyncCallback(this.ReceiveCallback), this.clientSocket);
+        }
+
+        private bool WilTegenComputerSpeln()
+        {
+            Console.WriteLine("Wil je tegen de computer speler J of N?");
+            if (this.ThisCheckAnswer())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
-        /// laat weten dat de server heeft een berichtje ontvangen.
+        /// Controleert of het anworrd geldig of ongeldig.
         /// </summary>
-        /// <param name="ar">The result.</param>
-        private void SendCallback(IAsyncResult ar)
+        /// <returns>Is het antoord geldig of niet?</returns>
+        private bool ThisCheckAnswer()
         {
-            try
-            {
-                // Retrieve the socket from the state object.
-                Socket client = (Socket)ar.AsyncState;
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
 
-                // Complete sending the data to the remote device.
-                int bytesSent = client.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
-
-                // Signal that all bytes have been sent.
-                this.sendDone.Set();
-            }
-            catch (Exception e)
+            while (keyInfo.Key != ConsoleKey.J && keyInfo.Key != ConsoleKey.N)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine("Je mag alleen j of N gebruiken.");
+                keyInfo = Console.ReadKey();
             }
+
+            if (keyInfo.Key == ConsoleKey.J)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

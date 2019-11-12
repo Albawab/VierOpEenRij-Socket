@@ -25,6 +25,15 @@ namespace HenE.ClientApp
             int dimension = 4;
             client.VerzoekOmStartenSpel(naam, dimension, clientSocket);
             Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace HenE.VierOPEenRij.Enum
     /// <summary>
     /// helpt de situatie.
     /// </summary>
-    public static class EnumHepler
+    public static class EnumHelperl
     {
         /// <summary>
         /// Omzetten de message van string tot een enum.

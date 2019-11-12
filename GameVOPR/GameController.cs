@@ -23,10 +23,10 @@ namespace HenE.VierOPEenRij
         /// <param name="speelVlak">Het speelval van het spel.</param>
         /// <param name="dimension">Het grootte van het speelvlak.</param>
         /// <param name="gameVierOpEenRij">Game.</param>
-        public GameController(SpeelVlak speelVlak, Game gameVierOpEenRij)
+        public GameController(Game gameVierOpEenRij)
         {
-            this.speelVlak = speelVlak;
             this.gameVierOpEenRij = gameVierOpEenRij;
+            this.speelVlak = gameVierOpEenRij.SpeelVlak;
         }
 
         /// <summary>
@@ -34,7 +34,10 @@ namespace HenE.VierOPEenRij
         /// </summary>
         public void GameStart()
         {
+            // Doe het spel kaar om te spelen.
             this.gameVierOpEenRij.InitialiseerHetSpel();
+
+            // start een nieuw ronde.
             this.NieuwRonde();
         }
 
@@ -45,7 +48,10 @@ namespace HenE.VierOPEenRij
         {
             Speler deWinnaar = null;
 
+            // Reset the Speelvalk.
             this.speelVlak.ResetSpeelVlak();
+
+            // Teken het bord.
             string bord = this.speelVlak.TekenSpeelvlak();
             Console.WriteLine(bord);
             Speler speler = this.gameVierOpEenRij.HuidigeSpeler;

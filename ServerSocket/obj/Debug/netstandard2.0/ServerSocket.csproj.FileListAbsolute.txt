@@ -22,3 +22,5 @@ C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerSocket\obj\Debug\netstanda
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerSocket\obj\Debug\netstandard2.0\HenE.ServerSocket.pdb
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerSocket\bin\Debug\netstandard2.0\HenE.GameVOPR.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerSocket\bin\Debug\netstandard2.0\HenE.GameVOPR.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\bin\Debug\netstandard2.0\HenE.GameVOPR.dll
+C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\bin\Debug\netstandard2.0\HenE.GameVOPR.pdb

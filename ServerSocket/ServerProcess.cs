@@ -9,21 +9,23 @@ namespace HenE.ServerSocket
     using System.Net;
     using System.Net.Sockets;
     using System.Text;
-    using ConnectionHelper;
+    using HenE.ConnectionHelper;
     using HenE.GameVierOpEenRij;
+    using HenE.VierOPEenRij.Enum;
     using HenE.VierOPEenRij.Interface;
+    using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
     /// class om nieuwe server te creëren.
     /// stuurt mesaage naar de cliet.
     /// Ontvangt mesaage vanuit de cliet.
     /// </summary>
-    public class ServerProcess : Conaction
+    public class ServerProcess : Communicate
     {
         private readonly byte[] buffer = new byte[1000];
         private Socket serverSocket = null;
         private List<Socket> clienten = new List<Socket>();
-        ICanHandelen handler = new Handler();
+        private ICanHandelen handler = new Handler();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerProcess"/> class.
@@ -41,8 +43,14 @@ namespace HenE.ServerSocket
         public void SetupServer()
         {
             Console.WriteLine("Setting up server....");
+
+            // Bind de server met de client.
             this.serverSocket.Bind(new IPEndPoint(IPAddress.Any, 5000));
+
+            // De hoeveel client mag de server ontvangen.
             this.serverSocket.Listen(100);
+
+            // begin hier de server de cliënt accepteren.
             this.serverSocket.BeginAccept(new AsyncCallback(this.AcceptCallback), this.serverSocket);
         }
 
@@ -53,18 +61,30 @@ namespace HenE.ServerSocket
         /// <param name="socket">De client.</param>
         public override void ProcessStream(string message, Socket socket)
         {
-            string[] opgeknipt = message.Split(new char[] { '%' });
-            switch (opgeknipt[1])
+            if (message == string.Empty)
             {
-                case "VerzoekTotDeelnemenSpel":
-                   // this.Send(socket, message);
-                    this.handler.StreamOntvanger(message);
-                    break;
-                case "Lolo":
-                    Console.WriteLine("Lolo");
-                    break;
+                throw new ArgumentException("Mag niet messagen empty zijn.");
+            }
+            else if (socket == null)
+            {
+                throw new ArgumentNullException("Mag niet een client null zijn.");
+            }
+
+            string[] opgeknipt = message.Split(new char[] { '%' });
+
+            // change the string to enum.
+            Commandos commando = EnumHelperl.EnumConvert<Commandos>(opgeknipt[0]);
+            switch (commando)
+            {
+                case Commandos.VerzoekTotDeelnemenSpel:
+                    // this.Send(socket, message);
+                   this.Send(socket, this.handler.StreamOntvanger(message, socket));
+                   break;
+                case Commandos.SpeelTegenComputer:
+                    this.handler.StreamOntvanger(message, socket);
+                   break;
                 default:
-                    break;
+                   break;
             }
         }
 
@@ -76,18 +96,20 @@ namespace HenE.ServerSocket
         {
             string content = string.Empty;
 
+            // Get the client.
             Socket socket = (Socket)ar.AsyncState;
 
             // Read data from the client socket.
             int bytesRead = socket.EndReceive(ar);
 
+            // start read.
             if (bytesRead > 0)
             {
                 content = Encoding.ASCII.GetString(this.buffer, 0, bytesRead);
                 if (content.IndexOf(content) > -1)
                 {
                     // All the data has been read from the
-                    // client. Display it on the console.
+                    // client.
                     this.ProcessStream(content, socket);
                 }
 
@@ -103,49 +125,14 @@ namespace HenE.ServerSocket
         private void AcceptCallback(IAsyncResult aR)
         {
             Socket socket = this.serverSocket.EndAccept(aR);
+
+            // Voeg de nieuwe client in.
             this.clienten.Add(socket);
             Console.WriteLine("Client connected.");
 
+            // wacht op andere bericht.
             socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
             this.serverSocket.BeginAccept(this.AcceptCallback, null);
-        }
-
-        /// <summary>
-        /// Stuurt een bericht naar een client.
-        /// </summary>
-        /// <param name="handler">De client.</param>
-        /// <param name="data">Het berichtje.</param>
-        private void Send(Socket handler, string data)
-        {
-            // Convert the string data to byte data using ASCII encoding.
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
-
-            // Begin sending the data to the remote device.
-            handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(this.SendCallback), handler);
-        }
-
-        /// <summary>
-        /// Laat weten dat de client heeft een bericht ontvang.
-        /// </summary>
-        /// <param name="ar">the result.</param>
-        private void SendCallback(IAsyncResult ar)
-        {
-            try
-            {
-                // Retrieve the socket from the object.
-                Socket handler = (Socket)ar.AsyncState;
-
-                // Complete sending the data to the remote device.
-                int bytesSent = handler.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to client.", bytesSent);
-
-/*                handler.Shutdown(SocketShutdown.Both);
-                handler.Close();*/
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
         }
     }
 }

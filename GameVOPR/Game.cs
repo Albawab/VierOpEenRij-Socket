@@ -6,6 +6,7 @@ namespace HenE.VierOPEenRij
 {
     using System;
     using System.Collections.Generic;
+    using System.Net.Sockets;
     using HenE.GameVOPR;
     using HenE.VierOPEenRij.Enum;
     using HenE.VierOPEenRij.Interface;
@@ -19,9 +20,34 @@ namespace HenE.VierOPEenRij
         private readonly List<Speler> spelers = new List<Speler>();
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Game"/> class.
+        /// </summary>
+        /// <param name="dimension">dimension van het speelvlak.</param>
+        public Game(int dimension)
+        {
+            this.Dimension = dimension;
+            this.SpeelVlak = new SpeelVlak(dimension);
+        }
+
+        /// <summary>
         /// Gets hudige speler.
         /// </summary>
         public Speler HuidigeSpeler { get; private set; }
+
+        /// <summary>
+        /// Gets het speelvalk van het spel.
+        /// </summary>
+        public SpeelVlak SpeelVlak { get; private set; }
+
+        /// <summary>
+        /// Gets the status of the game.
+        /// </summary>
+        public Status Status { get; private set; }
+
+        /// <summary>
+        /// Gets the dimension of the speelvlak.
+        /// </summary>
+        public int Dimension { get; private set; }
 
         /// <summary>
         /// Initialiseert Het Spel.
@@ -29,6 +55,10 @@ namespace HenE.VierOPEenRij
         /// </summary>
         public void InitialiseerHetSpel()
         {
+            // geeft het spel een gestart situatie.
+            this.Status = Status.Gestart;
+
+            // dan geef elke speler een gestart situatie.
             foreach (Speler speler in this.spelers)
             {
                 speler.ChangeStatus(Status.Gestart);
@@ -39,10 +69,11 @@ namespace HenE.VierOPEenRij
         /// Voeg een nieuwe speler aan het spel toe.
         /// </summary>
         /// <param name="naam">De naam van de nieuwe speler.</param>
+        /// <param name="socket">tcp client van de speler.</param>
         /// <returns>De nieuwe speler.</returns>
-        public Speler AddHumanSpeler(string naam)
+        public Speler AddHumanSpeler(string naam, Socket socket)
         {
-            Speler speler = new HumanSpeler(naam);
+            Speler speler = new HumanSpeler(naam, socket);
             this.spelers.Add(speler);
             return speler;
         }
@@ -57,6 +88,15 @@ namespace HenE.VierOPEenRij
             Speler speler = new ComputerSpeler(naam);
             this.spelers.Add(speler);
             return speler;
+        }
+
+        /// <summary>
+        /// Zet een situatie van het spel.
+        /// </summary>
+        /// <param name="status">de nieuwe situatie van het spel.</param>
+        public void ZetSitauatie(Status status)
+        {
+            this.Status = status;
         }
 
         /// <summary>
@@ -83,50 +123,10 @@ namespace HenE.VierOPEenRij
         }
 
         /// <summary>
-        /// Voeg een nieuwe speler toe.
-        /// Verandert de situatie van een speler.
-        /// </summary>
-        /// <param name="naam">De naam van een nieuwe speler.</param>
-        /// <param name="commandos">De commandos die uit de speler komt.</param>
-        /// <param name="teken">Het teken die de speler zal gepruiken.</param>
-        public void HandlSpeler(string naam, Commandos commandos, string teken)
-        {
-            Speler speler;
-            if (naam == "Computer")
-            {
-                speler = this.AddComputerSpeler(naam);
-            }
-            else
-            {
-                // Voeg een speler aan het spel toe.
-                speler = this.AddHumanSpeler(naam);
-            }
-
-            Teken tekenVanSpeler = EnumHepler.EnumConvert<Teken>(teken);
-            this.GeeftTeken(speler, tekenVanSpeler);
-            this.HuidigeSpeler = speler;
-        }
-
-        /// <summary>
         /// Chack of de speler mag spelen.
         /// </summary>
         /// <returns>Mag spelen of niet.</returns>
         public bool KanStarten() => this.spelers.Count == 2;
-
-        /// <summary>
-        /// Geeft de spelers van het speler terug geven.
-        /// </summary>
-        /// <returns>Lijst van spelers.</returns>
-        public List<Speler> GeefSpeler()
-        {
-            List<Speler> spelers = new List<Speler>();
-            foreach (Speler speler in this.spelers)
-            {
-                spelers.Add(speler);
-            }
-
-            return spelers;
-        }
 
         /// <summary>
         /// tekent op het speelvlak het teken die de speler wil inzetten op het speelvlak.
@@ -166,6 +166,21 @@ namespace HenE.VierOPEenRij
         }
 
         /// <summary>
+        /// Geeft de spelers van het spel terug.
+        /// </summary>
+        /// <returns>Lijst van speler.</returns>
+        public List<Speler> GetSpelers()
+        {
+            List<Speler> lijstOfSpelers = new List<Speler>();
+            foreach (Speler speler in this.spelers)
+            {
+                lijstOfSpelers.Add(speler);
+            }
+
+            return lijstOfSpelers;
+        }
+
+        /// <summary>
         /// Vraagt de speler of hij wil een nieuwe ronde doen of niet.
         /// Als hij wil een nieuw rondje doen  dan geeft dat terug.
         /// </summary>
@@ -176,16 +191,24 @@ namespace HenE.VierOPEenRij
             {
                 if (speler.IsHumanSpeler)
                 {
-                    // Doe contact met de human speler als interface.
-                    IMakeContactBetweenSpelerAndGame humanSpeler = speler as IMakeContactBetweenSpelerAndGame;
+/*                    // Doe contact met de human speler als interface.
                     if (humanSpeler.NieuwRonde("Wil je een nieuw Rondje doen?"))
                     {
                         return true;
-                    }
+                    }*/
                 }
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// zet de huidige speler.
+        /// </summary>
+        /// <param name="speler">De speler die zal starten.</param>
+        public void ZetHuidigeSpeler(Speler speler)
+        {
+            this.HuidigeSpeler = speler;
         }
 
         /// <summary>

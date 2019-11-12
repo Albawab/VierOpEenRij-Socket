@@ -19,8 +19,9 @@ namespace HenE.GameVierOpEenRij
         private static void Main(string[] args)
         {
             ICanHandelen handler = new Handler();
-            handler.StreamOntvanger("A%Wachten%O");
-            handler.StreamOntvanger("Computer%Gestart%X");
+
+           // handler.StreamOntvanger("A%Wachten%O");
+           // handler.StreamOntvanger("Computer%Gestart%X");
             Console.ReadLine();
         }
     }

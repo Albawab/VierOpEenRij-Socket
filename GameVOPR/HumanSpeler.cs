@@ -5,25 +5,32 @@
 namespace HenE.VierOPEenRij
 {
     using System;
-    using HenE.VierOPEenRij.Enum;
+    using System.Net.Sockets;
     using HenE.VierOPEenRij.Interface;
 
     /// <summary>
     /// Gaat over de Humanspeler.
     /// </summary>
-    internal class HumanSpeler : Speler, IMakeContactBetweenSpelerAndGame
+    internal class HumanSpeler : Speler
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HumanSpeler"/> class.
         /// </summary>
         /// <param name="naam">De naam van een speler.</param>
-        public HumanSpeler(string naam)
+        /// <param name="socket">De tcp client van de humen speler.</param>
+        public HumanSpeler(string naam, Socket socket)
             : base(naam)
         {
+            this.TcpClient = socket;
         }
 
         /// <inheritdoc/>
         public override bool IsHumanSpeler => true;
+
+        /// <summary>
+        /// Gets de clients van de spelrs.
+        /// </summary>
+        public Socket TcpClient { get; private set; }
 
         /// <inheritdoc/>
         public override int DoeZet(string vraag, SpeelVlak speelVlak, Game game)
@@ -54,12 +61,6 @@ namespace HenE.VierOPEenRij
             string antwoord = Console.ReadLine().ToUpper();
 
             return antwoord == "J";
-        }
-
-        /// <inheritdoc/>
-        public string VraagNaam(string vraag)
-        {
-            throw new ArgumentNullException("Mag de vraag niet null zijn. Er moet een vrijg.");
         }
 
         /// <inheritdoc/>

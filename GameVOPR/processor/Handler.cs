@@ -5,37 +5,33 @@
 namespace HenE.GameVierOpEenRij
 {
     using System;
-    using HenE.VierOPEenRij;
-    using HenE.VierOPEenRij.Enum;
+    using System.Net.Sockets;
+    using HenE.ServerSocket;
     using HenE.VierOPEenRij.Interface;
-    using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
     /// gaat de stream die van een speler komt behandlen.
     /// </summary>
     public class Handler : ICanHandelen
     {
-        private readonly Game game = new Game();
+        private readonly SpelHandler spelHandler = new SpelHandler();
 
         /// <inheritdoc/>
-        public override void StreamOntvanger(string stream)
+        public override string StreamOntvanger(string stream, Socket socket)
         {
             if (stream == string.Empty)
             {
                 throw new ArgumentNullException("De stream mag niet empty zijn.");
             }
 
-            this.SplitsDeStream(stream);
+            return this.SplitsDeStream(stream, socket);
         }
 
         /// <inheritdoc/>
-        protected override void SplitsDeStream(string stream)
+        protected override string SplitsDeStream(string stream, Socket socket)
         {
             // De stream komt in een zin.
             // die moet knippen worden.
-            // hier knip de stream .
-
-            // Todo Maak de split alleen met % symbol.
             string[] opgeknipt = stream.Split(new char[] { '%' });
 
             if (opgeknipt[0] == null)
@@ -58,27 +54,59 @@ namespace HenE.GameVierOpEenRij
                 throw new ArgumentNullException("Ietem mag niet null zijn.");
             }
 
-            // nu hebben we de naam van de speler en de situatie als string.
-            // We gaan de situatie verandert tot een enum.
-
-            this.game.HandlSpeler(opgeknipt[0], EnumHepler.EnumConvert<Commandos>(opgeknipt[1]), opgeknipt[2]);
-            this.HandlHetSpel();
+            return this.Handel(opgeknipt[1], opgeknipt[2], socket);
         }
 
         /// <summary>
-        /// Chack of mag spelen.
-        /// Als ja dan staart het spel.
-        /// als Nee Wacht op andere speler.
+        /// Hande de data.
+        /// Is de dimension tussen grens? Als ja dan stuur de data door.
+        /// als de dimenion niet tussen de grens is dan stuur de data niet door.
         /// </summary>
-        protected override void HandlHetSpel()
+        /// <param name="naam">De naam van de speler.</param>
+        /// <param name="dim">De dimension die de speler wil mee doen.</param>
+        /// <param name="socket">De tcp client van een speler.</param>
+        /// <returns>De event.</returns>
+        private string Handel(string naam, string dim, Socket socket)
         {
-            if (this.game.KanStarten())
+            string returnMessage = string.Empty;
+
+            // Nu hebben we de naam van de speler en de dimension van het speelvlak.
+            // eerst check of de dimension geldig of ongeldig is.
+            int dimension = this.ConvertToNumber(dim);
+
+            if (dimension < 4 || dimension > 9)
             {
-                SpeelVlak speelVlak = new SpeelVlak(4);
-                GameController controller = new GameController(speelVlak, this.game);
-                controller.GameStart();
-                Console.ReadKey();
+                // de dimension is ongeldig.
+                // stuur een bericht naar de speler terug en vraag hem op een nieuwe dimension.
+                throw new ArgumentOutOfRangeException("De dimension moet tussen 4 en 9.");
             }
+            else
+            {
+                // dan kan de data naar de spelhandeler sturen.
+               return this.spelHandler.SpelHandlen(naam, dimension, socket);
+            }
+
+            return returnMessage;
+        }
+
+        /// <summary>
+        /// Change the string to int.
+        /// </summary>
+        /// <param name="dimension">Dimension als string.</param>
+        /// <returns>Dimension.</returns>
+        private int ConvertToNumber(string dimension)
+        {
+            if (dimension == string.Empty)
+            {
+                throw new ArgumentNullException("Mag niet dimebnsion empty zijn.");
+            }
+
+            if (!int.TryParse(dimension, out int number))
+            {
+                throw new ArgumentNullException("Mag niet dimension nul zijn.");
+            }
+
+            return number;
         }
     }
 }

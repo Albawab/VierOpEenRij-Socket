@@ -246,11 +246,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj",
+      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\SocketClient\\SocketClient.csproj",
       "projectName": "HenE.SocketClient",
-      "projectPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj",
+      "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\SocketClient\\SocketClient.csproj",
       "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\SocketClient\\obj\\",
+      "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\SocketClient\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -269,11 +269,11 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ConnectionHelper\\ConnectionHelper.csproj": {
-              "projectPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\ConnectionHelper\\ConnectionHelper.csproj"
+            "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj": {
+              "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj"
             },
-            "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj": {
-              "projectPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj"
+            "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\GameVOPR\\GameVOPR.csproj": {
+              "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\GameVOPR\\GameVOPR.csproj"
             }
           }
         }

@@ -4,14 +4,19 @@
 
 namespace HenE.VierOPEenRij.Protocol
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// Hier staan de events van het spel.
     /// </summary>
-    public class Events
+    public enum Events
     {
+        /// <summary>
+        /// Het spel wordt gecoreéerd.
+        /// </summary>
+        Gecreeerd,
+
+        /// <summary>
+        /// Het spel is gestart.
+        /// </summary>
+        Gestart,
     }
 }

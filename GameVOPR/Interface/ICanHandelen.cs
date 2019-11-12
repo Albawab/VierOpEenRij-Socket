@@ -6,6 +6,7 @@ namespace HenE.VierOPEenRij.Interface
 {
     using System;
     using System.Collections.Generic;
+    using System.Net.Sockets;
     using System.Text;
 
     /// <summary>
@@ -18,19 +19,16 @@ namespace HenE.VierOPEenRij.Interface
         /// controlleert de stream.
         /// </summary>
         /// <param name="streamk">De stream die van een persoon komt.</param>
-        public abstract void StreamOntvanger(string streamk);
+        /// <param name="socket">De tcp client van een speler.</param>
+        /// <returns>De events.</returns>
+        public abstract string StreamOntvanger(string streamk, Socket socket);
 
         /// <summary>
         /// Functie om de stream te splitsen.
         /// </summary>
         /// <param name="stream">De stream die van een persoon komt.</param>
-        protected abstract void SplitsDeStream(string stream);
-
-        /// <summary>
-        /// Chack of mag spelen.
-        /// Als ja dan staart het spel.
-        /// als Nee Wacht op andere speler.
-        /// </summary>
-        protected abstract void HandlHetSpel();
+        /// <param name="socket">De tcp client van een speler.</param>
+        /// <returns>De events.</returns>
+        protected abstract string SplitsDeStream(string stream, Socket socket);
     }
 }
