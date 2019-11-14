@@ -4,14 +4,14 @@
     "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\SocketClient\\SocketClient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj": {
+    "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj",
-        "projectName": "ConnectionHelper",
-        "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj",
+        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj",
+        "projectName": "Communicator",
+        "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj",
         "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\obj\\",
+        "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -46,12 +46,6 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
-            },
-            "StyleCop.Analyzers": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[1.1.118, )"
             }
           },
           "imports": [
@@ -93,7 +87,11 @@
         },
         "frameworks": {
           "netstandard2.0": {
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj": {
+                "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -158,8 +156,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj": {
-                "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj"
+              "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj": {
+                "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj"
               },
               "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\GameVOPR\\GameVOPR.csproj": {
                 "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\GameVOPR\\GameVOPR.csproj"

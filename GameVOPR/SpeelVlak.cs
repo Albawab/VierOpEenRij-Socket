@@ -132,7 +132,7 @@ namespace HenE.VierOPEenRij
                 throw new ArgumentOutOfRangeException("Het nummer mag niet hogger dan de dimension van het speelvlak.");
             }
 
-            if (columnNummer < this.Dimension)
+            if (columnNummer < 0)
             {
                 throw new ArgumentOutOfRangeException("Het nummer mag niet minder dan de dimension van het speelvlak.");
             }

@@ -5,14 +5,15 @@
 namespace HenE.VierOPEenRij
 {
     using System;
-    using System.Collections.Generic;
+    using System.Net.Sockets;
     using System.Text;
-    using System.Threading;
+    using HenE.ConnectionHelper;
+    using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
     /// Doet controller op het spel.
     /// </summary>
-    public class GameController
+    public class GameController : Communicate
     {
         private readonly SpeelVlak speelVlak = null;
         private readonly Game gameVierOpEenRij = null;
@@ -46,47 +47,110 @@ namespace HenE.VierOPEenRij
         /// </summary>
         public void NieuwRonde()
         {
-            Speler deWinnaar = null;
-
-            // Reset the Speelvalk.
-            this.speelVlak.ResetSpeelVlak();
-
-            // Teken het bord.
-            string bord = this.speelVlak.TekenSpeelvlak();
-            Console.WriteLine(bord);
-            Speler speler = this.gameVierOpEenRij.HuidigeSpeler;
-
-            do
+            try
             {
-                speler = this.gameVierOpEenRij.TegenSpeler(speler);
-                int inzet;
+                Speler deWinnaar = null;
+
+                // Reset the Speelvalk.
+                this.speelVlak.ResetSpeelVlak();
+
+                // Teken het bord.
+                string bord = this.speelVlak.TekenSpeelvlak();
+
+                // get the player.
+                Speler speler = this.gameVierOpEenRij.HuidigeSpeler;
+
+                // send an message to this player.
+                this.SendEenBericht(Events.BordGetekend,bord, speler);
+
+                // Vraag de speler om te zetten.
                 do
                 {
-                    inzet = speler.DoeZet(string.Empty, this.speelVlak, this.gameVierOpEenRij);
+                    // Tegen speler.
+                    speler = this.gameVierOpEenRij.TegenSpeler(speler);
+                    int inzet;
+                    do
+                    {
+                        // stelt een vraag aan de speler.
+                        inzet = speler.DoeZet(string.Empty, this.speelVlak, this.gameVierOpEenRij);
+                    }
+                    while (!this.speelVlak.MagInzetten(inzet));
+
+                    // als de inzet geldig is dan teken het op het bord.
+                    this.gameVierOpEenRij.TekentOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
+
+                    // Teken het bord met de nieuwe situatie.
+                    bord = this.speelVlak.TekenSpeelvlak();
+
+                    // Stuur de nieuwe teken naar de spelers.
+                    this.SendEenBericht(Events.BordGetekend, bord, speler);
+                    deWinnaar = speler;
                 }
-                while (!this.speelVlak.MagInzetten(inzet));
+                while (!this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, speler.GebruikTeken)
+                    && !this.speelVlak.IsSpeelvlakVol());
 
-                this.gameVierOpEenRij.TekentOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
-                bord = this.speelVlak.TekenSpeelvlak();
-                Console.WriteLine(bord);
-                /*Thread.Sleep(2000);*/
-                deWinnaar = speler;
-            }
-            while (!this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, speler.GebruikTeken)
-                && !this.speelVlak.IsSpeelvlakVol());
+                if (this.speelVlak.IsSpeelvlakVol())
+                {
+                    Console.WriteLine("Het Speelvlak Is vol");
+                }
+                else
+                {
+                    Console.WriteLine($"{deWinnaar.Naam} is de winnaar.");
+                }
 
-            if (this.speelVlak.IsSpeelvlakVol())
-            {
-                Console.WriteLine("Het Speelvlak Is vol");
+                if (this.gameVierOpEenRij.VraagNieuwRonde())
+                {
+                    this.NieuwRonde();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"{deWinnaar.Naam} is de winnaar.");
+                throw new Exception(ex.Message);
             }
+        }
 
-            if (this.gameVierOpEenRij.VraagNieuwRonde())
+        /// <inheritdoc/>
+        public override void ProcessStream(string message, Socket socket)
+        {
+            this.Send(socket, message);
+        }
+
+        /// <summary>
+        /// Controleert of de speler is humanspeler.
+        /// Als de speler human speler is dan stuur een bericht naar deze speler.
+        /// </summary>
+        /// <param name="events">De event.</param>
+        /// <param name="message">De bericht die naar de humam speler gaat sturen.</param>
+        /// <param name="speler">De speler die een bericht zal ontvangen.</param>
+        private void SendEenBericht(Events events, string message, Speler speler)
+        {
+            StringBuilder msg = new StringBuilder();
+            if (speler.IsHumanSpeler)
             {
-                this.NieuwRonde();
+                // verzamel het bericht die naar de speler zal sturen.
+                msg.AppendFormat($"{events.ToString()}%{speler.Naam}%{message}");
+
+                // omdat de bericht gaat aleen naar de human speler sturen dan maak de speler als een human speler.
+                HumanSpeler humanSpeler = speler as HumanSpeler;
+
+                // stuur het bericht naar de speler.
+                this.ProcessStream(msg.ToString(), humanSpeler.TcpClient);
+            }
+        }
+
+        /// <summary>
+        /// stuurt een bericht naar elke speler.
+        /// </summary>
+        /// <param name="huidigeSpeler">De huidige speler.</param>
+        private void StuurBrichtNaarSpelers(Speler huidigeSpeler)
+        {
+            foreach (Speler speler in this.gameVierOpEenRij.GetSpelers())
+            {
+                if (speler.IsHumanSpeler)
+                {
+                    HumanSpeler humanSpeler = speler as HumanSpeler;
+                    this.SendEenBericht(Events.BordGetekend, string.Empty, huidigeSpeler);
+                }
             }
         }
     }

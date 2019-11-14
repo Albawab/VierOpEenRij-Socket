@@ -9,8 +9,6 @@ namespace HenE.VierOPEenRij
     using System.Net.Sockets;
     using HenE.GameVOPR;
     using HenE.VierOPEenRij.Enum;
-    using HenE.VierOPEenRij.Interface;
-    using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
     /// Gaat over het spel.
@@ -63,6 +61,15 @@ namespace HenE.VierOPEenRij
             {
                 speler.ChangeStatus(Status.Gestart);
             }
+        }
+
+        /// <summary>
+        /// Gaat het spel starten.
+        /// </summary>
+        public void StartHetSpel()
+        {
+            GameController gameController = new GameController(this);
+            gameController.GameStart();
         }
 
         /// <summary>
@@ -121,12 +128,6 @@ namespace HenE.VierOPEenRij
 
             return null;
         }
-
-        /// <summary>
-        /// Chack of de speler mag spelen.
-        /// </summary>
-        /// <returns>Mag spelen of niet.</returns>
-        public bool KanStarten() => this.spelers.Count == 2;
 
         /// <summary>
         /// tekent op het speelvlak het teken die de speler wil inzetten op het speelvlak.
@@ -211,19 +212,83 @@ namespace HenE.VierOPEenRij
             this.HuidigeSpeler = speler;
         }
 
+        /*        /// <summary>
+                /// Stelt een vraag aan de speler om eigen teken te kiezen.
+                /// </summary>
+                /// <param name="gameController">De game controller om de vraag naar de speler te sturn.</param>
+                public void VraagTekenTeZetten(GameController gameController)
+                {
+                    foreach (Speler speler in this.spelers)
+                    {
+                        gameController.SendEenBericht(Protocol.Events.Gestart, null, speler);
+                    }
+                }*/
+
         /// <summary>
         /// Geeft de speler eigen teken die hij het nodig heeft om te spelen.
         /// </summary>
-        /// <param name="speler">De speler die een teken wordt gekregen.</param>
-        /// <param name="tekenVanSpeler">De teken.</param>
-        private void GeeftTeken(Speler speler, Teken tekenVanSpeler)
+        /// <param name="socket">De client van de speler.</param>
+        /// <param name="tekenVanSpeler">De teken die de speler heeft gekozen.</param>
+        /// <returns>De naam van de speler.</returns>
+        public string TekenenBehandler(Socket socket, Teken tekenVanSpeler)
         {
-            if (speler == null)
+            if (socket == null)
             {
                 throw new ArgumentNullException("Mag speler niet null zijn");
             }
 
-            speler.GeeftTeken(tekenVanSpeler);
+            Speler deSpeler = null;
+
+            // Zoek naar de speler via zijn tcp.
+            foreach (Speler speler in this.spelers)
+            {
+                // Als de speler is humen speler dan mag zoeken naar zijn tcp.
+                if (speler.IsHumanSpeler)
+                {
+                    HumanSpeler humanSpeler = speler as HumanSpeler;
+                    if (humanSpeler.TcpClient == socket)
+                    {
+                        deSpeler = speler;
+                        speler.ZetTeken(tekenVanSpeler);
+                    }
+                }
+            }
+
+            // zoek naar de andere teken.
+            Teken teken = this.TegenDezeTeken(tekenVanSpeler);
+
+            // geef de andere teken aan de de andere speler.
+            this.ZetEenTekenVoorAnderSpeler(deSpeler, teken);
+            return deSpeler.Naam;
+        }
+
+        /// <summary>
+        /// Geeft de andere speler een teken.
+        /// </summary>
+        /// <param name="speler">Een speler.</param>
+        /// <param name="teken">De teken van de speler.</param>
+        private void ZetEenTekenVoorAnderSpeler(Speler speler, Teken teken)
+        {
+            Speler tegenSpeler = this.TegenSpeler(speler);
+
+            tegenSpeler.ZetTeken(teken);
+        }
+
+        /// <summary>
+        /// Geeft tegen de huidige teken terug.
+        /// </summary>
+        /// <param name="teken">De huidige teken.</param>
+        /// <returns>De tegen van de huidige teken.</returns>
+        private Teken TegenDezeTeken(Teken teken)
+        {
+            if (teken == Teken.O)
+            {
+                return Teken.X;
+            }
+            else
+            {
+                return Teken.O;
+            }
         }
     }
 }

@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConnectionHelper\ConnectionHelper.csproj" />
+    <ProjectReference Include="..\Communicator\Communicator.csproj" />
     <ProjectReference Include="..\GameVOPR\GameVOPR.csproj" />
   </ItemGroup>
 

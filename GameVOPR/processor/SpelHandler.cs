@@ -47,62 +47,88 @@ namespace HenE.ServerSocket
         /// <returns>Mag de speler starten of wachte.</returns>
         public string SpelHandlen(string naam, int dimension, Socket socket)
         {
-            string returnMessage = string.Empty;
-            if (naam == string.Empty)
+            try
             {
-                throw new ArgumentNullException("Mag niet de naam leeg zijn.");
-            }
+                Game game;
+                string returnMessage = string.Empty;
 
-            Game game;
-            if (naam == "Computer")
-            {
-                // zoek naar het zelfde spel van de humen speler.
-                game = this.GetGameByTcpClient(socket);
-            }
-            else
-            {
-                // Zoek naar een spel die de zelfde dimension heeft.
-                game = this.GetGameByDimensionAndStatus(dimension);
-            }
-
-            if (game == null)
-            {
-                // als geen game heeft gevonden dan creeert een nieuwe game.
-                game = this.CreerenEenSpel(dimension);
-                game.ZetSitauatie(Status.Wachten);
-
-                // voeg de speler toe.
-                Speler speler = game.AddHumanSpeler(naam, socket);
-
-                // Omdat hij de eerste speler mag hij starten.
-                game.ZetHuidigeSpeler(speler);
-
-                // Change the status of the speler.
-                speler.ChangeStatus(Status.Wachten);
-
-                // geeft de event terug sturen.
-                return Events.Gecreeerd.ToString();
-            }
-            else
-            {
-                // kan het spel starten.
-                // als de speler is computer dus voeg een computer speler toe.
-                // anders voeg een human speler toe.
-                if (naam != "Computer")
+                if (naam == string.Empty)
                 {
-                    game.AddHumanSpeler(naam, socket);
+                    throw new ArgumentNullException("Mag niet de naam leeg zijn.");
+                }
+
+                game = null;
+                if (naam == "Computer")
+                {
+                    // zoek naar het zelfde spel van de human speler.
+                    game = this.GetGameByTcpClient(socket);
                 }
                 else
                 {
-                    game.AddComputerSpeler(naam);
+                    // als de speler wil tegen andre speler spelen, dan gaat hier naar ander spel zoeken.
+                    // Zoek naar een spel die de zelfde dimension heeft.
+                    game = this.GetGameByDimensionAndStatus(dimension);
                 }
 
-                GameController gameController = new GameController(game);
-                returnMessage = Events.Gestart.ToString();
-                gameController.GameStart();
+                // Is er een game of niet.
+                // als niet dan laat de speler weten dat hij moet wachten.
+                if (game == null)
+                {
+                    // als geen game heeft gevonden dan creeert een nieuwe game.
+                    game = this.CreerenEenSpel(dimension);
+                    game.ZetSitauatie(Status.Wachten);
+
+                    // voeg de speler toe.
+                    Speler speler = game.AddHumanSpeler(naam, socket);
+
+                    // Omdat hij de eerste speler mag hij starten.
+                    game.ZetHuidigeSpeler(speler);
+
+                    // Change the status of the speler.
+                    speler.ChangeStatus(Status.Wachten);
+
+                    // geeft de event terug sturen.
+                    return Events.Gecreeerd.ToString();
+                }
+                else
+                {
+                    // kan het spel starten.
+                    // als de speler is computer dus voeg een computer speler toe.
+                    // anders voeg een human speler toe.
+                    if (naam != "Computer")
+                    {
+                        game.AddHumanSpeler(naam, socket);
+                    }
+                    else
+                    {
+                        game.AddComputerSpeler(naam);
+                    }
+
+                    return Events.SpelerInvoegde.ToString();
+                }
+
+                return returnMessage;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Geeft de lijst van de spellen terug geven.
+        /// </summary>
+        /// <returns>De list van de spellen.</returns>
+        public List<Game> GetSpellen()
+        {
+            List<Game> deSpellen = new List<Game>();
+
+            foreach (Game game in this.spellen)
+            {
+                deSpellen.Add(game);
             }
 
-            return returnMessage;
+            return deSpellen;
         }
 
         /// <summary>

@@ -5,8 +5,10 @@
 namespace HenE.GameVierOpEenRij
 {
     using System;
+    using System.Collections.Generic;
     using System.Net.Sockets;
     using HenE.ServerSocket;
+    using HenE.VierOPEenRij;
     using HenE.VierOPEenRij.Interface;
 
     /// <summary>
@@ -25,6 +27,15 @@ namespace HenE.GameVierOpEenRij
             }
 
             return this.SplitsDeStream(stream, socket);
+        }
+
+        /// <summary>
+        /// Geeft de lijst van de spellen terug.
+        /// </summary>
+        /// <returns>Lijst van de spellen.</returns>
+        public List<Game> GetSpellen()
+        {
+            return this.spelHandler.GetSpellen();
         }
 
         /// <inheritdoc/>
@@ -68,7 +79,7 @@ namespace HenE.GameVierOpEenRij
         /// <returns>De event.</returns>
         private string Handel(string naam, string dim, Socket socket)
         {
-            string returnMessage = string.Empty;
+            string returnMessage;
 
             // Nu hebben we de naam van de speler en de dimension van het speelvlak.
             // eerst check of de dimension geldig of ongeldig is.
@@ -83,7 +94,7 @@ namespace HenE.GameVierOpEenRij
             else
             {
                 // dan kan de data naar de spelhandeler sturen.
-               return this.spelHandler.SpelHandlen(naam, dimension, socket);
+               returnMessage = this.spelHandler.SpelHandlen(naam, dimension, socket);
             }
 
             return returnMessage;

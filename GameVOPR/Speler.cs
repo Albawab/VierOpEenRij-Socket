@@ -63,7 +63,7 @@ namespace HenE.VierOPEenRij
         /// Zet een teken die de speler het gaat gebruiken.
         /// </summary>
         /// <param name="teken">De teken.</param>
-        public void GeeftTeken(Teken teken)
+        public void ZetTeken(Teken teken)
         {
             this.GebruikTeken = teken;
         }

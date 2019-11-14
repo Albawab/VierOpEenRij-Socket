@@ -22,3 +22,6 @@ C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\HenE.GameVOPR.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\HenE.GameVOPR.pdb
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\GameVOPR.csprojAssemblyReference.cache
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\bin\Debug\netstandard2.0\Communicator.dll
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\bin\Debug\netstandard2.0\Communicator.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij\GameVOPR\obj\Debug\netstandard2.0\GameVOPR.csproj.CopyComplete

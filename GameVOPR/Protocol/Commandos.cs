@@ -27,5 +27,15 @@ namespace HenE.VierOPEenRij.Protocol
         /// Als de speler wil tegen de computer spelen.
         /// </summary>
         SpeelTegenComputer,
+
+        /// <summary>
+        /// Als het spelen mag starten.
+        /// </summary>
+        Starten,
+
+        /// <summary>
+        /// Doe de teken.
+        /// </summary>
+        ZetTeken,
     }
 }

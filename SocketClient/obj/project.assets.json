@@ -29,19 +29,22 @@
       "StyleCop.Analyzers/1.1.118": {
         "type": "package"
       },
-      "ConnectionHelper/1.0.0": {
+      "Communicator/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "compile": {
-          "bin/placeholder/ConnectionHelper.dll": {}
+          "bin/placeholder/Communicator.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ConnectionHelper.dll": {}
+          "bin/placeholder/Communicator.dll": {}
         }
       },
       "HenE.GameVOPR/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Communicator": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/HenE.GameVOPR.dll": {}
         },
@@ -220,10 +223,10 @@
         "tools/uninstall.ps1"
       ]
     },
-    "ConnectionHelper/1.0.0": {
+    "Communicator/1.0.0": {
       "type": "project",
-      "path": "../ConnectionHelper/ConnectionHelper.csproj",
-      "msbuildProject": "../ConnectionHelper/ConnectionHelper.csproj"
+      "path": "../Communicator/Communicator.csproj",
+      "msbuildProject": "../Communicator/Communicator.csproj"
     },
     "HenE.GameVOPR/1.0.0": {
       "type": "project",
@@ -233,7 +236,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "ConnectionHelper >= 1.0.0",
+      "Communicator >= 1.0.0",
       "HenE.GameVOPR >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "StyleCop.Analyzers >= 1.1.118"
@@ -269,8 +272,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj": {
-              "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj"
+            "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj": {
+              "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj"
             },
             "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\GameVOPR\\GameVOPR.csproj": {
               "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\GameVOPR\\GameVOPR.csproj"

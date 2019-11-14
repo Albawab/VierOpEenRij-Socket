@@ -20,6 +20,16 @@ namespace HenE.Server
             Console.Title = "Server";
             server.SetupServer();
             Console.ReadKey();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

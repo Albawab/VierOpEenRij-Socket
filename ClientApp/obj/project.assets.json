@@ -5,19 +5,22 @@
       "StyleCop.Analyzers/1.1.118": {
         "type": "package"
       },
-      "ConnectionHelper/1.0.0": {
+      "Communicator/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "compile": {
-          "bin/placeholder/ConnectionHelper.dll": {}
+          "bin/placeholder/Communicator.dll": {}
         },
         "runtime": {
-          "bin/placeholder/ConnectionHelper.dll": {}
+          "bin/placeholder/Communicator.dll": {}
         }
       },
       "HenE.GameVOPR/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "Communicator": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/HenE.GameVOPR.dll": {}
         },
@@ -29,7 +32,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "ConnectionHelper": "1.0.0",
+          "Communicator": "1.0.0",
           "HenE.GameVOPR": "1.0.0"
         },
         "compile": {
@@ -67,10 +70,10 @@
         "tools/uninstall.ps1"
       ]
     },
-    "ConnectionHelper/1.0.0": {
+    "Communicator/1.0.0": {
       "type": "project",
-      "path": "../ConnectionHelper/ConnectionHelper.csproj",
-      "msbuildProject": "../ConnectionHelper/ConnectionHelper.csproj"
+      "path": "../Communicator/Communicator.csproj",
+      "msbuildProject": "../Communicator/Communicator.csproj"
     },
     "HenE.GameVOPR/1.0.0": {
       "type": "project",
@@ -85,7 +88,6 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.0": [
-      "ConnectionHelper >= 1.0.0",
       "HenE.SocketClient >= 1.0.0",
       "StyleCop.Analyzers >= 1.1.118"
     ]
@@ -120,9 +122,6 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj": {
-              "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\ConnectionHelper\\ConnectionHelper.csproj"
-            },
             "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\SocketClient\\SocketClient.csproj": {
               "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\SocketClient\\SocketClient.csproj"
             }

@@ -9,6 +9,7 @@
     ".NETStandard,Version=v2.0/": {
       "HenE.GameVOPR/1.0.0": {
         "dependencies": {
+          "Communicator": "1.0.0",
           "NETStandard.Library": "2.0.3",
           "StyleCop.Analyzers": "1.1.118"
         },
@@ -22,7 +23,12 @@
           "Microsoft.NETCore.Platforms": "1.1.0"
         }
       },
-      "StyleCop.Analyzers/1.1.118": {}
+      "StyleCop.Analyzers/1.1.118": {},
+      "Communicator/1.0.0": {
+        "runtime": {
+          "Communicator.dll": {}
+        }
+      }
     }
   },
   "libraries": {
@@ -51,6 +57,11 @@
       "sha512": "sha512-Onx6ovGSqXSK07n/0eM3ZusiNdB6cIlJdabQhWGgJp3Vooy9AaLS/tigeybOJAobqbtggTamoWndz72JscZBvw==",
       "path": "stylecop.analyzers/1.1.118",
       "hashPath": "stylecop.analyzers.1.1.118.nupkg.sha512"
+    },
+    "Communicator/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

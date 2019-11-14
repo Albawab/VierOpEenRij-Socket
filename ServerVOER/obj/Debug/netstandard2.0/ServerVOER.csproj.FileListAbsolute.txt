@@ -1,8 +1,0 @@
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerVOER\bin\Debug\netstandard2.0\ServerVOER.deps.json
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerVOER\bin\Debug\netstandard2.0\ServerVOER.dll
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerVOER\bin\Debug\netstandard2.0\ServerVOER.pdb
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerVOER\obj\Debug\netstandard2.0\ServerVOER.AssemblyInfoInputs.cache
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerVOER\obj\Debug\netstandard2.0\ServerVOER.AssemblyInfo.cs
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerVOER\obj\Debug\netstandard2.0\ServerVOER.dll
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerVOER\obj\Debug\netstandard2.0\ServerVOER.pdb
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerVOER\obj\Debug\netstandard2.0\ServerVOER.csprojAssemblyReference.cache

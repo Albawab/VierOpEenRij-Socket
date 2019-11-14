@@ -1,4 +1,4 @@
-﻿// <copyright file="EnumHepler.cs" company="PlaceholderCompany">
+﻿// <copyright file="EnumHelperl.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 

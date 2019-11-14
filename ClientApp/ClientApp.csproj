@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConnectionHelper\ConnectionHelper.csproj" />
     <ProjectReference Include="..\SocketClient\SocketClient.csproj" />
   </ItemGroup>
 

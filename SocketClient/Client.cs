@@ -23,7 +23,7 @@ namespace HenE.SocketClient
     {
         private readonly byte[] buffer = new byte[1000];
         private Socket clientSocket = null;
-        int dimension = 0;
+        private int dimension = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
@@ -50,16 +50,13 @@ namespace HenE.SocketClient
                     this.clientSocket.Connect(IPAddress.Loopback, 5000);
                     this.Receive();
                 }
-                catch (SocketException)
+                catch (SocketException e)
                 {
                     // Als de cliént niet met de server kan aansluiten.
                     Console.Clear();
-                    Console.WriteLine("connection attempts :" + attempts.ToString());
+                    Console.WriteLine(e.ToString() + attempts.ToString());
                 }
             }
-
-            // Als de cliënt met de server wordt geconnect.
-            Console.WriteLine("Connected");
         }
 
         /// <summary>
@@ -69,23 +66,45 @@ namespace HenE.SocketClient
         /// <param name="socket">De client.</param>
         public override void ProcessStream(string message, Socket socket)
         {
+            // [0] is altijd de event.
+            // [1] De naam van de speler.
+            // [2] Het berichtje.
             string[] opgeknipt = message.Split(new char[] { '%' });
 
+            // Change this sting to event.
             Events events = EnumHelperl.EnumConvert<Events>(opgeknipt[0]);
 
             switch (events)
             {
                 case Events.Gecreeerd:
-                    Console.WriteLine("Je moet wachte.");
                     if (this.WilTegenComputerSpeln())
                     {
                         this.SpeelTegenComputerCommando();
                     }
                     else
                     {
-                        Console.WriteLine("Je Moet op anderen speler wachten.");
+                        Console.WriteLine("Je Moet op andere speler wachten.");
                     }
 
+                    break;
+
+                case Events.SpelerInvoegde:
+                    Console.WriteLine();
+                    Console.WriteLine("Nu mag je je teken te kiezen.");
+                    string teken = this.VraagOmEigenTekenTeKiezen();
+                    this.ZetTekenCommando(teken);
+                    break;
+
+                case Events.TekenIngezet:
+                    Console.WriteLine();
+                    Console.WriteLine("we kunnen starten.");
+                    this.StartHetSperCommando();
+                    break;
+                case Events.BordGetekend:
+                    Console.WriteLine();
+                    Console.WriteLine($"{opgeknipt[1]}");
+                    Thread.Sleep(1000);
+                    Console.WriteLine($"{opgeknipt[2]}");
                     break;
             }
         }
@@ -110,6 +129,22 @@ namespace HenE.SocketClient
         {
             string message = CommandoHelper.CreeertSpeelTegenComputerCommando(this.dimension);
             this.Send(this.clientSocket, message);
+        }
+
+        /// <summary>
+        /// Stuurt een bericht naar de server er in staat de commando met de teken die de speler heeft gekozen.
+        /// </summary>
+        /// <param name="teken">De teken die de speler heeft gekozen.</param>
+        private void ZetTekenCommando(string teken)
+        {
+            string message = CommandoHelper.CreeertZetTekenCommando(teken);
+            this.Send(this.clientSocket, message);
+        }
+
+        private void StartHetSperCommando()
+        {
+            string msg = CommandoHelper.CreeertStartHetSpelCommando();
+            this.Send(this.clientSocket, msg);
         }
 
         /// <summary>
@@ -147,7 +182,7 @@ namespace HenE.SocketClient
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.Message);
             }
 
             // Wachten op een nieuwe bericht.
@@ -168,7 +203,7 @@ namespace HenE.SocketClient
         /// <summary>
         /// Controleert of het anworrd geldig of ongeldig.
         /// </summary>
-        /// <returns>Is het antoord geldig of niet?</returns>
+        /// <returns>Is het antwoord geldig of niet.</returns>
         private bool ThisCheckAnswer()
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey();
@@ -185,6 +220,24 @@ namespace HenE.SocketClient
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Stelt een vraag aan de speler om een teken te kiezen.
+        /// </summary>
+        /// <returns>Wat de speler heeft van teken gekozen.</returns>
+        private string VraagOmEigenTekenTeKiezen()
+        {
+            Console.WriteLine("Welk teken wil je gebruiken O of X?");
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+            while (keyInfo.Key != ConsoleKey.O && keyInfo.Key != ConsoleKey.X)
+            {
+                Console.WriteLine("Je mag alleen O of X gebruiken.");
+                keyInfo = Console.ReadKey();
+            }
+
+            return keyInfo.Key.ToString();
         }
     }
 }

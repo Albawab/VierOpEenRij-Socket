@@ -6,7 +6,6 @@ namespace HenE.ClientApp
 {
     using System;
     using System.Net.Sockets;
-    using ConnectionHelper;
     using HenE.SocketClient;
 
     /// <summary>
@@ -18,12 +17,7 @@ namespace HenE.ClientApp
         {
             Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             Console.Title = "Client";
-            Client client = new Client(clientSocket);
-            client.Connect();
-
-            string naam = "A";
-            int dimension = 4;
-            client.VerzoekOmStartenSpel(naam, dimension, clientSocket);
+            CleintHelper.Start(clientSocket);
             Console.ReadLine();
             Console.ReadLine();
             Console.ReadLine();

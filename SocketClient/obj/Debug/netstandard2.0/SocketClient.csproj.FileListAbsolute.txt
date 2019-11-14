@@ -6,8 +6,6 @@ C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\obj\Debug\netstandard2.0\Socket
 C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\obj\Debug\netstandard2.0\SocketClient.AssemblyInfo.cs
 C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\obj\Debug\netstandard2.0\HenE.SocketClient.dll
 C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\obj\Debug\netstandard2.0\HenE.SocketClient.pdb
-C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\bin\Debug\netstandard2.0\ConnectionHelper.dll
-C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\bin\Debug\netstandard2.0\ConnectionHelper.pdb
 C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\obj\Debug\netstandard2.0\SocketClient.csproj.CopyComplete
 C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\bin\Debug\netstandard2.0\HenE.GameVOPR.dll
 C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\bin\Debug\netstandard2.0\HenE.GameVOPR.pdb
@@ -24,3 +22,5 @@ C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\SocketClient\obj\Debug\netstanda
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\SocketClient\obj\Debug\netstandard2.0\SocketClient.csproj.CopyComplete
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\SocketClient\obj\Debug\netstandard2.0\HenE.SocketClient.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\SocketClient\obj\Debug\netstandard2.0\HenE.SocketClient.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\bin\Debug\netstandard2.0\Communicator.dll
+C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\bin\Debug\netstandard2.0\Communicator.pdb

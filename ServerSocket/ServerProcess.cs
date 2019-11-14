@@ -11,6 +11,7 @@ namespace HenE.ServerSocket
     using System.Text;
     using HenE.ConnectionHelper;
     using HenE.GameVierOpEenRij;
+    using HenE.VierOPEenRij;
     using HenE.VierOPEenRij.Enum;
     using HenE.VierOPEenRij.Interface;
     using HenE.VierOPEenRij.Protocol;
@@ -70,6 +71,9 @@ namespace HenE.ServerSocket
                 throw new ArgumentNullException("Mag niet een client null zijn.");
             }
 
+            Game game = null;
+
+            // [0] is altijd de commando.
             string[] opgeknipt = message.Split(new char[] { '%' });
 
             // change the string to enum.
@@ -80,13 +84,26 @@ namespace HenE.ServerSocket
                     // this.Send(socket, message);
                    this.Send(socket, this.handler.StreamOntvanger(message, socket));
                    break;
+
+                case Commandos.ZetTeken:
+                   Teken teken = EnumHelperl.EnumConvert<Teken>(opgeknipt[1].ToString());
+                   this.GetGame(socket).TekenenBehandler(socket, teken);
+                   this.Send(socket, Events.TekenIngezet.ToString());
+                   break;
+
+                case Commandos.Starten:
+                   this.GetGame(socket).StartHetSpel();
+                   break;
                 case Commandos.SpeelTegenComputer:
-                    this.handler.StreamOntvanger(message, socket);
+                   this.Send(socket,this.handler.StreamOntvanger(message, socket));
+
                    break;
                 default:
                    break;
             }
         }
+
+
 
         /// <summary>
         /// Read a message form a client.
@@ -133,6 +150,38 @@ namespace HenE.ServerSocket
             // wacht op andere bericht.
             socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
             this.serverSocket.BeginAccept(this.AcceptCallback, null);
+        }
+
+        /// <summary>
+        /// Zoek naar een game via de client.
+        /// </summary>
+        /// <param name="socket">De client van de speler.</param>
+        /// <returns>Het spel waar de speler mee bezig zijn.</returns>
+        private Game GetGame(Socket socket)
+        {
+
+            if (socket == null)
+            {
+                throw new ArgumentNullException("Client mag niet null zijn.");
+            }
+
+            Handler handler = this.handler as Handler;
+            foreach (Game game in handler.GetSpellen())
+            {
+                foreach (Speler speler in game.GetSpelers())
+                {
+                    if (speler.IsHumanSpeler)
+                    {
+                        HumanSpeler humanSpeler = speler as HumanSpeler;
+                        if (humanSpeler.TcpClient == socket)
+                        {
+                            return game;
+                        }
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

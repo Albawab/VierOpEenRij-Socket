@@ -31,5 +31,24 @@ namespace HenE.GameVOPR.Protocol
         {
             return string.Format($"{Commandos.SpeelTegenComputer.ToString()}%Computer%{dimension}");
         }
+
+        /// <summary>
+        /// Maak een tekst met de commandos en de teken die de speler heeft gekozen.
+        /// </summary>
+        /// <param name="teken">De teken die de speler heeft gekozen.</param>
+        /// <returns>De tekst die naar de server wil sturen.</returns>
+        public static string CreeertZetTekenCommando(string teken)
+        {
+            return string.Format($"{Commandos.ZetTeken}%{teken}");
+        }
+
+        /// <summary>
+        /// Maakt een tekst met de commando.
+        /// </summary>
+        /// <returns>De tekst met de start commando.</returns>
+        public static string CreeertStartHetSpelCommando()
+        {
+            return string.Format($"{Commandos.Starten}");
+        }
     }
 }

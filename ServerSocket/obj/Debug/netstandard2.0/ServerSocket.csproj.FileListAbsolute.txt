@@ -6,8 +6,6 @@ C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\obj\Debug\netstandard2.0\Server
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\obj\Debug\netstandard2.0\ServerSocket.AssemblyInfo.cs
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\obj\Debug\netstandard2.0\HenE.ServerSocket.dll
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\obj\Debug\netstandard2.0\HenE.ServerSocket.pdb
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\bin\Debug\netstandard2.0\ConnectionHelper.dll
-C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\bin\Debug\netstandard2.0\ConnectionHelper.pdb
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\obj\Debug\netstandard2.0\ServerSocket.csproj.CopyComplete
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerSocket\bin\Debug\netstandard2.0\HenE.ServerSocket.deps.json
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerSocket\bin\Debug\netstandard2.0\HenE.ServerSocket.dll
@@ -24,3 +22,5 @@ C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerSocket\bin\Debug\netstanda
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerSocket\bin\Debug\netstandard2.0\HenE.GameVOPR.pdb
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\bin\Debug\netstandard2.0\HenE.GameVOPR.dll
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\bin\Debug\netstandard2.0\HenE.GameVOPR.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\bin\Debug\netstandard2.0\Communicator.dll
+C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\bin\Debug\netstandard2.0\Communicator.pdb

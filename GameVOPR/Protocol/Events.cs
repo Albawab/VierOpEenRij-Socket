@@ -15,8 +15,23 @@ namespace HenE.VierOPEenRij.Protocol
         Gecreeerd,
 
         /// <summary>
+        /// Tweede speler heeft ingevoegd.
+        /// </summary>
+        SpelerInvoegde,
+
+        /// <summary>
         /// Het spel is gestart.
         /// </summary>
         Gestart,
+
+        /// <summary>
+        /// Bord geteken.
+        /// </summary>
+        BordGetekend,
+
+        /// <summary>
+        /// Als de teken heeft ingezet.
+        /// </summary>
+        TekenIngezet,
     }
 }
