@@ -95,15 +95,15 @@ namespace HenE.ServerSocket
                    this.GetGame(socket).StartHetSpel();
                    break;
                 case Commandos.SpeelTegenComputer:
-                   this.Send(socket,this.handler.StreamOntvanger(message, socket));
-
+                   this.Send(socket, this.handler.StreamOntvanger(message, socket));
+                   break;
+                case Commandos.DoeZet:
+                   this.GetGame(socket).DoeInzet(opgeknipt[1], socket);
                    break;
                 default:
                    break;
             }
         }
-
-
 
         /// <summary>
         /// Read a message form a client.

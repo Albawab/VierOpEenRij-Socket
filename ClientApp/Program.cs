@@ -18,16 +18,6 @@ namespace HenE.ClientApp
             Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             Console.Title = "Client";
             CleintHelper.Start(clientSocket);
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
         }
     }
 }

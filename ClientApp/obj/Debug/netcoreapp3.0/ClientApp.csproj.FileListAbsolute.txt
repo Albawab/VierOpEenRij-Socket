@@ -20,10 +20,8 @@ C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\ClientApp.runtimeconfig.dev.json
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\ClientApp.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\ClientApp.pdb
-C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\ConnectionHelper.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\HenE.GameVOPR.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\HenE.SocketClient.dll
-C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\ConnectionHelper.pdb
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\HenE.SocketClient.pdb
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\HenE.GameVOPR.pdb
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\obj\Debug\netcoreapp3.0\ClientApp.csprojAssemblyReference.cache
@@ -34,3 +32,5 @@ C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\obj\Debug\netcoreapp3.
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\obj\Debug\netcoreapp3.0\ClientApp.pdb
 C:\Users\Abdul\Desktop\VierOpEenRij\ClientApp\bin\Debug\netcoreapp3.0\Communicator.dll
 C:\Users\Abdul\Desktop\VierOpEenRij\ClientApp\bin\Debug\netcoreapp3.0\Communicator.pdb
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\Communicator.dll
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\Communicator.pdb

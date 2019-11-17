@@ -53,7 +53,7 @@ namespace HenE.ConnectionHelper
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.Message);
             }
         }
     }

@@ -85,11 +85,12 @@ namespace HenE.GameVierOpEenRij
             // eerst check of de dimension geldig of ongeldig is.
             int dimension = this.ConvertToNumber(dim);
 
-            if (dimension < 4 || dimension > 9)
+            // todo check boven 10.
+            if (dimension < 4 || dimension > 10)
             {
                 // de dimension is ongeldig.
                 // stuur een bericht naar de speler terug en vraag hem op een nieuwe dimension.
-                throw new ArgumentOutOfRangeException("De dimension moet tussen 4 en 9.");
+                throw new ArgumentOutOfRangeException("De dimension moet tussen 4 en 10.");
             }
             else
             {

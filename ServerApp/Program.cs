@@ -19,15 +19,6 @@ namespace HenE.Server
             ServerProcess server = new ServerProcess(serverSocket);
             Console.Title = "Server";
             server.SetupServer();
-            Console.ReadKey();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
-            Console.ReadLine();
             Console.ReadLine();
             Console.ReadLine();
         }

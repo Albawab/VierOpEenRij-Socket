@@ -37,5 +37,10 @@ namespace HenE.VierOPEenRij.Protocol
         /// Doe de teken.
         /// </summary>
         ZetTeken,
+
+        /// <summary>
+        /// Commando om de inzet van humenspeler naar het spel te sturen.
+        /// </summary>
+        DoeZet,
     }
 }

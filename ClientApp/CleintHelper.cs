@@ -51,8 +51,10 @@ namespace HenE.ClientApp
                         }
                     }
 
-                    if (!isGeldigValue)
+                    if (!isGeldigValue || naam == string.Empty)
                     {
+                        isGeldigValue = false;
+
                         // De naam is ongeldig.
                         Console.WriteLine("Ongeldig naam.");
                     }
@@ -75,13 +77,17 @@ namespace HenE.ClientApp
                     antwoord = Console.ReadLine();
                     if (int.TryParse(antwoord, out dimension))
                     {
-                        if (dimension < 0)
+/*                        if (dimension < 0)
                         {
                             Console.WriteLine("De cijfer mag niet mider dan nul zijn.");
-                        }
-                        else if (dimension > 10)
+                        }*/
+                        if (dimension > 10)
                         {
                             Console.WriteLine("De cijfer mag niet hoger dan 10 zijn.");
+                        }
+                        else if (dimension < 4)
+                        {
+                            Console.WriteLine("De cijfer mag niet minder dan 4 zijn.");
                         }
                         else
                         {
@@ -96,6 +102,7 @@ namespace HenE.ClientApp
                 while (!isGeldigValue);
 
                 client.VerzoekOmStartenSpel(naam, dimension, clientSocket);
+                client.RequestLoop();
             }
             catch (Exception exp)
             {

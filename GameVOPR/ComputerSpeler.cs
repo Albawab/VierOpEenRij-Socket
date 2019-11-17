@@ -25,7 +25,7 @@ namespace HenE.GameVOPR
         public override bool IsHumanSpeler => false;
 
         /// <inheritdoc/>
-        public override int DoeZet(string vraag, SpeelVlak speelVlak, Game game)
+        public override int DoeZet(string deInzet, SpeelVlak speelVlak, Game game)
         {
             int veldOpKolom = 0;
             for (int kolom = 0; kolom < speelVlak.Dimension; kolom++)

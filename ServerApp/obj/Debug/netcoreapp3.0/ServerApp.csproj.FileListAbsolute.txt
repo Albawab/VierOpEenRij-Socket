@@ -18,10 +18,8 @@ C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\HenE.ServerApp.runtimeconfig.dev.json
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\HenE.ServerApp.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\HenE.ServerApp.pdb
-C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\ConnectionHelper.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\HenE.ServerSocket.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\HenE.ServerSocket.pdb
-C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\ConnectionHelper.pdb
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\obj\Debug\netcoreapp3.0\ServerApp.csprojAssemblyReference.cache
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\obj\Debug\netcoreapp3.0\ServerApp.AssemblyInfoInputs.cache
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\obj\Debug\netcoreapp3.0\ServerApp.AssemblyInfo.cs
@@ -34,3 +32,5 @@ C:\Users\Abdul\Desktop\VierOpEenRij\ServerApp\bin\Debug\netcoreapp3.0\HenE.GameV
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerApp\bin\Debug\netcoreapp3.0\HenE.GameVOPR.pdb
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerApp\bin\Debug\netcoreapp3.0\Communicator.dll
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerApp\bin\Debug\netcoreapp3.0\Communicator.pdb
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\Communicator.dll
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\ServerApp\bin\Debug\netcoreapp3.0\Communicator.pdb

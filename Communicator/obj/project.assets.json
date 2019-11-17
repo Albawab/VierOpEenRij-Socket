@@ -185,11 +185,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj",
+      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj",
       "projectName": "Communicator",
-      "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\Communicator.csproj",
+      "projectPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj",
       "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij\\Communicator\\obj\\",
+      "outputPath": "C:\\Users\\Abdul\\Desktop\\Werk\\VierOpEenRij-Socket\\Communicator\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

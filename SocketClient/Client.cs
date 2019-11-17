@@ -48,14 +48,21 @@ namespace HenE.SocketClient
                     attempts++;
 
                     this.clientSocket.Connect(IPAddress.Loopback, 5000);
-                    this.Receive();
                 }
                 catch (SocketException e)
                 {
                     // Als de cliént niet met de server kan aansluiten.
-                    Console.Clear();
                     Console.WriteLine(e.ToString() + attempts.ToString());
                 }
+            }
+        }
+
+        public void RequestLoop()
+        {
+            this.Receive();
+            while (true)
+            {
+                this.Send(this.clientSocket, "");
             }
         }
 
@@ -106,6 +113,12 @@ namespace HenE.SocketClient
                     Thread.Sleep(1000);
                     Console.WriteLine($"{opgeknipt[2]}");
                     break;
+                case Events.JeRol:
+                    Console.WriteLine();
+                    ColorConsole.WriteLine(ConsoleColor.Green, "Je mag een nummer Kiezen.");
+                    int inzet = this.Doezet();
+                    this.DoeZetCommando(inzet);
+                    break;
             }
         }
 
@@ -147,6 +160,12 @@ namespace HenE.SocketClient
             this.Send(this.clientSocket, msg);
         }
 
+        private void DoeZetCommando(int inzet)
+        {
+            string msg = CommandoHelper.CreeertDoeZetCommando(inzet.ToString());
+            this.Send(this.clientSocket, msg);
+        }
+
         /// <summary>
         /// Ontvangt een bericht.
         /// </summary>
@@ -154,8 +173,8 @@ namespace HenE.SocketClient
         {
             try
             {
-                // Begin receiving the data from the remote device.
-                this.clientSocket.BeginReceive(this.buffer, 0, this.buffer.Length, 0, new AsyncCallback(this.ReceiveCallback), this.clientSocket);
+                        // Begin receiving the data from the remote device.
+                       this.clientSocket.BeginReceive(this.buffer, 0, this.buffer.Length, 0, new AsyncCallback(this.ReceiveCallback), this.clientSocket);
             }
             catch (Exception e)
             {
@@ -189,6 +208,10 @@ namespace HenE.SocketClient
             this.clientSocket.BeginReceive(this.buffer, 0, this.buffer.Length, 0, new AsyncCallback(this.ReceiveCallback), this.clientSocket);
         }
 
+        /// <summary>
+        /// Stelt een vraag aan een speler of hij wil tegen computer spelen.
+        /// </summary>
+        /// <returns>Wil een speler tegen computer spelen of niet.</returns>
         private bool WilTegenComputerSpeln()
         {
             Console.WriteLine("Wil je tegen de computer speler J of N?");
@@ -238,6 +261,44 @@ namespace HenE.SocketClient
             }
 
             return keyInfo.Key.ToString();
+        }
+
+        /// <summary>
+        /// Vraagt een speler om een nummer te kiezen.
+        /// </summary>
+        /// <returns>Het nummer die de speler heeft gekozen.</returns>
+        private int Doezet()
+        {
+            int dimen = 0;
+            string antwoord = string.Empty;
+            bool isGeldigValue = false;
+            do
+            {
+                Thread.Sleep(2000);
+                Console.WriteLine();
+                antwoord = Console.ReadLine();
+                if (int.TryParse(antwoord, out dimen))
+                {
+                    if (dimen > this.dimension)
+                    {
+                        Console.WriteLine($"De cijfer mag niet hoger dan {this.dimension} zijn.");
+                    }
+                    else if (dimen < 0)
+                    {
+                        Console.WriteLine("De cijfer mag niet minder dan 0 zijn.");
+                    }
+                    else
+                    {
+                        isGeldigValue = true;
+                    }
+                }
+                else
+                {
+                    ColorConsole.WriteLine(ConsoleColor.Red, "Ongeldige value!");
+                }
+            }
+            while (!isGeldigValue);
+            return dimen;
         }
     }
 }

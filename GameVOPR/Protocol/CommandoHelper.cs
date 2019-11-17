@@ -50,5 +50,15 @@ namespace HenE.GameVOPR.Protocol
         {
             return string.Format($"{Commandos.Starten}");
         }
+
+        /// <summary>
+        /// Creeert een commando met een "Doe zet" value.
+        /// </summary>
+        /// <param name="inzet">inzet.</param>
+        /// <returns>text die naar het spel gaat met commando en de inzet.</returns>
+        public static string CreeertDoeZetCommando(string inzet)
+        {
+            return string.Format($"{Commandos.DoeZet}%{inzet}");
+        }
     }
 }

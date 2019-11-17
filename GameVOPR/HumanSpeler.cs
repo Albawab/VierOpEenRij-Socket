@@ -27,24 +27,31 @@ namespace HenE.VierOPEenRij
         public override bool IsHumanSpeler => true;
 
         /// <summary>
+        /// Gets inzet van een speler.
+        /// </summary>
+        public int HuidigeInZet { get; private set; }
+
+        /// <summary>
         /// Gets de clients van de spelrs.
         /// </summary>
         public Socket TcpClient { get; private set; }
 
         /// <inheritdoc/>
-        public override int DoeZet(string vraag, SpeelVlak speelVlak, Game game)
+        public override int DoeZet(string inzet, SpeelVlak speelVlak, Game game)
         {
-            Console.WriteLine("Kies een nummer");
-            string antwoord = Console.ReadLine();
-
             // het nummer die de speler heeft gekozen.
-            int.TryParse(antwoord, out int keuzeNummer);
+            int.TryParse(inzet, out int keuzeNummer);
 
-            // we doen een nummer af want de array start van nummer nul.
+            if (keuzeNummer < 0 || keuzeNummer > speelVlak.Dimension)
+            {
+                throw new ArgumentOutOfRangeException("Mag niet de inzet mider dan nul of hoger dan de dimension van het speelvlak");
+            }
+
+            // doet een nummer af want de array start van nummer nul.
+            this.HuidigeInZet = keuzeNummer - 1;
+
             // De speler gaat een nummer tussen een en de dimension kiesen.
-            int zet = keuzeNummer - 1;
-
-            return zet;
+            return this.HuidigeInZet;
         }
     }
 }

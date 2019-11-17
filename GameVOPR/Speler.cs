@@ -5,6 +5,7 @@
 namespace HenE.VierOPEenRij
 {
     using HenE.VierOPEenRij.Enum;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Vraagt de speler om zet te doen.
@@ -53,11 +54,11 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// Vraag de speler om een zet te doen.
         /// </summary>
-        /// <param name="vraag">De inzet.</param>
+        /// <param name="inzet">De inzet.</param>
         /// <param name="speelVlak">Speelvlak van het spel.</param>
         /// <param name="game">Game.</param>
         /// <returns>Het nummer die de speler wil inzetten.</returns>
-        public abstract int DoeZet(string vraag, SpeelVlak speelVlak, Game game);
+        public abstract int DoeZet(string inzet, SpeelVlak speelVlak, Game game);
 
         /// <summary>
         /// Zet een teken die de speler het gaat gebruiken.

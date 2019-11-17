@@ -212,17 +212,39 @@ namespace HenE.VierOPEenRij
             this.HuidigeSpeler = speler;
         }
 
-        /*        /// <summary>
-                /// Stelt een vraag aan de speler om eigen teken te kiezen.
-                /// </summary>
-                /// <param name="gameController">De game controller om de vraag naar de speler te sturn.</param>
-                public void VraagTekenTeZetten(GameController gameController)
+        /// <summary>
+        /// Stuurt het inzet van de inzet die de speler heeft gekozen naar de speler om te handlen.
+        /// </summary>
+        /// <param name="inzet">de inzet.</param>
+        /// <param name="socket">De tcp client van de speler.</param>
+        /// <returns>Het nummer die de speler hem heeft gekozen.</returns>
+        public int DoeInzet(string inzet, Socket socket)
+        {
+            Speler speler = this.GetSpelerViaTcp(socket);
+            return speler.DoeZet(inzet, this.SpeelVlak, this);
+        }
+
+        /// <summary>
+        /// Geeft de speler terug via zijn tcp client.
+        /// </summary>
+        /// <param name="socket">De tcp client van de pseler.</param>
+        /// <returns>een speler.</returns>
+        private Speler GetSpelerViaTcp(Socket socket)
+        {
+            foreach (Speler speler in this.spelers)
+            {
+                if (speler.IsHumanSpeler)
                 {
-                    foreach (Speler speler in this.spelers)
+                    HumanSpeler humanSpeler = speler as HumanSpeler;
+                    if (humanSpeler.TcpClient == socket)
                     {
-                        gameController.SendEenBericht(Protocol.Events.Gestart, null, speler);
+                        return speler;
                     }
-                }*/
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Geeft de speler eigen teken die hij het nodig heeft om te spelen.

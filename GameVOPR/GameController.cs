@@ -7,7 +7,10 @@ namespace HenE.VierOPEenRij
     using System;
     using System.Net.Sockets;
     using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
     using HenE.ConnectionHelper;
+    using HenE.VierOPEenRij.Enum;
     using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
@@ -61,51 +64,71 @@ namespace HenE.VierOPEenRij
                 Speler speler = this.gameVierOpEenRij.HuidigeSpeler;
 
                 // send an message to this player.
-                this.SendEenBericht(Events.BordGetekend,bord, speler);
+                this.SendEenBericht(Events.BordGetekend, bord, speler);
+                this.DoeInzet(speler);
+            }
+            catch
+            {
+            }
+        }
 
-                // Vraag de speler om te zetten.
+        public void DoeInzet(Speler speler)
+        {
+            bool magInzet = false;
+
+            // Vraag de speler om te zetten.
+            do
+            {
+                int inzet;
                 do
                 {
-                    // Tegen speler.
-                    speler = this.gameVierOpEenRij.TegenSpeler(speler);
-                    int inzet;
-                    do
+                    if (speler.IsHumanSpeler)
+                    {
+                        if (magInzet)
+                        {
+                            this.Send();
+                        }
+
+                        magInzet = false;
+                        inzet = this.DoeZetHumanSpeler(speler);
+                    }
+                    else
                     {
                         // stelt een vraag aan de speler.
                         inzet = speler.DoeZet(string.Empty, this.speelVlak, this.gameVierOpEenRij);
                     }
-                    while (!this.speelVlak.MagInzetten(inzet));
-
-                    // als de inzet geldig is dan teken het op het bord.
-                    this.gameVierOpEenRij.TekentOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
-
-                    // Teken het bord met de nieuwe situatie.
-                    bord = this.speelVlak.TekenSpeelvlak();
-
-                    // Stuur de nieuwe teken naar de spelers.
-                    this.SendEenBericht(Events.BordGetekend, bord, speler);
-                    deWinnaar = speler;
+                    magInzet = true;
                 }
-                while (!this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, speler.GebruikTeken)
-                    && !this.speelVlak.IsSpeelvlakVol());
+                while (!this.speelVlak.MagInzetten(inzet));
 
-                if (this.speelVlak.IsSpeelvlakVol())
-                {
-                    Console.WriteLine("Het Speelvlak Is vol");
-                }
-                else
-                {
-                    Console.WriteLine($"{deWinnaar.Naam} is de winnaar.");
-                }
+                // als de inzet geldig is dan teken het op het bord.
+                this.gameVierOpEenRij.TekentOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
 
-                if (this.gameVierOpEenRij.VraagNieuwRonde())
-                {
-                    this.NieuwRonde();
-                }
+                // Teken het bord met de nieuwe situatie.
+                bord = this.speelVlak.TekenSpeelvlak();
+
+                // Stuur de nieuwe teken naar de spelers.
+                this.SendEenBericht(Events.BordGetekend, bord, speler);
+
+                // Tegen speler.
+                speler = this.gameVierOpEenRij.TegenSpeler(speler);
+                deWinnaar = speler;
             }
-            catch (Exception ex)
+            while (!this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, speler.GebruikTeken)
+                && !this.speelVlak.IsSpeelvlakVol());
+
+            if (this.speelVlak.IsSpeelvlakVol())
             {
-                throw new Exception(ex.Message);
+                Console.WriteLine("Het Speelvlak Is vol");
+            }
+            else
+            {
+                Console.WriteLine($"{deWinnaar.Naam} is de winnaar.");
+            }
+
+            if (this.gameVierOpEenRij.VraagNieuwRonde())
+            {
+                this.NieuwRonde();
             }
         }
 
@@ -152,6 +175,23 @@ namespace HenE.VierOPEenRij
                     this.SendEenBericht(Events.BordGetekend, string.Empty, huidigeSpeler);
                 }
             }
+        }
+
+        private int DoeZetHumanSpeler(Speler speler)
+        {
+            HumanSpeler humanSpeler = speler as HumanSpeler;
+            this.SendEenBericht(Events.JeRol, string.Empty, speler);
+            while (this.gameVierOpEenRij.Status == Status.WachtOpReactie)
+            {
+                Thread.Sleep(10000);
+            }
+
+            return 0;
+        }
+
+        private void VeandertHetSpelSituatie(Status status)
+        {
+            this.gameVierOpEenRij.ZetSitauatie(status);
         }
     }
 }

@@ -32,5 +32,15 @@ namespace HenE.VierOPEenRij.Enum
         /// Als de speler is gestopt.
         /// </summary>
         Gestopt,
+
+        /// <summary>
+        /// Wachten op een een reactie.
+        /// </summary>
+        WachtOpReactie,
+
+        /// <summary>
+        /// bezig bij het spel.
+        /// </summary>
+        InHetSpel,
     }
 }

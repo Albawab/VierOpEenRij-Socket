@@ -33,5 +33,10 @@ namespace HenE.VierOPEenRij.Protocol
         /// Als de teken heeft ingezet.
         /// </summary>
         TekenIngezet,
+
+        /// <summary>
+        /// De speler is in de buurt.
+        /// </summary>
+        JeRol,
     }
 }
