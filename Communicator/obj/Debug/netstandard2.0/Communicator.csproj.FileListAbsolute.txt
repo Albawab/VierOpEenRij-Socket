@@ -13,3 +13,11 @@ C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\Communicator\obj\Debug\netstanda
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.AssemblyInfo.cs
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\bin\Debug\netstandard2.0\Communicator.deps.json
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\bin\Debug\netstandard2.0\Communicator.dll
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\bin\Debug\netstandard2.0\Communicator.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.csprojAssemblyReference.cache
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.AssemblyInfoInputs.cache
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.AssemblyInfo.cs
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.dll
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.pdb

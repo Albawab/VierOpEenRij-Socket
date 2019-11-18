@@ -23,7 +23,7 @@ namespace HenE.ServerSocket
     /// </summary>
     public class ServerProcess : Communicate
     {
-        private readonly byte[] buffer = new byte[1000];
+        private readonly byte[] buffer = new byte[10000];
         private Socket serverSocket = null;
         private List<Socket> clienten = new List<Socket>();
         private ICanHandelen handler = new Handler();
@@ -82,26 +82,39 @@ namespace HenE.ServerSocket
             {
                 case Commandos.VerzoekTotDeelnemenSpel:
                     // this.Send(socket, message);
-                   this.Send(socket, this.handler.StreamOntvanger(message, socket));
-                   break;
+                    this.Send(socket, this.handler.StreamOntvanger(message, socket));
+                    break;
 
                 case Commandos.ZetTeken:
-                   Teken teken = EnumHelperl.EnumConvert<Teken>(opgeknipt[1].ToString());
-                   this.GetGame(socket).TekenenBehandler(socket, teken);
-                   this.Send(socket, Events.TekenIngezet.ToString());
-                   break;
+                    Teken teken = EnumHelperl.EnumConvert<Teken>(opgeknipt[1].ToString());
+                    this.GetGame(socket).TekenenBehandler(socket, teken);
+                    this.Send(socket, Events.TekenIngezet.ToString());
+                    break;
 
                 case Commandos.Starten:
-                   this.GetGame(socket).StartHetSpel();
-                   break;
+                    this.GetGame(socket).StartHetSpel();
+                    break;
                 case Commandos.SpeelTegenComputer:
-                   this.Send(socket, this.handler.StreamOntvanger(message, socket));
-                   break;
+                    this.Send(socket, this.handler.StreamOntvanger(message, socket));
+                    break;
                 case Commandos.DoeZet:
-                   this.GetGame(socket).DoeInzet(opgeknipt[1], socket);
-                   break;
+                    game = this.GetGame(socket);
+                    game.DoeInzet(opgeknipt[1], socket);
+                    Speler speler = game.GetSpelerViaTcp(socket);
+                    game.GameController.DoeInzet(speler);
+                    break;
                 default:
-                   break;
+                    break;
+
+                case Commandos.NieuwRonde:
+                    game = this.GetGame(socket);
+                    game.GameController.NieuwRonde();
+                    break;
+                case Commandos.WilNietNieuweRonde:
+                    game = this.GetGame(socket);
+                    game.VerWijdertEenSpeler(socket);
+                    game.ZetSitauatie(Status.Wachten);
+                    break;
             }
         }
 
@@ -111,27 +124,39 @@ namespace HenE.ServerSocket
         /// <param name="ar">result.</param>
         public void ReadCallback(IAsyncResult ar)
         {
-            string content = string.Empty;
-
             // Get the client.
             Socket socket = (Socket)ar.AsyncState;
-
-            // Read data from the client socket.
-            int bytesRead = socket.EndReceive(ar);
-
-            // start read.
-            if (bytesRead > 0)
+            string content = string.Empty;
+            try
             {
-                content = Encoding.ASCII.GetString(this.buffer, 0, bytesRead);
-                if (content.IndexOf(content) > -1)
-                {
-                    // All the data has been read from the
-                    // client.
-                    this.ProcessStream(content, socket);
-                }
+                // Read data from the client socket.
+                int bytesRead = socket.EndReceive(ar);
 
-                // Not all data received. Get more.
-                socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
+                // start read.
+                if (bytesRead > 0)
+                {
+                    content = Encoding.ASCII.GetString(this.buffer, 0, bytesRead);
+                    if (content.IndexOf(content) > -1)
+                    {
+                        // All the data has been read from the
+                        // client.
+                        this.ProcessStream(content, socket);
+                    }
+
+                    // Not all data received. Get more.
+                    socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
+                }
+            }
+            catch (Exception)
+            {
+                // Get the play.
+                Game game = this.GetGame(socket);
+
+                // Stuur een bericht naar de tegen speler.
+                this.SendBerichtNaarDeTegenSpeler(game, socket);
+
+                // verwijdert deze cliënt.
+                this.clienten.Remove(socket);
             }
         }
 
@@ -143,13 +168,20 @@ namespace HenE.ServerSocket
         {
             Socket socket = this.serverSocket.EndAccept(aR);
 
-            // Voeg de nieuwe client in.
-            this.clienten.Add(socket);
-            Console.WriteLine("Client connected.");
+            try
+            {
+                // Voeg de nieuwe client in.
+                this.clienten.Add(socket);
+                Console.WriteLine("Client connected.");
 
-            // wacht op andere bericht.
-            socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
-            this.serverSocket.BeginAccept(this.AcceptCallback, null);
+                // wacht op andere bericht.
+                socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
+                this.serverSocket.BeginAccept(this.AcceptCallback, null);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("No");
+            }
         }
 
         /// <summary>
@@ -159,7 +191,6 @@ namespace HenE.ServerSocket
         /// <returns>Het spel waar de speler mee bezig zijn.</returns>
         private Game GetGame(Socket socket)
         {
-
             if (socket == null)
             {
                 throw new ArgumentNullException("Client mag niet null zijn.");
@@ -182,6 +213,20 @@ namespace HenE.ServerSocket
             }
 
             return null;
+        }
+
+        private void SendBerichtNaarDeTegenSpeler(Game game, Socket socket)
+        {
+            if (game != null)
+            {
+                Speler speler = game.GetSpelerViaTcp(socket);
+                Speler tegenSpeler = game.TegenSpeler(speler);
+                if (tegenSpeler.IsHumanSpeler)
+                {
+                    HumanSpeler humanSpeler = tegenSpeler as HumanSpeler;
+                    this.Send(humanSpeler.TcpClient, Events.TegenSpelerVerlaten.ToString());
+                }
+            }
         }
     }
 }

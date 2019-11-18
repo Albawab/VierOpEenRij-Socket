@@ -60,5 +60,23 @@ namespace HenE.GameVOPR.Protocol
         {
             return string.Format($"{Commandos.DoeZet}%{inzet}");
         }
+
+        /// <summary>
+        /// Maak een berichtje dat de speler wil een nieuwe rondje doen.
+        /// </summary>
+        /// <returns>Het berichtje.</returns>
+        public static string CreeertWilNieuweRondje()
+        {
+            return string.Format($"{Commandos.NieuwRonde}");
+        }
+
+        /// <summary>
+        /// Maakt een nieuw bericht dat de speler geen nieuwe rondje wil doen.
+        /// </summary>
+        /// <returns>Het beichtje.</returns>
+        public static string CreeertWilNietRonde()
+        {
+            return string.Format($"{Commandos.WilNietNieuweRonde}");
+        }
     }
 }

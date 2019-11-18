@@ -46,7 +46,7 @@ namespace HenE.ConnectionHelper
                 Socket handler = (Socket)ar.AsyncState;
 
                 // Complete sending the data to the remote device.
-               handler.EndSend(ar);
+                handler.EndSend(ar);
 
                 /*                handler.Shutdown(SocketShutdown.Both);
                                 handler.Close();*/

@@ -28,6 +28,11 @@ namespace HenE.VierOPEenRij
         }
 
         /// <summary>
+        /// Gets the game controller.
+        /// </summary>
+        public GameController GameController { get; private set; }
+
+        /// <summary>
         /// Gets hudige speler.
         /// </summary>
         public Speler HuidigeSpeler { get; private set; }
@@ -51,8 +56,11 @@ namespace HenE.VierOPEenRij
         /// Initialiseert Het Spel.
         /// change the status of the speler.
         /// </summary>
-        public void InitialiseerHetSpel()
+        /// <param name="gameController">De controller van het spel.</param>
+        public void InitialiseerHetSpel(GameController gameController)
         {
+            this.GameController = gameController;
+
             // geeft het spel een gestart situatie.
             this.Status = Status.Gestart;
 
@@ -135,7 +143,7 @@ namespace HenE.VierOPEenRij
         /// <param name="inzet">De keuze van de speler.</param>
         /// <param name="speelVlak">Het speelvalk.</param>
         /// <param name="teken">Het teken van de speler.</param>
-        public void TekentOpSpeelvlak(int inzet, SpeelVlak speelVlak, Teken teken)
+        public void ZetTekenOpSpeelvlak(int inzet, SpeelVlak speelVlak, Teken teken)
         {
             if (teken == Teken.Undefined)
             {
@@ -182,28 +190,6 @@ namespace HenE.VierOPEenRij
         }
 
         /// <summary>
-        /// Vraagt de speler of hij wil een nieuwe ronde doen of niet.
-        /// Als hij wil een nieuw rondje doen  dan geeft dat terug.
-        /// </summary>
-        /// <returns>Wil de speler mee doen of niet.</returns>
-        public bool VraagNieuwRonde()
-        {
-            foreach (Speler speler in this.spelers)
-            {
-                if (speler.IsHumanSpeler)
-                {
-/*                    // Doe contact met de human speler als interface.
-                    if (humanSpeler.NieuwRonde("Wil je een nieuw Rondje doen?"))
-                    {
-                        return true;
-                    }*/
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// zet de huidige speler.
         /// </summary>
         /// <param name="speler">De speler die zal starten.</param>
@@ -225,11 +211,35 @@ namespace HenE.VierOPEenRij
         }
 
         /// <summary>
+        /// Krijgt de inzet van een speler.
+        /// </summary>
+        /// <param name="speler">Een speler.</param>
+        /// <returns>De inzet van deze speler.</returns>
+        public int GetInzet(Speler speler)
+        {
+            if (speler == null)
+            {
+                throw new ArgumentNullException("Mag niet de speler null zijn.");
+            }
+
+            if (speler.IsHumanSpeler)
+            {
+                HumanSpeler humanSpeler = speler as HumanSpeler;
+
+                return humanSpeler.HuidigeInZet;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
         /// Geeft de speler terug via zijn tcp client.
         /// </summary>
         /// <param name="socket">De tcp client van de pseler.</param>
         /// <returns>een speler.</returns>
-        private Speler GetSpelerViaTcp(Socket socket)
+        public Speler GetSpelerViaTcp(Socket socket)
         {
             foreach (Speler speler in this.spelers)
             {
@@ -244,6 +254,24 @@ namespace HenE.VierOPEenRij
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Controleert of de huidige speler al de zelfde naam heeft of niet.
+        /// </summary>
+        /// <param name="naam">De naam van de nieuwe speler.</param>
+        /// <returns>bestaat deze naam al of niet.</returns>
+        public bool BestaalDezeNaam(string naam)
+        {
+            foreach (Speler speler in this.spelers)
+            {
+                if (speler.Naam == naam)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -282,6 +310,16 @@ namespace HenE.VierOPEenRij
             // geef de andere teken aan de de andere speler.
             this.ZetEenTekenVoorAnderSpeler(deSpeler, teken);
             return deSpeler.Naam;
+        }
+
+        /// <summary>
+        /// Verwijdert Een speler van het spel.
+        /// </summary>
+        /// <param name="socket">De tcp client van het spel.</param>
+        public void VerWijdertEenSpeler(Socket socket)
+        {
+            Speler speler = this.GetSpelerViaTcp(socket);
+            this.spelers.Remove(speler);
         }
 
         /// <summary>

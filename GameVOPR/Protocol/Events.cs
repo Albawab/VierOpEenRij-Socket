@@ -12,7 +12,7 @@ namespace HenE.VierOPEenRij.Protocol
         /// <summary>
         /// Het spel wordt gecoreéerd.
         /// </summary>
-        Gecreeerd,
+        GecreeerdSpel,
 
         /// <summary>
         /// Tweede speler heeft ingevoegd.
@@ -38,5 +38,30 @@ namespace HenE.VierOPEenRij.Protocol
         /// De speler is in de buurt.
         /// </summary>
         JeRol,
+
+        /// <summary>
+        /// Als de speler mag niet deze nummer gpruiken.
+        /// </summary>
+        OngeldigInzet,
+
+        /// <summary>
+        /// Als de speler moet wachten.
+        /// </summary>
+        Wachten,
+
+        /// <summary>
+        /// Het bord vol geworden.
+        /// </summary>
+        HetBordVolGeworden,
+
+        /// <summary>
+        /// Een speler heeft gewonnen.
+        /// </summary>
+        HeeftGewonnen,
+
+        /// <summary>
+        /// De tegen speler heeft het spel verlaten.
+        /// </summary>
+        TegenSpelerVerlaten,
     }
 }

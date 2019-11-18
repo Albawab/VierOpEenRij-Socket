@@ -85,7 +85,7 @@ namespace HenE.GameVierOpEenRij
             // eerst check of de dimension geldig of ongeldig is.
             int dimension = this.ConvertToNumber(dim);
 
-            // todo check boven 10.
+            // Het nummer mag aleen teussen 4 en 10.
             if (dimension < 4 || dimension > 10)
             {
                 // de dimension is ongeldig.
@@ -95,7 +95,7 @@ namespace HenE.GameVierOpEenRij
             else
             {
                 // dan kan de data naar de spelhandeler sturen.
-               returnMessage = this.spelHandler.SpelHandlen(naam, dimension, socket);
+                returnMessage = this.spelHandler.SpelHandlen(naam, dimension, socket);
             }
 
             return returnMessage;

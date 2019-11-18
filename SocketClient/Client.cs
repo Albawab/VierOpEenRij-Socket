@@ -8,7 +8,6 @@ namespace HenE.SocketClient
     using System.Net;
     using System.Net.Sockets;
     using System.Text;
-    using System.Threading;
     using HenE.ConnectionHelper;
     using HenE.GameVOPR.Protocol;
     using HenE.VierOPEenRij.Enum;
@@ -21,7 +20,7 @@ namespace HenE.SocketClient
     /// </summary>
     public class Client : Communicate
     {
-        private readonly byte[] buffer = new byte[1000];
+        private readonly byte[] buffer = new byte[10000];
         private Socket clientSocket = null;
         private int dimension = 0;
 
@@ -57,12 +56,15 @@ namespace HenE.SocketClient
             }
         }
 
+        /// <summary>
+        /// Laat de kleint door gaan. Mag hiet niet sluiten.
+        /// </summary>
         public void RequestLoop()
         {
             this.Receive();
             while (true)
             {
-                this.Send(this.clientSocket, "");
+                this.Send(this.clientSocket, string.Empty);
             }
         }
 
@@ -76,6 +78,7 @@ namespace HenE.SocketClient
             // [0] is altijd de event.
             // [1] De naam van de speler.
             // [2] Het berichtje.
+            // [3] De naam van de tegen speler.
             string[] opgeknipt = message.Split(new char[] { '%' });
 
             // Change this sting to event.
@@ -83,14 +86,15 @@ namespace HenE.SocketClient
 
             switch (events)
             {
-                case Events.Gecreeerd:
+                case Events.GecreeerdSpel:
                     if (this.WilTegenComputerSpeln())
                     {
                         this.SpeelTegenComputerCommando();
                     }
                     else
                     {
-                        Console.WriteLine("Je Moet op andere speler wachten.");
+                        Console.WriteLine();
+                        Console.WriteLine("Je Moet op een speler wachten.");
                     }
 
                     break;
@@ -109,8 +113,6 @@ namespace HenE.SocketClient
                     break;
                 case Events.BordGetekend:
                     Console.WriteLine();
-                    Console.WriteLine($"{opgeknipt[1]}");
-                    Thread.Sleep(1000);
                     Console.WriteLine($"{opgeknipt[2]}");
                     break;
                 case Events.JeRol:
@@ -118,6 +120,56 @@ namespace HenE.SocketClient
                     ColorConsole.WriteLine(ConsoleColor.Green, "Je mag een nummer Kiezen.");
                     int inzet = this.Doezet();
                     this.DoeZetCommando(inzet);
+                    break;
+                case Events.OngeldigInzet:
+                    Console.WriteLine();
+                    Console.WriteLine("Deze kolom is vol. Je mag een ander nummer gebruiken.");
+                    inzet = this.Doezet();
+                    this.DoeZetCommando(inzet);
+                    break;
+                case Events.Wachten:
+                    Console.WriteLine($"{opgeknipt[3]} is aan het spel je mag nu wachten op hem.");
+                    break;
+                case Events.HeeftGewonnen:
+                case Events.HetBordVolGeworden:
+                    if (events == Events.HeeftGewonnen)
+                    {
+                        Console.WriteLine($"{opgeknipt[3]} heeft gewonne.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Het spelvlak is vol.");
+                    }
+
+                    if (this.WilNieuweRonde())
+                    {
+                        // Wil Nieuwe rondje.
+                        this.WilNieuweRondjeCommando();
+                    }
+                    else
+                    {
+                        // Niet.
+                        this.WilNietNieuweRondjeCommando();
+                        Environment.Exit(0);
+                    }
+
+                    break;
+
+                case Events.TegenSpelerVerlaten:
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine("De andere speler heeft het spel verlaten.");
+                    if (this.WilNieuweRonde())
+                    {
+                        // Wil Nieuwe rondje.
+                        this.WilNieuweRondjeCommando();
+                    }
+                    else
+                    {
+                        // Niet.
+                        this.WilNietNieuweRondjeCommando();
+                    }
+
                     break;
             }
         }
@@ -154,15 +206,44 @@ namespace HenE.SocketClient
             this.Send(this.clientSocket, message);
         }
 
+        /// <summary>
+        /// Maak een bericht dat de speler gaat starten.
+        /// stuurt een bericht naar de server dat de speler gaat starten.
+        /// </summary>
         private void StartHetSperCommando()
         {
             string msg = CommandoHelper.CreeertStartHetSpelCommando();
             this.Send(this.clientSocket, msg);
         }
 
+        /// <summary>
+        /// Maak een bericht dat de speler een inzet deed.
+        /// Stuur het berichtje naar de server.
+        /// </summary>
+        /// <param name="inzet">De inzet.</param>
         private void DoeZetCommando(int inzet)
         {
             string msg = CommandoHelper.CreeertDoeZetCommando(inzet.ToString());
+            this.Send(this.clientSocket, msg);
+        }
+
+        /// <summary>
+        /// Maakt een bericht dat de speler een nieuw rondje wil doen.
+        /// Stuurt het berichtje naar de server.
+        /// </summary>
+        private void WilNieuweRondjeCommando()
+        {
+            string msg = CommandoHelper.CreeertWilNieuweRondje();
+            this.Send(this.clientSocket, msg);
+        }
+
+        /// <summary>
+        /// Maakt een nieuwe berichtje dat de speler wil niet mee doen.
+        /// Stuurt het berichtje naar de server.
+        /// </summary>
+        private void WilNietNieuweRondjeCommando()
+        {
+            string msg = CommandoHelper.CreeertWilNietRonde();
             this.Send(this.clientSocket, msg);
         }
 
@@ -173,8 +254,8 @@ namespace HenE.SocketClient
         {
             try
             {
-                        // Begin receiving the data from the remote device.
-                       this.clientSocket.BeginReceive(this.buffer, 0, this.buffer.Length, 0, new AsyncCallback(this.ReceiveCallback), this.clientSocket);
+                // Begin receiving the data from the remote device.
+                this.clientSocket.BeginReceive(this.buffer, 0, this.buffer.Length, 0, new AsyncCallback(this.ReceiveCallback), this.clientSocket);
             }
             catch (Exception e)
             {
@@ -274,7 +355,6 @@ namespace HenE.SocketClient
             bool isGeldigValue = false;
             do
             {
-                Thread.Sleep(2000);
                 Console.WriteLine();
                 antwoord = Console.ReadLine();
                 if (int.TryParse(antwoord, out dimen))
@@ -283,9 +363,9 @@ namespace HenE.SocketClient
                     {
                         Console.WriteLine($"De cijfer mag niet hoger dan {this.dimension} zijn.");
                     }
-                    else if (dimen < 0)
+                    else if (dimen < 1)
                     {
-                        Console.WriteLine("De cijfer mag niet minder dan 0 zijn.");
+                        Console.WriteLine("De cijfer mag niet minder dan 1 zijn.");
                     }
                     else
                     {
@@ -299,6 +379,17 @@ namespace HenE.SocketClient
             }
             while (!isGeldigValue);
             return dimen;
+        }
+
+        /// <summary>
+        /// Vraagt de speler of hij wil een nieuw rondje wil doen.
+        /// </summary>
+        /// <returns>Wil de speler een nieuwe rondje doen of niet.</returns>
+        private bool WilNieuweRonde()
+        {
+            Console.WriteLine();
+            ColorConsole.WriteLine(ConsoleColor.Yellow, "Wil je een nieuwe ronde doen J of N?");
+            return this.ThisCheckAnswer();
         }
     }
 }

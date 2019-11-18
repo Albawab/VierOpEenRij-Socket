@@ -24,3 +24,16 @@ C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\bin\Debug\netstandard2.0\Commun
 C:\Users\Abdul\Desktop\VierOpEenRij\SocketClient\bin\Debug\netstandard2.0\Communicator.pdb
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\Communicator.dll
 C:\Users\Abdul\Desktop\Werk\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\Communicator.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\HenE.SocketClient.deps.json
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\HenE.SocketClient.dll
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\HenE.SocketClient.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\Communicator.dll
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\HenE.GameVOPR.dll
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\Communicator.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\HenE.GameVOPR.pdb
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\obj\Debug\netstandard2.0\SocketClient.csprojAssemblyReference.cache
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\obj\Debug\netstandard2.0\SocketClient.AssemblyInfoInputs.cache
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\obj\Debug\netstandard2.0\SocketClient.AssemblyInfo.cs
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\obj\Debug\netstandard2.0\SocketClient.csproj.CopyComplete
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\obj\Debug\netstandard2.0\HenE.SocketClient.dll
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\obj\Debug\netstandard2.0\HenE.SocketClient.pdb

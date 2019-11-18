@@ -77,10 +77,10 @@ namespace HenE.ClientApp
                     antwoord = Console.ReadLine();
                     if (int.TryParse(antwoord, out dimension))
                     {
-/*                        if (dimension < 0)
-                        {
-                            Console.WriteLine("De cijfer mag niet mider dan nul zijn.");
-                        }*/
+                        /*                        if (dimension < 0)
+                                                {
+                                                    Console.WriteLine("De cijfer mag niet mider dan nul zijn.");
+                                                }*/
                         if (dimension > 10)
                         {
                             Console.WriteLine("De cijfer mag niet hoger dan 10 zijn.");

@@ -42,5 +42,15 @@ namespace HenE.VierOPEenRij.Protocol
         /// Commando om de inzet van humenspeler naar het spel te sturen.
         /// </summary>
         DoeZet,
+
+        /// <summary>
+        /// De speler wil een nieuw ronde doen.
+        /// </summary>
+        NieuwRonde,
+
+        /// <summary>
+        /// De speler wil niet een nieuwe rondje doen.
+        /// </summary>
+        WilNietNieuweRonde,
     }
 }

@@ -4,8 +4,8 @@
 
 namespace HenE.VierOPEenRij
 {
-    using HenE.VierOPEenRij.Enum;
     using System.Threading.Tasks;
+    using HenE.VierOPEenRij.Enum;
 
     /// <summary>
     /// Vraagt de speler om zet te doen.

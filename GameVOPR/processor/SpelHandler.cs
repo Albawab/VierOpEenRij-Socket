@@ -68,6 +68,7 @@ namespace HenE.ServerSocket
                     // als de speler wil tegen andre speler spelen, dan gaat hier naar ander spel zoeken.
                     // Zoek naar een spel die de zelfde dimension heeft.
                     game = this.GetGameByDimensionAndStatus(dimension);
+                    .Er zijn geen human speler op wachten. Wil je tegen combuter speler ?
                 }
 
                 // Is er een game of niet.
@@ -88,20 +89,29 @@ namespace HenE.ServerSocket
                     speler.ChangeStatus(Status.Wachten);
 
                     // geeft de event terug sturen.
-                    return Events.Gecreeerd.ToString();
+                    return Events.GecreeerdSpel.ToString();
                 }
                 else
                 {
                     // kan het spel starten.
                     // als de speler is computer dus voeg een computer speler toe.
                     // anders voeg een human speler toe.
-                    if (naam != "Computer")
+                    if (naam == "Computer")
                     {
-                        game.AddHumanSpeler(naam, socket);
+                        game.AddComputerSpeler(naam);
                     }
                     else
                     {
-                        game.AddComputerSpeler(naam);
+                        // Controleert of tegen speler heeft de zelfde naam.
+                        // als ja, Dan komt een nummer achter de naam van de nieuwe speler.
+                        string nieuweNaam = naam;
+
+                        if (game.BestaalDezeNaam(naam))
+                        {
+                            nieuweNaam += "1";
+                        }
+
+                        game.AddHumanSpeler(nieuweNaam, socket);
                     }
 
                     return Events.SpelerInvoegde.ToString();

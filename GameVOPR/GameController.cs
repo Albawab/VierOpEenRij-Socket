@@ -8,9 +8,7 @@ namespace HenE.VierOPEenRij
     using System.Net.Sockets;
     using System.Text;
     using System.Threading;
-    using System.Threading.Tasks;
     using HenE.ConnectionHelper;
-    using HenE.VierOPEenRij.Enum;
     using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
@@ -20,6 +18,7 @@ namespace HenE.VierOPEenRij
     {
         private readonly SpeelVlak speelVlak = null;
         private readonly Game gameVierOpEenRij = null;
+        private bool magControleer = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameController"/> class.
@@ -39,7 +38,7 @@ namespace HenE.VierOPEenRij
         public void GameStart()
         {
             // Doe het spel kaar om te spelen.
-            this.gameVierOpEenRij.InitialiseerHetSpel();
+            this.gameVierOpEenRij.InitialiseerHetSpel(this);
 
             // start een nieuw ronde.
             this.NieuwRonde();
@@ -52,83 +51,101 @@ namespace HenE.VierOPEenRij
         {
             try
             {
-                Speler deWinnaar = null;
-
                 // Reset the Speelvalk.
                 this.speelVlak.ResetSpeelVlak();
-
-                // Teken het bord.
-                string bord = this.speelVlak.TekenSpeelvlak();
 
                 // get the player.
                 Speler speler = this.gameVierOpEenRij.HuidigeSpeler;
 
-                // send an message to this player.
-                this.SendEenBericht(Events.BordGetekend, bord, speler);
+                // Teken het bord.
+                string bord = this.speelVlak.TekenSpeelvlak();
+
+                // send an message  to this player included this bord.
+                this.StuurBrichtNaarSpelers(Events.BordGetekend, bord, speler);
                 this.DoeInzet(speler);
             }
-            catch
+            catch (Exception e)
             {
+                throw new Exception(e.Message);
             }
         }
 
+        /// <summary>
+        /// ask de speler om inzet te doen.
+        /// </summary>
+        /// <param name="speler">De speler die een vraag heeft gekregen. Dus hij moet een inzet doen.</param>
         public void DoeInzet(Speler speler)
         {
-            bool magInzet = false;
+            string bord = string.Empty;
+            Speler hudigeSpeler;
 
             // Vraag de speler om te zetten.
             do
             {
                 int inzet;
-                do
-                {
-                    if (speler.IsHumanSpeler)
-                    {
-                        if (magInzet)
-                        {
-                            this.Send();
-                        }
 
-                        magInzet = false;
-                        inzet = this.DoeZetHumanSpeler(speler);
+                if (speler.IsHumanSpeler)
+                {
+                    if (this.magControleer)
+                    {
+                        // Krijg de inzet van de speler.
+                        inzet = this.gameVierOpEenRij.GetInzet(speler);
+
+                        // Controleer of de inzet mag inzetten of niet.
+                        if (!this.speelVlak.MagInzetten(inzet))
+                        {
+                            // Als het mag niet inzetten dan stuur een bericht naar de speler om nieuwe nummer te kiezen.
+                            this.SendEenBericht(Events.OngeldigInzet, string.Empty, speler);
+                            break;
+                        }
                     }
                     else
                     {
-                        // stelt een vraag aan de speler.
+                        // Stuur een bericht naar de speler dat hij moet inzetten.
+                        this.StuurBrichtNaarSpelers(Events.JeRol, string.Empty, speler);
+
+                        // Doe mag controleer true.
+                        // vanaf nu kan de controller de inzet van de huidige speler controleren
+                        this.magControleer = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    // Nu gaat de applicatie met de computer speler behandelen.
+                    // Als de speler is geen human speler dan krijgt een nummer van de computer.
+                    do
+                    {
                         inzet = speler.DoeZet(string.Empty, this.speelVlak, this.gameVierOpEenRij);
                     }
-                    magInzet = true;
+                    while (!this.speelVlak.MagInzetten(inzet));
                 }
-                while (!this.speelVlak.MagInzetten(inzet));
 
                 // als de inzet geldig is dan teken het op het bord.
-                this.gameVierOpEenRij.TekentOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
+                this.gameVierOpEenRij.ZetTekenOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
 
-                // Teken het bord met de nieuwe situatie.
+                // Teken het bord.
                 bord = this.speelVlak.TekenSpeelvlak();
+                Thread.Sleep(2000);
 
-                // Stuur de nieuwe teken naar de spelers.
-                this.SendEenBericht(Events.BordGetekend, bord, speler);
+                // send an message  to this player included this bord.
+                this.StuurBrichtNaarSpelers(Events.BordGetekend, bord, speler);
+                hudigeSpeler = speler;
 
                 // Tegen speler.
                 speler = this.gameVierOpEenRij.TegenSpeler(speler);
-                deWinnaar = speler;
+                this.magControleer = false;
             }
-            while (!this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, speler.GebruikTeken)
+            while (!this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, hudigeSpeler.GebruikTeken)
                 && !this.speelVlak.IsSpeelvlakVol());
 
             if (this.speelVlak.IsSpeelvlakVol())
             {
-                Console.WriteLine("Het Speelvlak Is vol");
+                this.StuurBrichtNaarSpelers(Events.HetBordVolGeworden, string.Empty, speler);
             }
-            else
+            else if (this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, this.gameVierOpEenRij.TegenSpeler(speler).GebruikTeken))
             {
-                Console.WriteLine($"{deWinnaar.Naam} is de winnaar.");
-            }
-
-            if (this.gameVierOpEenRij.VraagNieuwRonde())
-            {
-                this.NieuwRonde();
+                this.StuurBrichtNaarSpelers(Events.HeeftGewonnen, string.Empty, speler);
             }
         }
 
@@ -151,7 +168,7 @@ namespace HenE.VierOPEenRij
             if (speler.IsHumanSpeler)
             {
                 // verzamel het bericht die naar de speler zal sturen.
-                msg.AppendFormat($"{events.ToString()}%{speler.Naam}%{message}");
+                msg.AppendFormat($"{events.ToString()}%{speler.Naam}%{message}%{this.gameVierOpEenRij.TegenSpeler(speler).Naam}");
 
                 // omdat de bericht gaat aleen naar de human speler sturen dan maak de speler als een human speler.
                 HumanSpeler humanSpeler = speler as HumanSpeler;
@@ -164,34 +181,34 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// stuurt een bericht naar elke speler.
         /// </summary>
+        /// <param name="events">De event.</param>
+        /// <param name="msg">Het berichtje die naar een speler wordt gesturd.</param>
         /// <param name="huidigeSpeler">De huidige speler.</param>
-        private void StuurBrichtNaarSpelers(Speler huidigeSpeler)
+        private void StuurBrichtNaarSpelers(Events events, string msg, Speler huidigeSpeler)
         {
+            // Krijg de lijst van de spelers.
             foreach (Speler speler in this.gameVierOpEenRij.GetSpelers())
             {
+                // Als de speler human is dan stuur een bericht naar hem.
                 if (speler.IsHumanSpeler)
                 {
                     HumanSpeler humanSpeler = speler as HumanSpeler;
-                    this.SendEenBericht(Events.BordGetekend, string.Empty, huidigeSpeler);
+
+                    // stuur berichtje naar de huidige speler
+                    if (speler == huidigeSpeler)
+                    {
+                        this.SendEenBericht(events, msg, huidigeSpeler);
+                    }
+                    else if (events == Events.BordGetekend)
+                    {
+                        this.SendEenBericht(events, msg, speler);
+                    }
+                    else
+                    {
+                        this.SendEenBericht(Events.Wachten, msg, this.gameVierOpEenRij.TegenSpeler(huidigeSpeler));
+                    }
                 }
             }
-        }
-
-        private int DoeZetHumanSpeler(Speler speler)
-        {
-            HumanSpeler humanSpeler = speler as HumanSpeler;
-            this.SendEenBericht(Events.JeRol, string.Empty, speler);
-            while (this.gameVierOpEenRij.Status == Status.WachtOpReactie)
-            {
-                Thread.Sleep(10000);
-            }
-
-            return 0;
-        }
-
-        private void VeandertHetSpelSituatie(Status status)
-        {
-            this.gameVierOpEenRij.ZetSitauatie(status);
         }
     }
 }
