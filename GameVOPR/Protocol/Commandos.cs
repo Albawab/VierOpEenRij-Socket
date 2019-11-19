@@ -24,11 +24,6 @@ namespace HenE.VierOPEenRij.Protocol
         Wachten,
 
         /// <summary>
-        /// Als de speler wil tegen de computer spelen.
-        /// </summary>
-        SpeelTegenComputer,
-
-        /// <summary>
         /// Als het spelen mag starten.
         /// </summary>
         Starten,

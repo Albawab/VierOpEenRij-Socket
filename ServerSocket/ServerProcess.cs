@@ -9,6 +9,7 @@ namespace HenE.ServerSocket
     using System.Net;
     using System.Net.Sockets;
     using System.Text;
+    using System.Threading;
     using HenE.ConnectionHelper;
     using HenE.GameVierOpEenRij;
     using HenE.VierOPEenRij;
@@ -94,9 +95,6 @@ namespace HenE.ServerSocket
                 case Commandos.Starten:
                     this.GetGame(socket).StartHetSpel();
                     break;
-                case Commandos.SpeelTegenComputer:
-                    this.Send(socket, this.handler.StreamOntvanger(message, socket));
-                    break;
                 case Commandos.DoeZet:
                     game = this.GetGame(socket);
                     game.DoeInzet(opgeknipt[1], socket);
@@ -109,11 +107,30 @@ namespace HenE.ServerSocket
                 case Commandos.NieuwRonde:
                     game = this.GetGame(socket);
                     game.GameController.NieuwRonde();
+
                     break;
                 case Commandos.WilNietNieuweRonde:
+                    // neem de game.
                     game = this.GetGame(socket);
-                    game.VerWijdertEenSpeler(socket);
-                    game.ZetSitauatie(Status.Wachten);
+                    if (game.GetSpelers().Count == 1)
+                    {
+                        Handler handler = new Handler();
+                        handler.DeleteGame(game);
+                    }
+                    else
+                    {
+                        // stuur een bericht naar de tegen speler dat deze speler wil niet meer spelen.
+                        this.SendBerichtNaarDeTegenSpeler(game, Events.TegenSpelerVerlaten.ToString(), socket);
+
+                        // verwijder de speler.
+                        game.VerWijdertEenSpeler(socket);
+
+                        // Zet het situatie van het spel op een speler wachten.
+                        game.ZetSitauatie(Status.Wachten);
+                    }
+
+                    socket.Close();
+                    this.clienten.Remove(socket);
                     break;
             }
         }
@@ -151,12 +168,19 @@ namespace HenE.ServerSocket
             {
                 // Get the play.
                 Game game = this.GetGame(socket);
+                if (game != null)
+                {
+                    // Stuur een bericht naar de tegen speler.
+                    // this.SendBerichtNaarDeTegenSpeler(game, Events.TegenSpelerVerlaten.ToString(), socket);
+                    Thread.Sleep(1000);
+                    this.SendBerichtNaarDeTegenSpeler(game, Events.SpelVerwijderd.ToString(), socket);
+                    game.VerWijdertEenSpeler(socket);
+                    Handler handler = new Handler();
+                    handler.DeleteGame(game);
 
-                // Stuur een bericht naar de tegen speler.
-                this.SendBerichtNaarDeTegenSpeler(game, socket);
-
-                // verwijdert deze cliënt.
-                this.clienten.Remove(socket);
+                    // verwijdert deze cliënt.
+                    this.clienten.Remove(socket);
+                }
             }
         }
 
@@ -172,15 +196,14 @@ namespace HenE.ServerSocket
             {
                 // Voeg de nieuwe client in.
                 this.clienten.Add(socket);
-                Console.WriteLine("Client connected.");
 
                 // wacht op andere bericht.
                 socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
                 this.serverSocket.BeginAccept(this.AcceptCallback, null);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("No");
+                throw new Exception(e.Message);
             }
         }
 
@@ -215,16 +238,27 @@ namespace HenE.ServerSocket
             return null;
         }
 
-        private void SendBerichtNaarDeTegenSpeler(Game game, Socket socket)
+        /// <summary>
+        /// Send een berichtje naar de tegen speler.
+        /// </summary>
+        /// <param name="game">Het huidige spel.</param>
+        /// <param name="socket">De tcp client van de huidige speler.</param>
+        private void SendBerichtNaarDeTegenSpeler(Game game, string events, Socket socket)
         {
             if (game != null)
             {
                 Speler speler = game.GetSpelerViaTcp(socket);
-                Speler tegenSpeler = game.TegenSpeler(speler);
-                if (tegenSpeler.IsHumanSpeler)
+                if (speler != null)
                 {
-                    HumanSpeler humanSpeler = tegenSpeler as HumanSpeler;
-                    this.Send(humanSpeler.TcpClient, Events.TegenSpelerVerlaten.ToString());
+                    Speler tegenSpeler = game.TegenSpeler(speler);
+                    if (tegenSpeler != null)
+                    {
+                        if (tegenSpeler.IsHumanSpeler)
+                        {
+                            HumanSpeler humanSpeler = tegenSpeler as HumanSpeler;
+                            this.Send(humanSpeler.TcpClient, events);
+                        }
+                    }
                 }
             }
         }

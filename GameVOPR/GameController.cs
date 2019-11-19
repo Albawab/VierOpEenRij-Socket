@@ -57,11 +57,16 @@ namespace HenE.VierOPEenRij
                 // get the player.
                 Speler speler = this.gameVierOpEenRij.HuidigeSpeler;
 
+                this.StuurBrichtNaarSpelers(Events.Gestart, string.Empty, speler);
+
+                Thread.Sleep(2000);
+
                 // Teken het bord.
                 string bord = this.speelVlak.TekenSpeelvlak();
 
                 // send an message  to this player included this bord.
                 this.StuurBrichtNaarSpelers(Events.BordGetekend, bord, speler);
+                Thread.Sleep(3000);
                 this.DoeInzet(speler);
             }
             catch (Exception e)
@@ -126,7 +131,7 @@ namespace HenE.VierOPEenRij
 
                 // Teken het bord.
                 bord = this.speelVlak.TekenSpeelvlak();
-                Thread.Sleep(2000);
+                Thread.Sleep(1500);
 
                 // send an message  to this player included this bord.
                 this.StuurBrichtNaarSpelers(Events.BordGetekend, bord, speler);
@@ -145,7 +150,7 @@ namespace HenE.VierOPEenRij
             }
             else if (this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, this.gameVierOpEenRij.TegenSpeler(speler).GebruikTeken))
             {
-                this.StuurBrichtNaarSpelers(Events.HeeftGewonnen, string.Empty, speler);
+                this.StuurBrichtNaarSpelers(Events.HeeftGewonnen, string.Empty, this.gameVierOpEenRij.TegenSpeler(speler));
             }
         }
 
@@ -195,16 +200,26 @@ namespace HenE.VierOPEenRij
                     HumanSpeler humanSpeler = speler as HumanSpeler;
 
                     // stuur berichtje naar de huidige speler
-                    if (speler == huidigeSpeler)
+                    if (speler == huidigeSpeler || events == Events.BordGetekend)
                     {
-                        this.SendEenBericht(events, msg, huidigeSpeler);
+                        this.SendEenBericht(events, msg, speler);
+                        if (events == Events.HeeftGewonnen || events == Events.HetBordVolGeworden)
+                        {
+                            Thread.Sleep(3000);
+                            this.SendEenBericht(Events.SpelGstopt, msg, huidigeSpeler);
+                        }
                     }
-                    else if (events == Events.BordGetekend)
+                    else if (events == Events.Gestart)
                     {
                         this.SendEenBericht(events, msg, speler);
                     }
-                    else
+                    else if (events == Events.HeeftGewonnen)
                     {
+                        this.SendEenBericht(Events.HeeftGewonnenTegen, msg, speler);
+                    }
+                    else if (events == Events.JeRol)
+                    {
+                        // stuur deze messag naar de tegen speler.
                         this.SendEenBericht(Events.Wachten, msg, this.gameVierOpEenRij.TegenSpeler(huidigeSpeler));
                     }
                 }

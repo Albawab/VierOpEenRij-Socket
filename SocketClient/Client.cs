@@ -8,6 +8,7 @@ namespace HenE.SocketClient
     using System.Net;
     using System.Net.Sockets;
     using System.Text;
+    using System.Threading;
     using HenE.ConnectionHelper;
     using HenE.GameVOPR.Protocol;
     using HenE.VierOPEenRij.Enum;
@@ -23,6 +24,7 @@ namespace HenE.SocketClient
         private readonly byte[] buffer = new byte[10000];
         private Socket clientSocket = null;
         private int dimension = 0;
+        private string naam = string.Empty;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
@@ -87,31 +89,33 @@ namespace HenE.SocketClient
             switch (events)
             {
                 case Events.GecreeerdSpel:
-                    if (this.WilTegenComputerSpeln())
-                    {
-                        this.SpeelTegenComputerCommando();
-                    }
-                    else
-                    {
-                        Console.WriteLine();
-                        Console.WriteLine("Je Moet op een speler wachten.");
-                    }
-
+                    Thread.Sleep(1000);
+                    Console.WriteLine();
+                    Console.WriteLine("Je Moet op een speler wachten.");
                     break;
 
                 case Events.SpelerInvoegde:
                     Console.WriteLine();
-                    Console.WriteLine("Nu mag je je teken te kiezen.");
+                    Thread.Sleep(1000);
+                    Console.WriteLine("Nu mag je je teken kiezen.");
+                    Console.WriteLine();
                     string teken = this.VraagOmEigenTekenTeKiezen();
                     this.ZetTekenCommando(teken);
                     break;
 
                 case Events.TekenIngezet:
+                    this.StartHetSpelCommando();
+                    break;
+
+                case Events.Gestart:
                     Console.WriteLine();
-                    Console.WriteLine("we kunnen starten.");
-                    this.StartHetSperCommando();
+                    Thread.Sleep(1000);
+                    ColorConsole.WriteLine(ConsoleColor.Green, "Na twee seconds wordt het spele gestart.");
+                    Thread.Sleep(2000);
                     break;
                 case Events.BordGetekend:
+                    Console.Clear();
+                    Thread.Sleep(1000);
                     Console.WriteLine();
                     Console.WriteLine($"{opgeknipt[2]}");
                     break;
@@ -134,23 +138,25 @@ namespace HenE.SocketClient
                 case Events.HetBordVolGeworden:
                     if (events == Events.HeeftGewonnen)
                     {
-                        Console.WriteLine($"{opgeknipt[3]} heeft gewonne.");
+                        Console.WriteLine($"{opgeknipt[1]}: je hebt gewonne.");
                     }
                     else
                     {
                         Console.WriteLine("Het spelvlak is vol.");
                     }
 
-                    if (this.WilNieuweRonde())
+                    break;
+
+                case Events.HeeftGewonnenTegen:
+                    Console.WriteLine($"{opgeknipt[3]} heeft gewonne.");
+                    Thread.Sleep(1000);
+                    if (opgeknipt[3] == "Computer")
                     {
-                        // Wil Nieuwe rondje.
-                        this.WilNieuweRondjeCommando();
+                        this.UitVoerNieuwRonde();
                     }
                     else
                     {
-                        // Niet.
-                        this.WilNietNieuweRondjeCommando();
-                        Environment.Exit(0);
+                        Console.WriteLine("Wacht op hem.");
                     }
 
                     break;
@@ -159,15 +165,35 @@ namespace HenE.SocketClient
                     Console.Clear();
                     Console.WriteLine();
                     Console.WriteLine("De andere speler heeft het spel verlaten.");
-                    if (this.WilNieuweRonde())
+                    this.UitVoerNieuwRonde();
+
+                    break;
+
+                case Events.SpelGstopt:
+                    Console.WriteLine();
+                    this.UitVoerNieuwRonde();
+
+                    break;
+                case Events.SpelVerwijderd:
+                    Console.WriteLine("Het spel is gestopt!");
+                    Console.WriteLine("Speler heeft het spel verlaten. Het spel wordt verwijderd.");
+                    if (this.WilNieuweSpel())
                     {
-                        // Wil Nieuwe rondje.
-                        this.WilNieuweRondjeCommando();
+                        this.dimension = this.KrijgDimension();
+                        string tegenComputerSpelen = string.Empty;
+                        if (this.WilTegenComputerSpeln())
+                        {
+                            tegenComputerSpelen = "true";
+                        }
+
+                        this.VerzoekOmStartenSpel(this.naam, this.dimension, tegenComputerSpelen, this.clientSocket);
                     }
                     else
                     {
-                        // Niet.
-                        this.WilNietNieuweRondjeCommando();
+                        Console.WriteLine();
+                        ColorConsole.WriteLine(ConsoleColor.Red, "Tot ziens!");
+                        Thread.Sleep(4000);
+                        Environment.Exit(0);
                     }
 
                     break;
@@ -175,25 +201,82 @@ namespace HenE.SocketClient
         }
 
         /// <summary>
+        /// Stelt een vraag aan een speler of hij wil tegen computer spelen.
+        /// </summary>
+        /// <returns>Wil een speler tegen computer spelen of niet.</returns>
+        public bool WilTegenComputerSpeln()
+        {
+            Console.WriteLine("Wil je tegen de computer speler J of N?");
+            if (this.ThisCheckAnswer())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// stuurt een berichtje naar de server dat de speler wil spelen.
         /// </summary>
         /// <param name="naam">De naam van de speler.</param>
         /// <param name="dimension">De dimension van het speelvlak.</param>
+        /// <param name="wilTegenComputerSpelen">Wil tegen computer spelen of niet.</param>
         /// <param name="socket">De client.</param>
-        public void VerzoekOmStartenSpel(string naam, int dimension, Socket socket)
+        public void VerzoekOmStartenSpel(string naam, int dimension, string wilTegenComputerSpelen, Socket socket)
         {
-            this.dimension = dimension;
-            string message = CommandoHelper.CreëertVerzoekTotDeelnameSpelCommando(naam, dimension);
+            string message = CommandoHelper.CreëertVerzoekTotDeelnameSpelCommando(naam, dimension, wilTegenComputerSpelen);
             this.Send(this.clientSocket, message);
         }
 
         /// <summary>
-        /// Stuurt een bericht naar de server dat de speler wil tegen de computer spelen.
+        /// Zet waarde die we hebben het nodig.De dimension en de naam.
         /// </summary>
-        private void SpeelTegenComputerCommando()
+        /// <param name="naam">De naam van de speler.</param>
+        public void SetValue(string naam)
         {
-            string message = CommandoHelper.CreeertSpeelTegenComputerCommando(this.dimension);
-            this.Send(this.clientSocket, message);
+            this.naam = naam;
+        }
+
+        /// <summary>
+        /// Vraag de speler om dimension te geven.
+        /// </summary>
+        /// <returns>De dimension van het speelvalk.</returns>
+        public int KrijgDimension()
+        {
+            // Vraag de speler om dimension te geven.
+            int dimension = 0;
+            string antwoord = string.Empty;
+            bool isGeldigValue = false;
+            do
+            {
+                Thread.Sleep(2000);
+                Console.WriteLine();
+                Console.WriteLine("Hoegroot is de speelveld?");
+                ColorConsole.WriteLine(ConsoleColor.Yellow, "Je mag alleen cijfer gebruiken. De cijfers moeten tussen 4 en 10.");
+                antwoord = Console.ReadLine();
+                if (int.TryParse(antwoord, out dimension))
+                {
+                    if (dimension > 10)
+                    {
+                        Console.WriteLine("De cijfer mag niet hoger dan 10 zijn.");
+                    }
+                    else if (dimension < 4)
+                    {
+                        Console.WriteLine("De cijfer mag niet minder dan 4 zijn.");
+                    }
+                    else
+                    {
+                        isGeldigValue = true;
+                    }
+                }
+                else
+                {
+                    ColorConsole.WriteLine(ConsoleColor.Red, "Ongeldige value!");
+                }
+            }
+            while (!isGeldigValue);
+            this.dimension = dimension;
+            return dimension;
         }
 
         /// <summary>
@@ -210,7 +293,7 @@ namespace HenE.SocketClient
         /// Maak een bericht dat de speler gaat starten.
         /// stuurt een bericht naar de server dat de speler gaat starten.
         /// </summary>
-        private void StartHetSperCommando()
+        private void StartHetSpelCommando()
         {
             string msg = CommandoHelper.CreeertStartHetSpelCommando();
             this.Send(this.clientSocket, msg);
@@ -287,21 +370,6 @@ namespace HenE.SocketClient
 
             // Wachten op een nieuwe bericht.
             this.clientSocket.BeginReceive(this.buffer, 0, this.buffer.Length, 0, new AsyncCallback(this.ReceiveCallback), this.clientSocket);
-        }
-
-        /// <summary>
-        /// Stelt een vraag aan een speler of hij wil tegen computer spelen.
-        /// </summary>
-        /// <returns>Wil een speler tegen computer spelen of niet.</returns>
-        private bool WilTegenComputerSpeln()
-        {
-            Console.WriteLine("Wil je tegen de computer speler J of N?");
-            if (this.ThisCheckAnswer())
-            {
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -390,6 +458,46 @@ namespace HenE.SocketClient
             Console.WriteLine();
             ColorConsole.WriteLine(ConsoleColor.Yellow, "Wil je een nieuwe ronde doen J of N?");
             return this.ThisCheckAnswer();
+        }
+
+        /// <summary>
+        /// Behande het nieuwe rondje.
+        /// </summary>
+        private void UitVoerNieuwRonde()
+        {
+            if (this.WilNieuweRonde())
+            {
+                // Wil Nieuwe rondje.
+                this.WilNieuweRondjeCommando();
+            }
+            else
+            {
+                // Niet.
+                this.WilNietNieuweRondjeCommando();
+                Thread.Sleep(1000);
+                ColorConsole.WriteLine(ConsoleColor.Red, "Tot ziens!");
+                Thread.Sleep(2000);
+
+                // Dus doe het window dicht.
+                Environment.Exit(0);
+            }
+        }
+
+        /// <summary>
+        /// Vraag de speler of hij een nieuwe spel wil spelen.
+        /// </summary>
+        /// <returns>Wil spelen of niet.</returns>
+        private bool WilNieuweSpel()
+        {
+            Console.WriteLine("Wil je nog spelen J of N?");
+            if (this.ThisCheckAnswer())
+            {
+               return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

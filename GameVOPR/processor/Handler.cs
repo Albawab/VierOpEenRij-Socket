@@ -16,7 +16,7 @@ namespace HenE.GameVierOpEenRij
     /// </summary>
     public class Handler : ICanHandelen
     {
-        private readonly SpelHandler spelHandler = new SpelHandler();
+        private SpelHandler spelHandler = new SpelHandler();
 
         /// <inheritdoc/>
         public override string StreamOntvanger(string stream, Socket socket)
@@ -36,6 +36,15 @@ namespace HenE.GameVierOpEenRij
         public List<Game> GetSpellen()
         {
             return this.spelHandler.GetSpellen();
+        }
+
+        /// <summary>
+        /// Verwijdert het spel.
+        /// </summary>
+        /// <param name="game">Het game die gaat verwijderen.</param>
+        public void DeleteGame(Game game)
+        {
+            this.spelHandler.DeleteGame(game);
         }
 
         /// <inheritdoc/>
@@ -65,7 +74,7 @@ namespace HenE.GameVierOpEenRij
                 throw new ArgumentNullException("Ietem mag niet null zijn.");
             }
 
-            return this.Handel(opgeknipt[1], opgeknipt[2], socket);
+            return this.Handel(opgeknipt[1], opgeknipt[2], opgeknipt[3], socket);
         }
 
         /// <summary>
@@ -75,15 +84,18 @@ namespace HenE.GameVierOpEenRij
         /// </summary>
         /// <param name="naam">De naam van de speler.</param>
         /// <param name="dim">De dimension die de speler wil mee doen.</param>
+        /// <param name="wilTegenComputerSpelen">Wil de speler tegen computer of niet.</param>
         /// <param name="socket">De tcp client van een speler.</param>
         /// <returns>De event.</returns>
-        private string Handel(string naam, string dim, Socket socket)
+        private string Handel(string naam, string dim, string wilTegenComputerSpelen, Socket socket)
         {
             string returnMessage;
 
             // Nu hebben we de naam van de speler en de dimension van het speelvlak.
             // eerst check of de dimension geldig of ongeldig is.
             int dimension = this.ConvertToNumber(dim);
+
+            bool wilTegenComputerSpel = this.ConvertBoolea(wilTegenComputerSpelen);
 
             // Het nummer mag aleen teussen 4 en 10.
             if (dimension < 4 || dimension > 10)
@@ -95,7 +107,7 @@ namespace HenE.GameVierOpEenRij
             else
             {
                 // dan kan de data naar de spelhandeler sturen.
-                returnMessage = this.spelHandler.SpelHandlen(naam, dimension, socket);
+                returnMessage = this.spelHandler.SpelHandlen(naam, dimension, wilTegenComputerSpel, socket);
             }
 
             return returnMessage;
@@ -120,5 +132,12 @@ namespace HenE.GameVierOpEenRij
 
             return number;
         }
+
+        /// <summary>
+        /// change the text to boolean.
+        /// </summary>
+        /// <param name="wilTegenComputerSpelen">De text die veranderd wordt.</param>
+        /// <returns>Wil tegen computer of niet.</returns>
+        private bool ConvertBoolea(string wilTegenComputerSpelen) => wilTegenComputerSpelen == "true";
     }
 }

@@ -63,5 +63,20 @@ namespace HenE.VierOPEenRij.Protocol
         /// De tegen speler heeft het spel verlaten.
         /// </summary>
         TegenSpelerVerlaten,
+
+        /// <summary>
+        /// Het spel is gestopt.
+        /// </summary>
+        SpelGstopt,
+
+        /// <summary>
+        /// De tegen heeft gewonnen.
+        /// </summary>
+        HeeftGewonnenTegen,
+
+        /// <summary>
+        /// Het spel is verwijderd.
+        /// </summary>
+        SpelVerwijderd,
     }
 }

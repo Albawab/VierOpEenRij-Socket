@@ -16,20 +16,11 @@ namespace HenE.GameVOPR.Protocol
         /// </summary>
         /// <param name="naam">De naam van een speler.</param>
         /// <param name="dimension">De dimension van het speelvlak die de speler wil mee spelen.</param>
+        /// <param name="wilTegenComputerSpelen">Wil Tegen computer spelen of niet.</param>
         /// <returns>De zien die naar de server gaat sturen met de commando , de naam en de dimension.</returns>
-        public static string CreëertVerzoekTotDeelnameSpelCommando(string naam, int dimension)
+        public static string CreëertVerzoekTotDeelnameSpelCommando(string naam, int dimension, string wilTegenComputerSpelen)
         {
-            return string.Format($"{Commandos.VerzoekTotDeelnemenSpel.ToString()}%{naam}%{dimension}");
-        }
-
-        /// <summary>
-        /// Maak een message dat de speler tegen de computer wil spelen.
-        /// </summary>
-        /// <param name="dimension">De dimension van het speelvalk.</param>
-        /// <returns>De zien die naar de server gaat sturen.</returns>
-        public static string CreeertSpeelTegenComputerCommando(int dimension)
-        {
-            return string.Format($"{Commandos.SpeelTegenComputer.ToString()}%Computer%{dimension}");
+            return string.Format($"{Commandos.VerzoekTotDeelnemenSpel.ToString()}%{naam}%{dimension}%{wilTegenComputerSpelen}");
         }
 
         /// <summary>

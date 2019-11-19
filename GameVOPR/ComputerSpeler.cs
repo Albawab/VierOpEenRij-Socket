@@ -5,6 +5,7 @@
 namespace HenE.GameVOPR
 {
     using System;
+    using System.Threading;
     using HenE.VierOPEenRij;
 
     /// <summary>
@@ -49,6 +50,7 @@ namespace HenE.GameVOPR
                 {
                     // reset eerst de oude teken en daarna ga verder.
                     speelVlak.ResetVeld(kolom, veldOpKolom);
+                    Thread.Sleep(500);
 
                     // Hier breng ik de tegen speler want ik heb zijn teken nodig om te controleren of kan hij winnen.
                     Speler tegenSpeler = game.TegenSpeler(this);

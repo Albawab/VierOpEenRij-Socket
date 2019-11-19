@@ -43,9 +43,10 @@ namespace HenE.ServerSocket
         /// </summary>
         /// <param name="naam">De naam van een nieuwe speler.</param>
         /// <param name="dimension">De dimension die de speler mee wil spelen.</param>
+        /// <param name="wilTegenComputerSpelen">Als de speler wil tegen computer spelen of niet.</param>
         /// <param name="socket">De tcp client van de speler.</param>
         /// <returns>Mag de speler starten of wachte.</returns>
-        public string SpelHandlen(string naam, int dimension, Socket socket)
+        public string SpelHandlen(string naam, int dimension, bool wilTegenComputerSpelen, Socket socket)
         {
             try
             {
@@ -57,48 +58,48 @@ namespace HenE.ServerSocket
                     throw new ArgumentNullException("Mag niet de naam leeg zijn.");
                 }
 
-                game = null;
-                if (naam == "Computer")
+                // Als de speler tegen computer wil spelen.
+                if (wilTegenComputerSpelen)
                 {
-                    // zoek naar het zelfde spel van de human speler.
-                    game = this.GetGameByTcpClient(socket);
-                }
-                else
-                {
-                    // als de speler wil tegen andre speler spelen, dan gaat hier naar ander spel zoeken.
-                    // Zoek naar een spel die de zelfde dimension heeft.
-                    game = this.GetGameByDimensionAndStatus(dimension);
-                    .Er zijn geen human speler op wachten. Wil je tegen combuter speler ?
-                }
-
-                // Is er een game of niet.
-                // als niet dan laat de speler weten dat hij moet wachten.
-                if (game == null)
-                {
-                    // als geen game heeft gevonden dan creeert een nieuwe game.
+                    // een nieuw spel gemakt.
                     game = this.CreerenEenSpel(dimension);
+
+                    // Geef een situatie aan die nieuwe spel.
                     game.ZetSitauatie(Status.Wachten);
 
-                    // voeg de speler toe.
+                    // Voeg de human speler toe.
                     Speler speler = game.AddHumanSpeler(naam, socket);
 
-                    // Omdat hij de eerste speler mag hij starten.
                     game.ZetHuidigeSpeler(speler);
 
-                    // Change the status of the speler.
-                    speler.ChangeStatus(Status.Wachten);
-
-                    // geeft de event terug sturen.
-                    return Events.GecreeerdSpel.ToString();
+                    // Voeg de computer speler toe.
+                    game.AddComputerSpeler("Computer");
+                    return Events.SpelerInvoegde.ToString();
                 }
                 else
                 {
-                    // kan het spel starten.
-                    // als de speler is computer dus voeg een computer speler toe.
-                    // anders voeg een human speler toe.
-                    if (naam == "Computer")
+                    // Als de computer tegen een andere humen spelen dan zoek of er staat een spel.
+                    game = this.GetGameByDimensionAndStatus(dimension);
+
+                    // Is er een game of niet.
+                    // als niet dan laat de speler weten dat hij moet wachten.
+                    if (game == null)
                     {
-                        game.AddComputerSpeler(naam);
+                        // als geen game heeft gevonden dan creeert een nieuwe game.
+                        game = this.CreerenEenSpel(dimension);
+                        game.ZetSitauatie(Status.Wachten);
+
+                        // voeg de speler toe.
+                        Speler speler = game.AddHumanSpeler(naam, socket);
+
+                        // Omdat hij de eerste speler mag hij starten.
+                        game.ZetHuidigeSpeler(speler);
+
+                        // Change the status of the speler.
+                        speler.ChangeStatus(Status.Wachten);
+
+                        // geeft de event terug sturen.
+                        return Events.GecreeerdSpel.ToString();
                     }
                     else
                     {
@@ -112,9 +113,9 @@ namespace HenE.ServerSocket
                         }
 
                         game.AddHumanSpeler(nieuweNaam, socket);
-                    }
 
-                    return Events.SpelerInvoegde.ToString();
+                        return Events.SpelerInvoegde.ToString();
+                    }
                 }
 
                 return returnMessage;
@@ -142,6 +143,15 @@ namespace HenE.ServerSocket
         }
 
         /// <summary>
+        /// Verwijdert een spel.
+        /// </summary>
+        /// <param name="game">Het game die zal verwijderen.</param>
+        public void DeleteGame(Game game)
+        {
+            this.spellen.Remove(game);
+        }
+
+        /// <summary>
         /// Zoekt naar een spel die de zelfde dimension en wachte situatie heeft.
         /// </summary>
         /// <param name="dimension">De dimension van de nieuwe spel. zoekt bij de spellen of er zijn een spel die de zelfde dimension heeft.</param>
@@ -161,29 +171,6 @@ namespace HenE.ServerSocket
             }
 
             return nieuweSpel;
-        }
-
-        /// <summary>
-        /// Zoekt naar een game van de zelfde tcpclient heeft.
-        /// Die is nodig omdat de speler tegen de computer wil spelen, Nu moet de computer tegen de speler spelen op zelefde spel.
-        /// </summary>
-        /// <param name="socket">De tcp client van de speler.</param>
-        /// <returns>Het game van de speler.</returns>
-        private Game GetGameByTcpClient(Socket socket)
-        {
-            foreach (Game game in this.spellen)
-            {
-                foreach (Speler speler in game.GetSpelers())
-                {
-                    HumanSpeler human = speler as HumanSpeler;
-                    if (human.TcpClient == socket)
-                    {
-                        return game;
-                    }
-                }
-            }
-
-            return null;
         }
     }
 }

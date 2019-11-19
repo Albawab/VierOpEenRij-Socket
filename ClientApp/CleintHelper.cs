@@ -64,44 +64,16 @@ namespace HenE.ClientApp
                 Console.WriteLine();
                 ColorConsole.WriteLine(ConsoleColor.Red, $"Hoi {naam}");
 
-                // Vraag de speler om dimension te geven.
-                int dimension = 0;
-                string antwoord = string.Empty;
-                isGeldigValue = false;
-                do
-                {
-                    Thread.Sleep(2000);
-                    Console.WriteLine();
-                    Console.WriteLine("Hoegroot is de speelveld?");
-                    ColorConsole.WriteLine(ConsoleColor.Yellow, "Je mag alleen cijfer gebruiken. De cijfers moeten tussen 4 en 10.");
-                    antwoord = Console.ReadLine();
-                    if (int.TryParse(antwoord, out dimension))
-                    {
-                        /*                        if (dimension < 0)
-                                                {
-                                                    Console.WriteLine("De cijfer mag niet mider dan nul zijn.");
-                                                }*/
-                        if (dimension > 10)
-                        {
-                            Console.WriteLine("De cijfer mag niet hoger dan 10 zijn.");
-                        }
-                        else if (dimension < 4)
-                        {
-                            Console.WriteLine("De cijfer mag niet minder dan 4 zijn.");
-                        }
-                        else
-                        {
-                            isGeldigValue = true;
-                        }
-                    }
-                    else
-                    {
-                        ColorConsole.WriteLine(ConsoleColor.Red, "Ongeldige value!");
-                    }
-                }
-                while (!isGeldigValue);
+                int dimension = client.KrijgDimension();
 
-                client.VerzoekOmStartenSpel(naam, dimension, clientSocket);
+                string tegenComputerSpelen = string.Empty;
+                if (client.WilTegenComputerSpeln())
+                {
+                    tegenComputerSpelen = "true";
+                }
+
+                client.SetValue(naam);
+                client.VerzoekOmStartenSpel(naam, dimension, tegenComputerSpelen, clientSocket);
                 client.RequestLoop();
             }
             catch (Exception exp)
