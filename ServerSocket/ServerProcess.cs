@@ -44,8 +44,6 @@ namespace HenE.ServerSocket
         /// </summary>
         public void SetupServer()
         {
-            Console.WriteLine("Setting up server....");
-
             // Bind de server met de client.
             this.serverSocket.Bind(new IPEndPoint(IPAddress.Any, 5000));
 

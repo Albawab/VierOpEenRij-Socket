@@ -110,7 +110,7 @@ namespace HenE.SocketClient
                 case Events.Gestart:
                     Console.WriteLine();
                     Thread.Sleep(1000);
-                    ColorConsole.WriteLine(ConsoleColor.Green, "Na twee seconds wordt het spele gestart.");
+                    ColorConsole.WriteLine(ConsoleColor.Green, "Na twee seconds wordt het spel gestart.");
                     Thread.Sleep(2000);
                     break;
                 case Events.BordGetekend:
@@ -127,28 +127,28 @@ namespace HenE.SocketClient
                     break;
                 case Events.OngeldigInzet:
                     Console.WriteLine();
-                    Console.WriteLine("Deze kolom is vol. Je mag een ander nummer gebruiken.");
+                    Console.WriteLine("Deze kolom is vol. Je mag een andere kolom kiezen.");
                     inzet = this.Doezet();
                     this.DoeZetCommando(inzet);
                     break;
                 case Events.Wachten:
-                    Console.WriteLine($"{opgeknipt[3]} is aan het spel je mag nu wachten op hem.");
+                    Console.WriteLine($"{opgeknipt[3]} is aan het spelen. je moet op hem/haar nu wachten.");
                     break;
                 case Events.HeeftGewonnen:
                 case Events.HetBordVolGeworden:
                     if (events == Events.HeeftGewonnen)
                     {
-                        Console.WriteLine($"{opgeknipt[1]}: je hebt gewonne.");
+                        Console.WriteLine($"{opgeknipt[1]}: je hebt gewonnen.");
                     }
                     else
                     {
-                        Console.WriteLine("Het spelvlak is vol.");
+                        Console.WriteLine("Het speelvlak is vol.");
                     }
 
                     break;
 
                 case Events.HeeftGewonnenTegen:
-                    Console.WriteLine($"{opgeknipt[3]} heeft gewonne.");
+                    Console.WriteLine($"{opgeknipt[3]} heeft gewonnen.");
                     Thread.Sleep(1000);
                     if (opgeknipt[3] == "Computer")
                     {
@@ -156,7 +156,7 @@ namespace HenE.SocketClient
                     }
                     else
                     {
-                        Console.WriteLine("Wacht op hem.");
+                        Console.WriteLine("Wacht op hem/haar.");
                     }
 
                     break;
@@ -176,7 +176,7 @@ namespace HenE.SocketClient
                     break;
                 case Events.SpelVerwijderd:
                     Console.WriteLine("Het spel is gestopt!");
-                    Console.WriteLine("Speler heeft het spel verlaten. Het spel wordt verwijderd.");
+                    Console.WriteLine("De speler heeft het spel verlaten. Het spel wordt verwijderd.");
                     if (this.WilNieuweSpel())
                     {
                         this.dimension = this.KrijgDimension();
@@ -251,18 +251,18 @@ namespace HenE.SocketClient
             {
                 Thread.Sleep(2000);
                 Console.WriteLine();
-                Console.WriteLine("Hoegroot is de speelveld?");
-                ColorConsole.WriteLine(ConsoleColor.Yellow, "Je mag alleen cijfer gebruiken. De cijfers moeten tussen 4 en 10.");
+                Console.WriteLine("Hoe groot is het speelveld?");
+                ColorConsole.WriteLine(ConsoleColor.Yellow, "Je mag alleen een cijfer gebruiken. Het cijfer ligt tussen d4 4 en de 10.");
                 antwoord = Console.ReadLine();
                 if (int.TryParse(antwoord, out dimension))
                 {
                     if (dimension > 10)
                     {
-                        Console.WriteLine("De cijfer mag niet hoger dan 10 zijn.");
+                        Console.WriteLine("Het cijfer mag niet hoger dan 10 zijn.");
                     }
                     else if (dimension < 4)
                     {
-                        Console.WriteLine("De cijfer mag niet minder dan 4 zijn.");
+                        Console.WriteLine("Het cijfer mag niet lager dan 4 zijn.");
                     }
                     else
                     {
@@ -271,7 +271,7 @@ namespace HenE.SocketClient
                 }
                 else
                 {
-                    ColorConsole.WriteLine(ConsoleColor.Red, "Ongeldige value!");
+                    ColorConsole.WriteLine(ConsoleColor.Red, "Ongeldige waarde!");
                 }
             }
             while (!isGeldigValue);
@@ -382,7 +382,7 @@ namespace HenE.SocketClient
 
             while (keyInfo.Key != ConsoleKey.J && keyInfo.Key != ConsoleKey.N)
             {
-                Console.WriteLine("Je mag alleen j of N gebruiken.");
+                Console.WriteLine("Je mag alleen J of N gebruiken.");
                 keyInfo = Console.ReadKey();
             }
 
@@ -429,11 +429,11 @@ namespace HenE.SocketClient
                 {
                     if (dimen > this.dimension)
                     {
-                        Console.WriteLine($"De cijfer mag niet hoger dan {this.dimension} zijn.");
+                        Console.WriteLine($"Het cijfer mag niet hoger dan {this.dimension} zijn.");
                     }
                     else if (dimen < 1)
                     {
-                        Console.WriteLine("De cijfer mag niet minder dan 1 zijn.");
+                        Console.WriteLine("Het cijfer mag niet lager dan 1 zijn.");
                     }
                     else
                     {
@@ -442,7 +442,7 @@ namespace HenE.SocketClient
                 }
                 else
                 {
-                    ColorConsole.WriteLine(ConsoleColor.Red, "Ongeldige value!");
+                    ColorConsole.WriteLine(ConsoleColor.Red, "Ongeldige waarde!");
                 }
             }
             while (!isGeldigValue);
@@ -489,7 +489,7 @@ namespace HenE.SocketClient
         /// <returns>Wil spelen of niet.</returns>
         private bool WilNieuweSpel()
         {
-            Console.WriteLine("Wil je nog spelen J of N?");
+            Console.WriteLine("Wil je nieuew spel doen J of N?");
             if (this.ThisCheckAnswer())
             {
                return true;

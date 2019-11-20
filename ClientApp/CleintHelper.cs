@@ -33,6 +33,8 @@ namespace HenE.ClientApp
                 do
                 {
                     Console.WriteLine();
+                    ColorConsole.WriteLine(ConsoleColor.Yellow, "Wat leuk dat je komt spelen.");
+                    Thread.Sleep(1000);
                     Console.WriteLine("Wat is je naam?");
                     Console.WriteLine("Je mag alleen letters gebruiken.");
                     naam = Console.ReadLine();

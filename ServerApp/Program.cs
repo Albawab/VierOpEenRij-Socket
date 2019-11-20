@@ -17,10 +17,7 @@ namespace HenE.Server
         {
             Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             ServerProcess server = new ServerProcess(serverSocket);
-            Console.Title = "Server";
             server.SetupServer();
-            Console.ReadLine();
-            Console.ReadLine();
         }
     }
 }
