@@ -46,7 +46,7 @@ namespace HenE.GameVOPR.Protocol
         /// Creeert een commando met een "Doe zet" value.
         /// </summary>
         /// <param name="inzet">inzet.</param>
-        /// <returns>text die naar het spel gaat met commando en de inzet.</returns>
+        /// <returns>tekst die naar het spel gaat met commando en de inzet.</returns>
         public static string CreeertDoeZetCommando(string inzet)
         {
             return string.Format($"{Commandos.DoeZet}%{inzet}");
@@ -64,7 +64,7 @@ namespace HenE.GameVOPR.Protocol
         /// <summary>
         /// Maakt een nieuw bericht dat de speler geen nieuwe rondje wil doen.
         /// </summary>
-        /// <returns>Het beichtje.</returns>
+        /// <returns>Het berichtje.</returns>
         public static string CreeertWilNietRonde()
         {
             return string.Format($"{Commandos.WilNietNieuweRonde}");

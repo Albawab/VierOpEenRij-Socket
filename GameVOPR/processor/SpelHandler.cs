@@ -16,7 +16,7 @@ namespace HenE.ServerSocket
     /// </summary>
     public class SpelHandler
     {
-        private List<Game> spellen = new List<Game>();
+        private readonly List<Game> spellen = new List<Game>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpelHandler"/> class.
@@ -61,11 +61,14 @@ namespace HenE.ServerSocket
                 // Als de speler tegen computer wil spelen.
                 if (wilTegenComputerSpelen)
                 {
-                    // een nieuw spel gemakt.
+                    // een nieuw spel gemaakt.
                     game = this.CreerenEenSpel(dimension);
 
+                    // Voeg een nieuwe controller aan het spel.
+                    game.VoegEenControllerToe();
+
                     // Geef een situatie aan die nieuwe spel.
-                    game.ZetSitauatie(Status.Wachten);
+                    game.ZetSituatie(Status.InHetSpel);
 
                     // Voeg de human speler toe.
                     Speler speler = game.AddHumanSpeler(naam, socket);
@@ -78,7 +81,7 @@ namespace HenE.ServerSocket
                 }
                 else
                 {
-                    // Als de computer tegen een andere humen spelen dan zoek of er staat een spel.
+                    // Als de computer tegen een andere human spelen dan zoek of er staat een spel.
                     game = this.GetGameByDimensionAndStatus(dimension);
 
                     // Is er een game of niet.
@@ -87,7 +90,7 @@ namespace HenE.ServerSocket
                     {
                         // als geen game heeft gevonden dan creeert een nieuwe game.
                         game = this.CreerenEenSpel(dimension);
-                        game.ZetSitauatie(Status.Wachten);
+                        game.ZetSituatie(Status.Wachten);
 
                         // voeg de speler toe.
                         Speler speler = game.AddHumanSpeler(naam, socket);
@@ -103,16 +106,23 @@ namespace HenE.ServerSocket
                     }
                     else
                     {
-                        // Controleert of tegen speler heeft de zelfde naam.
+                        // Controleert of tegen speler heeft dezelfde naam.
                         // als ja, Dan komt een nummer achter de naam van de nieuwe speler.
                         string nieuweNaam = naam;
+                        game.VoegEenControllerToe();
 
-                        if (game.BestaalDezeNaam(naam))
+                        if (game.BestaatDezeNaam(naam))
                         {
                             nieuweNaam += "1";
+                            game.AddHumanSpeler(nieuweNaam, socket);
+                            game.GameController.SendEenBericht(Events.NaamVeranderd, nieuweNaam, game.GetSpelerViaTcp(socket));
+                        }
+                        else
+                        {
+                            game.AddHumanSpeler(naam, socket);
                         }
 
-                        game.AddHumanSpeler(nieuweNaam, socket);
+                        game.GameController.SendEenBericht(Events.SpelGevonden, nieuweNaam, game.TegenSpeler(game.GetSpelerViaTcp(socket)));
 
                         return Events.SpelerInvoegde.ToString();
                     }

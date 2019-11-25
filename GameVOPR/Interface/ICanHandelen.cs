@@ -4,10 +4,7 @@
 
 namespace HenE.VierOPEenRij.Interface
 {
-    using System;
-    using System.Collections.Generic;
     using System.Net.Sockets;
-    using System.Text;
 
     /// <summary>
     /// interface waar de handeler de stream gaat handelen.
@@ -16,7 +13,7 @@ namespace HenE.VierOPEenRij.Interface
     {
         /// <summary>
         /// Ontvangt de stream.
-        /// controlleert de stream.
+        /// controleert de stream.
         /// </summary>
         /// <param name="streamk">De stream die van een persoon komt.</param>
         /// <param name="socket">De tcp client van een speler.</param>

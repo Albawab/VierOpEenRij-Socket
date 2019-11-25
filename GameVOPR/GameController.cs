@@ -12,7 +12,7 @@ namespace HenE.VierOPEenRij
     using HenE.VierOPEenRij.Protocol;
 
     /// <summary>
-    /// Doet controller op het spel.
+    /// Doet controle op het spel.
     /// </summary>
     public class GameController : Communicate
     {
@@ -23,8 +23,6 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// Initializes a new instance of the <see cref="GameController"/> class.
         /// </summary>
-        /// <param name="speelVlak">Het speelval van het spel.</param>
-        /// <param name="dimension">Het grootte van het speelvlak.</param>
         /// <param name="gameVierOpEenRij">Game.</param>
         public GameController(Game gameVierOpEenRij)
         {
@@ -37,7 +35,7 @@ namespace HenE.VierOPEenRij
         /// </summary>
         public void GameStart()
         {
-            // Doe het spel kaar om te spelen.
+            // Doe het spel klaar om te spelen.
             this.gameVierOpEenRij.InitialiseerHetSpel(this);
 
             // start een nieuw ronde.
@@ -51,7 +49,7 @@ namespace HenE.VierOPEenRij
         {
             try
             {
-                // Reset the Speelvalk.
+                // Reset the Speelvlak.
                 this.speelVlak.ResetSpeelVlak();
 
                 // get the player.
@@ -59,14 +57,14 @@ namespace HenE.VierOPEenRij
 
                 this.StuurBrichtNaarSpelers(Events.Gestart, string.Empty, speler);
 
-                Thread.Sleep(2000);
+                Thread.Sleep(1500);
 
                 // Teken het bord.
                 string bord = this.speelVlak.TekenSpeelvlak();
 
-                // send an message  to this player included this bord.
+                // send an message  to this player included this board.
                 this.StuurBrichtNaarSpelers(Events.BordGetekend, bord, speler);
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 this.DoeInzet(speler);
             }
             catch (Exception e)
@@ -81,7 +79,6 @@ namespace HenE.VierOPEenRij
         /// <param name="speler">De speler die een vraag heeft gekregen. Dus hij moet een inzet doen.</param>
         public void DoeInzet(Speler speler)
         {
-            string bord = string.Empty;
             Speler hudigeSpeler;
 
             // Vraag de speler om te zetten.
@@ -130,27 +127,29 @@ namespace HenE.VierOPEenRij
                 this.gameVierOpEenRij.ZetTekenOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
 
                 // Teken het bord.
-                bord = this.speelVlak.TekenSpeelvlak();
-                Thread.Sleep(1500);
+                string bord = this.speelVlak.TekenSpeelvlak();
+                Thread.Sleep(1000);
 
                 // send an message  to this player included this bord.
                 this.StuurBrichtNaarSpelers(Events.BordGetekend, bord, speler);
                 hudigeSpeler = speler;
 
-                // Tegen speler.
+                // Tegenspeler.
                 speler = this.gameVierOpEenRij.TegenSpeler(speler);
                 this.magControleer = false;
             }
             while (!this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, hudigeSpeler.GebruikTeken)
                 && !this.speelVlak.IsSpeelvlakVol());
 
-            if (this.speelVlak.IsSpeelvlakVol())
+            if (this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, this.gameVierOpEenRij.TegenSpeler(speler).GebruikTeken))
+            {
+                // Hier heb ik de tegenspeler nodig, omdat de speler boven een andere speler geeft.
+                // ik heb eiglijk hier de speler die heeft gewonnen.
+                this.StuurBrichtNaarSpelers(Events.HeeftGewonnen, string.Empty, this.gameVierOpEenRij.TegenSpeler(speler));
+            }
+            else if (this.speelVlak.IsSpeelvlakVol())
             {
                 this.StuurBrichtNaarSpelers(Events.HetBordVolGeworden, string.Empty, speler);
-            }
-            else if (this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, this.gameVierOpEenRij.TegenSpeler(speler).GebruikTeken))
-            {
-                this.StuurBrichtNaarSpelers(Events.HeeftGewonnen, string.Empty, this.gameVierOpEenRij.TegenSpeler(speler));
             }
         }
 
@@ -167,7 +166,7 @@ namespace HenE.VierOPEenRij
         /// <param name="events">De event.</param>
         /// <param name="message">De bericht die naar de humam speler gaat sturen.</param>
         /// <param name="speler">De speler die een bericht zal ontvangen.</param>
-        private void SendEenBericht(Events events, string message, Speler speler)
+        public void SendEenBericht(Events events, string message, Speler speler)
         {
             StringBuilder msg = new StringBuilder();
             if (speler.IsHumanSpeler)
@@ -175,7 +174,7 @@ namespace HenE.VierOPEenRij
                 // verzamel het bericht die naar de speler zal sturen.
                 msg.AppendFormat($"{events.ToString()}%{speler.Naam}%{message}%{this.gameVierOpEenRij.TegenSpeler(speler).Naam}");
 
-                // omdat de bericht gaat aleen naar de human speler sturen dan maak de speler als een human speler.
+                // omdat de bericht gaat alleen naar de human speler sturen dan maak de speler als een human speler.
                 HumanSpeler humanSpeler = speler as HumanSpeler;
 
                 // stuur het bericht naar de speler.
@@ -187,7 +186,7 @@ namespace HenE.VierOPEenRij
         /// stuurt een bericht naar elke speler.
         /// </summary>
         /// <param name="events">De event.</param>
-        /// <param name="msg">Het berichtje die naar een speler wordt gesturd.</param>
+        /// <param name="msg">Het bericht die naar een speler wordt gestuurd.</param>
         /// <param name="huidigeSpeler">De huidige speler.</param>
         private void StuurBrichtNaarSpelers(Events events, string msg, Speler huidigeSpeler)
         {
@@ -199,14 +198,16 @@ namespace HenE.VierOPEenRij
                 {
                     HumanSpeler humanSpeler = speler as HumanSpeler;
 
-                    // stuur berichtje naar de huidige speler
-                    if (speler == huidigeSpeler || events == Events.BordGetekend)
+                    // stuur bericht naar de huidige speler
+                    if (speler == huidigeSpeler
+                        || events == Events.BordGetekend)
                     {
                         this.SendEenBericht(events, msg, speler);
-                        if (events == Events.HeeftGewonnen || events == Events.HetBordVolGeworden)
+                        if (events == Events.HeeftGewonnen
+                            || events == Events.HetBordVolGeworden)
                         {
-                            Thread.Sleep(3000);
-                            this.SendEenBericht(Events.SpelGstopt, msg, huidigeSpeler);
+                            Thread.Sleep(2000);
+                            this.SendEenBericht(Events.SpelGestopt, msg, speler);
                         }
                     }
                     else if (events == Events.Gestart)
@@ -217,9 +218,22 @@ namespace HenE.VierOPEenRij
                     {
                         this.SendEenBericht(Events.HeeftGewonnenTegen, msg, speler);
                     }
+                    else if (events == Events.HetBordVolGeworden)
+                    {
+                        this.SendEenBericht(events, msg, speler);
+                        Thread.Sleep(2000);
+                        if (this.gameVierOpEenRij.TegenSpeler(speler).IsHumanSpeler)
+                        {
+                            this.SendEenBericht(Events.WachtOPReactie, msg, speler);
+                        }
+                        else
+                        {
+                            this.SendEenBericht(Events.SpelGestopt, msg, speler);
+                        }
+                    }
                     else if (events == Events.JeRol)
                     {
-                        // stuur deze messag naar de tegen speler.
+                        // stuur deze message naar de tegenspeler.
                         this.SendEenBericht(Events.Wachten, msg, this.gameVierOpEenRij.TegenSpeler(huidigeSpeler));
                     }
                 }

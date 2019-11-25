@@ -36,7 +36,6 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// Teken het speelvlak.
         /// </summary>
-        /// <param name="dimension">Hoe is het speelvlak groot is.</param>
         /// <returns>de speelvlak.</returns>
         public string TekenSpeelvlak()
         {
@@ -98,7 +97,6 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// Reset the table.
         /// </summary>
-        /// <param name="dimension">De grootte van het speelvlak waar de method loopt door.</param>
         public void ResetSpeelVlak()
         {
             for (int rij = 0; rij < this.Dimension; rij++)
@@ -129,12 +127,12 @@ namespace HenE.VierOPEenRij
         {
             if (columnNummer > this.Dimension)
             {
-                throw new ArgumentOutOfRangeException("Het nummer mag niet hogger dan de dimension van het speelvlak.");
+                throw new ArgumentOutOfRangeException("Het nummer mag niet hoger dan de dimensie  van het speelvlak.");
             }
 
             if (columnNummer < 0)
             {
-                throw new ArgumentOutOfRangeException("Het nummer mag niet minder dan de dimension van het speelvlak.");
+                throw new ArgumentOutOfRangeException("Het nummer mag niet minder dan de dimensie  van het speelvlak.");
             }
 
             for (int kolom = 0; kolom < this.Dimension; kolom++)
@@ -153,7 +151,6 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// Check of het speelvlak vol of nog niet helemaal is.
         /// </summary>
-        /// <param name="dimension">De grootte van het speelvlak.</param>
         /// <returns>Is het speelvlak vol of nog niet.</returns>
         public bool IsSpeelvlakVol()
         {
@@ -243,28 +240,19 @@ namespace HenE.VierOPEenRij
                 }
             }
 
-            // richtboven naar linksonder.
-            if (this.ControleertRichtbovenNaarLinksOnder(teken))
+            // richtsboven naar linksonder.
+            if (this.ControleertRichtsbovenNaarLinksOnder(teken))
             {
                 return true;
             }
 
-            // Link boven naar richt onder.
-            if (this.ControleertLinksBovenNaarRichtOnder(teken))
+            // Linksboven naar richtsonder.
+            if (this.ControleertLinksBovenNaarRichtsOnder(teken))
             {
                 return true;
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// functie om de lijst van velden terug geven.
-        /// </summary>
-        /// <returns>Geeft de lijst van de velden terug.</returns>
-        public Teken[,] VeldenOpSpelvlak()
-        {
-            return this.veldenInHetSpeelvlak;
         }
 
         /// <summary>
@@ -307,7 +295,7 @@ namespace HenE.VierOPEenRij
         /// <returns>Heeft de functie vier vilden zijn gelijk of niet.</returns>
         private bool ZijnErVierTekenGelijkInEenKolom(int kolomNummer, Teken teken)
         {
-            // Eigenlijk is doorKolom is de rij.
+            // Eigenlijk is door Kolom is de rij.
             int aantalTekenInEenrij = 0;
 
             for (int doorKolom = 0; doorKolom < this.Dimension; doorKolom++)
@@ -340,7 +328,7 @@ namespace HenE.VierOPEenRij
         /// </summary>
         /// <param name="teken">De teken die wordt gecontroleerd.</param>
         /// <returns>Heeft vier op een rij of niet.</returns>
-        private bool ControleertRichtbovenNaarLinksOnder(Teken teken)
+        private bool ControleertRichtsbovenNaarLinksOnder(Teken teken)
         {
             int aantalTekenOpEenRij = 0;
 
@@ -376,7 +364,7 @@ namespace HenE.VierOPEenRij
                 aantalTekenOpEenRij = 0;
             }
 
-            // Hier gaat de spleelvlak naar onder __|.
+            // Hier gaat de speelvlak naar onder __|.
             // vanaf boven naar beneden.
             // links --> naar richt++.
             int doorKolomLopen = this.Dimension;
@@ -387,13 +375,13 @@ namespace HenE.VierOPEenRij
                 int kolomNummer = this.Dimension - 1;
                 for (int kolom = doorKolomLopen; kolom >= 0; kolom--)
                 {
-                    // als de speler een teken op een rij heeft dan voeg een nummer aan de anntalTeken toe.
+                    // als de speler een teken op een rij heeft dan voeg een nummer aan de aantalTeken toe.
                     if (this.veldenInHetSpeelvlak[kolomNummer--, rijNummer++] == teken)
                     {
                         aantalTekenOpEenRij++;
                     }
 
-                    // Als de speler niet meer teken op een rij heeft dan doe de aantalTeken nul.
+                    // Als de speler niet meer teken op een rij heeft dan doe de aantal Teken nul.
                     else
                     {
                         aantalTekenOpEenRij = 0;
@@ -420,13 +408,13 @@ namespace HenE.VierOPEenRij
         /// </summary>
         /// <param name="teken">De teken die wordt gecontroleerd.</param>
         /// <returns>Heeft vier op een rij of niet.</returns>
-        private bool ControleertLinksBovenNaarRichtOnder(Teken teken)
+        private bool ControleertLinksBovenNaarRichtsOnder(Teken teken)
         {
             int aantalTekenOpEenRij = 0;
             int doorRijLopen = this.Dimension;
 
-            // start vanaf link boven naar richt onder.
-            // Links boven .
+            // start vanaf linksboven naar richtsonder.
+            // Linksboven .
             for (int kolom = 0; kolom < this.Dimension - 3; kolom++)
             {
                 doorRijLopen--;
@@ -434,13 +422,13 @@ namespace HenE.VierOPEenRij
                 int rijNummer = 0;
                 for (int rij = doorRijLopen; rij >= 0; rij--)
                 {
-                    // Als de speler een teken op een rij heeft dan voeg een nummer aan de anntalTeken toe.
+                    // Als de speler een teken op een rij heeft dan voeg een nummer aan de aantal Teken toe.
                     if (this.veldenInHetSpeelvlak[kolomNummer++, rijNummer++] == teken)
                     {
                         aantalTekenOpEenRij++;
                     }
 
-                    // Als de speler niet meer teken op een rij heeft dan doe de aantalTeken nul.
+                    // Als de speler niet meer teken op een rij heeft dan doe de aantal Teken nul.
                     else
                     {
                         aantalTekenOpEenRij = 0;
@@ -464,13 +452,13 @@ namespace HenE.VierOPEenRij
                 int rijNummer = kolom;
                 for (int rij = doorRijLopen; rij >= 0; rij--)
                 {
-                    // Als de speler een teken op een rij heeft dan voeg een nummer aan de anntalTeken toe.
+                    // Als de speler een teken op een rij heeft dan voeg een nummer aan de aantal Teken toe.
                     if (this.veldenInHetSpeelvlak[kolomNummer++, rijNummer++] == teken)
                     {
                         aantalTekenOpEenRij++;
                     }
 
-                    // Als de speler niet meer teken op een rij heeft dan doe de aantalTeken nul.
+                    // Als de speler niet meer teken op een rij heeft dan doe de aantal Teken nul.
                     else
                     {
                         aantalTekenOpEenRij = 0;
@@ -481,6 +469,7 @@ namespace HenE.VierOPEenRij
                         return true;
                     }
                 }
+                aantalTekenOpEenRij = 0;
             }
 
             return false;

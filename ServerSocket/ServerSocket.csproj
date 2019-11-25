@@ -6,6 +6,10 @@
     <AssemblyName>HenE.ServerSocket</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\HenE.ServerSocket.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>

@@ -10,7 +10,7 @@ namespace HenE.VierOPEenRij.Protocol
     public enum Events
     {
         /// <summary>
-        /// Het spel wordt gecoreéerd.
+        /// Het spel wordt gecreëerd.
         /// </summary>
         GecreeerdSpel,
 
@@ -25,7 +25,7 @@ namespace HenE.VierOPEenRij.Protocol
         Gestart,
 
         /// <summary>
-        /// Bord geteken.
+        /// Bord getekend.
         /// </summary>
         BordGetekend,
 
@@ -40,7 +40,7 @@ namespace HenE.VierOPEenRij.Protocol
         JeRol,
 
         /// <summary>
-        /// Als de speler mag niet deze nummer gpruiken.
+        /// Als de speler mag niet deze nummer gebruiken.
         /// </summary>
         OngeldigInzet,
 
@@ -60,14 +60,14 @@ namespace HenE.VierOPEenRij.Protocol
         HeeftGewonnen,
 
         /// <summary>
-        /// De tegen speler heeft het spel verlaten.
+        /// De tegenspeler heeft het spel verlaten.
         /// </summary>
         TegenSpelerVerlaten,
 
         /// <summary>
         /// Het spel is gestopt.
         /// </summary>
-        SpelGstopt,
+        SpelGestopt,
 
         /// <summary>
         /// De tegen heeft gewonnen.
@@ -78,5 +78,26 @@ namespace HenE.VierOPEenRij.Protocol
         /// Het spel is verwijderd.
         /// </summary>
         SpelVerwijderd,
+
+        /// <summary>
+        /// Als de naam van een speler is veranderd dan laat hem dat weten.
+        /// </summary>
+        NaamVeranderd,
+
+        /// <summary>
+        /// Wachten of een reactie.
+        /// </summary>
+        WachtOPReactie,
+
+        /// <summary>
+        /// Als de tegenspeler heeft het huidig spel verlaten en de speler wil nog spelen dan laat hem weten dat
+        /// hij moet op nieuwe speler wachten.
+        /// </summary>
+        WachtenNieuweSpeler,
+
+        /// <summary>
+        /// Als er een spel heeft gevonden.
+        /// </summary>
+        SpelGevonden,
     }
 }

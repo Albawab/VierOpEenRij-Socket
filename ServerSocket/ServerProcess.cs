@@ -25,9 +25,10 @@ namespace HenE.ServerSocket
     public class ServerProcess : Communicate
     {
         private readonly byte[] buffer = new byte[10000];
-        private Socket serverSocket = null;
-        private List<Socket> clienten = new List<Socket>();
-        private ICanHandelen handler = new Handler();
+        private readonly Socket serverSocket = null;
+        private readonly List<Socket> clienten = new List<Socket>();
+        private readonly ICanHandelen handler = new Handler();
+        private readonly bool connected = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerProcess"/> class.
@@ -36,6 +37,7 @@ namespace HenE.ServerSocket
         public ServerProcess(Socket server)
         {
             this.serverSocket = server;
+            this.connected = true;
         }
 
         /// <summary>
@@ -48,10 +50,16 @@ namespace HenE.ServerSocket
             this.serverSocket.Bind(new IPEndPoint(IPAddress.Any, 5000));
 
             // De hoeveel client mag de server ontvangen.
-            this.serverSocket.Listen(100);
+            this.serverSocket.Listen(0);
 
-            // begin hier de server de cliënt accepteren.
-            this.serverSocket.BeginAccept(new AsyncCallback(this.AcceptCallback), this.serverSocket);
+            // begint hier de server de cliënt accepteren.
+            this.serverSocket.BeginAccept(this.AcceptCallback, null);
+            TimeSpan timeout = new TimeSpan(0, 1, 0);
+            while (this.connected)
+            {
+                // Wacht 5 minuten voor dat Gaat door.
+                Thread.Sleep(timeout);
+            }
         }
 
         /// <summary>
@@ -61,75 +69,109 @@ namespace HenE.ServerSocket
         /// <param name="socket">De client.</param>
         public override void ProcessStream(string message, Socket socket)
         {
-            if (message == string.Empty)
+            try
             {
-                throw new ArgumentException("Mag niet messagen empty zijn.");
+                if (message == string.Empty)
+                {
+                    throw new ArgumentException("Mag niet messagen empty zijn.");
+                }
+                else if (socket == null)
+                {
+                    throw new ArgumentNullException("Mag niet een client null zijn.");
+                }
+
+                Game game = null;
+
+                // [0] is altijd de commando.
+                string[] opgeknipt = message.Split(new char[] { '%' });
+
+                // change the string to enum.
+                Commandos commando = EnumHelperl.EnumConvert<Commandos>(opgeknipt[0]);
+                switch (commando)
+                {
+                    case Commandos.VerzoekTotDeelnemenSpel:
+                        this.Send(socket, this.handler.StreamOntvanger(message, socket));
+                        break;
+
+                        // Geef een teken aan een speler.
+                        // en geef de andere speler de andere teken.
+                    case Commandos.ZetTeken:
+                        Teken teken = EnumHelperl.EnumConvert<Teken>(opgeknipt[1].ToString());
+                        this.GetGame(socket).TekenenBehandl(socket, teken);
+                        this.Send(socket, Events.TekenIngezet.ToString());
+                        break;
+
+                        // start het spel.
+                    case Commandos.Starten:
+                        this.GetGame(socket).StartHetSpel();
+                        break;
+
+                        // doe zet op het speelvlak.
+                    case Commandos.DoeZet:
+                        game = this.GetGame(socket);
+                        if (game != null)
+                        {
+                            // eerst gaat het spel de inzet van de speler zetten.
+                            // dan gaat de controller dat nummertje uit de properties speler op halen.
+                            game.DoeInzet(opgeknipt[1], socket);
+                            Speler speler = game.GetSpelerViaTcp(socket);
+                            game.GameController.DoeInzet(speler);
+                        }
+
+                        break;
+                    default:
+                        break;
+
+                    case Commandos.NieuwRonde:
+                        game = this.GetGame(socket);
+                        if (game != null)
+                        {
+                            // Als de speler een nieuw rondje wil doen.
+                            // Er staat alleen een speler dan de situatie verandert tot wachten op andere speler.
+                            if (game.GetSpelers().Count == 1)
+                            {
+                                game.ZetSituatie(Status.Wachten);
+                                Thread.Sleep(500);
+                                this.SendBerichtNaarDeTegenSpeler(game, Events.WachtenNieuweSpeler.ToString(), socket);
+                            }
+                            else
+                            {
+                                // Als het spel twee spelers heeft dan gaat het door.
+                                game.GameController.NieuwRonde();
+                            }
+                        }
+
+                        break;
+                    case Commandos.WilNietNieuweRonde:
+                        // neem de game.
+                        game = this.GetGame(socket);
+                        if (game != null)
+                        {
+                            if (game.GetSpelers().Count == 1)
+                            {
+                                this.VerWijdertHetSpelMetSpeller(socket);
+                            }
+                            else
+                            {
+                                // stuur een bericht naar de tegen speler dat deze speler wil niet meer spelen.
+                                this.SendBerichtNaarDeTegenSpeler(game, Events.TegenSpelerVerlaten.ToString(), socket);
+
+                                // verwijder de speler.
+                                game.VerWijdertEenSpeler(game.GetSpelerViaTcp(socket));
+
+                                // Zet het situatie van het spel op een speler wachten.
+                                game.ZetSituatie(Status.Wachten);
+                            }
+                        }
+
+                        socket.Close();
+                        this.clienten.Remove(socket);
+                        break;
+                }
             }
-            else if (socket == null)
+            catch (Exception e)
             {
-                throw new ArgumentNullException("Mag niet een client null zijn.");
-            }
-
-            Game game = null;
-
-            // [0] is altijd de commando.
-            string[] opgeknipt = message.Split(new char[] { '%' });
-
-            // change the string to enum.
-            Commandos commando = EnumHelperl.EnumConvert<Commandos>(opgeknipt[0]);
-            switch (commando)
-            {
-                case Commandos.VerzoekTotDeelnemenSpel:
-                    // this.Send(socket, message);
-                    this.Send(socket, this.handler.StreamOntvanger(message, socket));
-                    break;
-
-                case Commandos.ZetTeken:
-                    Teken teken = EnumHelperl.EnumConvert<Teken>(opgeknipt[1].ToString());
-                    this.GetGame(socket).TekenenBehandler(socket, teken);
-                    this.Send(socket, Events.TekenIngezet.ToString());
-                    break;
-
-                case Commandos.Starten:
-                    this.GetGame(socket).StartHetSpel();
-                    break;
-                case Commandos.DoeZet:
-                    game = this.GetGame(socket);
-                    game.DoeInzet(opgeknipt[1], socket);
-                    Speler speler = game.GetSpelerViaTcp(socket);
-                    game.GameController.DoeInzet(speler);
-                    break;
-                default:
-                    break;
-
-                case Commandos.NieuwRonde:
-                    game = this.GetGame(socket);
-                    game.GameController.NieuwRonde();
-
-                    break;
-                case Commandos.WilNietNieuweRonde:
-                    // neem de game.
-                    game = this.GetGame(socket);
-                    if (game.GetSpelers().Count == 1)
-                    {
-                        Handler handler = new Handler();
-                        handler.DeleteGame(game);
-                    }
-                    else
-                    {
-                        // stuur een bericht naar de tegen speler dat deze speler wil niet meer spelen.
-                        this.SendBerichtNaarDeTegenSpeler(game, Events.TegenSpelerVerlaten.ToString(), socket);
-
-                        // verwijder de speler.
-                        game.VerWijdertEenSpeler(socket);
-
-                        // Zet het situatie van het spel op een speler wachten.
-                        game.ZetSitauatie(Status.Wachten);
-                    }
-
-                    socket.Close();
-                    this.clienten.Remove(socket);
-                    break;
+                throw new Exception(e.Message);
             }
         }
 
@@ -159,26 +201,36 @@ namespace HenE.ServerSocket
                     }
 
                     // Not all data received. Get more.
-                    socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
+                    socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, this.ReadCallback, socket);
                 }
             }
             catch (Exception)
             {
-                // Get the play.
-                Game game = this.GetGame(socket);
-                if (game != null)
-                {
-                    // Stuur een bericht naar de tegen speler.
-                    // this.SendBerichtNaarDeTegenSpeler(game, Events.TegenSpelerVerlaten.ToString(), socket);
-                    Thread.Sleep(1000);
-                    this.SendBerichtNaarDeTegenSpeler(game, Events.SpelVerwijderd.ToString(), socket);
-                    game.VerWijdertEenSpeler(socket);
-                    Handler handler = new Handler();
-                    handler.DeleteGame(game);
+                this.VerWijdertHetSpelMetSpeller(socket);
+            }
+        }
 
-                    // verwijdert deze cliënt.
-                    this.clienten.Remove(socket);
-                }
+        /// <summary>
+        /// Verwijdert het spel en de spelers.
+        /// </summary>
+        /// <param name="socket">De client van een speler.Die hebben we nodig om de speler te roepen.</param>
+        private void VerWijdertHetSpelMetSpeller(Socket socket)
+        {
+            // Get the play.
+            Game game = this.GetGame(socket);
+            if (game != null)
+            {
+                // Stuur een bericht naar de tegen speler.
+                // this.SendBerichtNaarDeTegenSpeler(game, Events.TegenSpelerVerlaten.ToString(), socket);
+                Thread.Sleep(1000);
+                this.SendBerichtNaarDeTegenSpeler(game, Events.SpelVerwijderd.ToString(), socket);
+                game.VerWijdertEenSpeler(game.TegenSpeler(game.GetSpelerViaTcp(socket)));
+                game.VerWijdertEenSpeler(game.GetSpelerViaTcp(socket));
+                Handler handler = new Handler();
+                handler.DeleteGame(game);
+
+                // verwijdert deze cliënt.
+                this.clienten.Remove(socket);
             }
         }
 
@@ -196,7 +248,7 @@ namespace HenE.ServerSocket
                 this.clienten.Add(socket);
 
                 // wacht op andere bericht.
-                socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(this.ReadCallback), socket);
+                socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, this.ReadCallback, socket);
                 this.serverSocket.BeginAccept(this.AcceptCallback, null);
             }
             catch (Exception e)
@@ -240,6 +292,7 @@ namespace HenE.ServerSocket
         /// Send een berichtje naar de tegen speler.
         /// </summary>
         /// <param name="game">Het huidige spel.</param>
+        /// <param name="events">Event die nnar de client gaat om iets te laten weten.</param>
         /// <param name="socket">De tcp client van de huidige speler.</param>
         private void SendBerichtNaarDeTegenSpeler(Game game, string events, Socket socket)
         {

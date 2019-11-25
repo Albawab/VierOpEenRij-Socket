@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ClientApp</name>
+    </assembly>
+    <members>
+        <member name="T:HenE.ClientApp.CleintHelper">
+            <summary>
+            klas om de cliënt application te helpen.
+            </summary>
+        </member>
+        <member name="M:HenE.ClientApp.CleintHelper.Start(System.Net.Sockets.Socket)">
+            <summary>
+            Vraagt een speler om zijn naam te geven, ook om de dimension te geven.
+            </summary><param name="clientSocket">De cleint van de speler.</param>
+        </member>
+        <member name="T:HenE.ClientApp.Program">
+            <summary>
+            Class om de server te starten.
+            </summary>
+        </member>
+    </members>
+</doc>

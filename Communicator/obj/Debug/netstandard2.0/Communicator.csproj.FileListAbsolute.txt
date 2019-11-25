@@ -21,3 +21,12 @@ C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0
 C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.AssemblyInfo.cs
 C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.dll
 C:\Users\Abdul\Desktop\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\bin\Debug\netstandard2.0\Communicator.deps.json
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\bin\Debug\netstandard2.0\Communicator.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\bin\Debug\netstandard2.0\Communicator.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.csprojAssemblyReference.cache
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.AssemblyInfoInputs.cache
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.AssemblyInfo.cs
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Debug\netstandard2.0\Communicator.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\bin\Debug\netstandard2.0\Communicator.xml

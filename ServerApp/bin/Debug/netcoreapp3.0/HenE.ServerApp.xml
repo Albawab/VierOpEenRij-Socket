@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>HenE.ServerApp</name>
+    </assembly>
+    <members>
+        <member name="T:HenE.Server.Program">
+            <summary>
+            Class om de server te starten.
+            </summary>
+        </member>
+    </members>
+</doc>

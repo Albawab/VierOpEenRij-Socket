@@ -8,7 +8,7 @@ namespace HenE.VierOPEenRij
     using HenE.VierOPEenRij.Enum;
 
     /// <summary>
-    /// Vraagt de speler om zet te doen.
+    /// Vraagt de speler om inzet te doen.
     /// Vraag de speler om naam te geven.
     /// </summary>
     public abstract class Speler

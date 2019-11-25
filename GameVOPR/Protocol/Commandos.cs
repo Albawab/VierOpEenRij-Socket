@@ -14,7 +14,7 @@ namespace HenE.VierOPEenRij.Protocol
     public enum Commandos
     {
         /// <summary>
-        /// Zoek naar andre speler.
+        /// Zoek naar andere speler.
         /// </summary>
         VerzoekTotDeelnemenSpel,
 
@@ -34,7 +34,7 @@ namespace HenE.VierOPEenRij.Protocol
         ZetTeken,
 
         /// <summary>
-        /// Commando om de inzet van humenspeler naar het spel te sturen.
+        /// Commando om de inzet van human speler naar het spel te sturen.
         /// </summary>
         DoeZet,
 

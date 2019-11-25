@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Communicator</name>
+    </assembly>
+    <members>
+        <member name="T:HenE.ConnectionHelper.Communicate">
+            <summary>
+            Doe conection tussen de server en een client.
+            </summary>
+        </member>
+        <member name="M:HenE.ConnectionHelper.Communicate.ProcessStream(System.String,System.Net.Sockets.Socket)">
+            <summary>
+            handlt de stream tussen de client en de server.
+            </summary>
+            <param name="message">De message die wordt gehandled.</param>
+            <param name="socket">De Socket.</param>
+        </member>
+        <member name="M:HenE.ConnectionHelper.Communicate.Send(System.Net.Sockets.Socket,System.String)">
+            <summary>
+            Stuurt een bericht tussen de client en de server.
+            </summary>
+            <param name="handler">De client.</param>
+            <param name="data">Het berichtje.</param>
+        </member>
+        <member name="M:HenE.ConnectionHelper.Communicate.SendCallback(System.IAsyncResult)">
+            <summary>
+            Laat weten dat de client of de server een bericht heeft ontvangen.
+            </summary>
+            <param name="ar">the result.</param>
+        </member>
+    </members>
+</doc>

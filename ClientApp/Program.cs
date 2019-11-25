@@ -5,8 +5,8 @@
 namespace HenE.ClientApp
 {
     using System;
+    using System.Net;
     using System.Net.Sockets;
-    using HenE.SocketClient;
 
     /// <summary>
     /// Class om de server te starten.
@@ -15,7 +15,10 @@ namespace HenE.ClientApp
     {
         private static void Main(string[] args)
         {
-            Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPAddress[] iPs = Dns.GetHostAddresses("10.0.0.184");
+            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            Socket clientSocket = socket;
+            clientSocket.Connect(iPs, 5000);
             Console.Title = "Client";
             CleintHelper.Start(clientSocket);
         }

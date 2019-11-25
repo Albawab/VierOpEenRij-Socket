@@ -33,27 +33,27 @@ namespace HenE.VierOPEenRij
         public GameController GameController { get; private set; }
 
         /// <summary>
-        /// Gets hudige speler.
+        /// Gets huidige speler.
         /// </summary>
         public Speler HuidigeSpeler { get; private set; }
 
         /// <summary>
-        /// Gets het speelvalk van het spel.
+        /// Gets het speelveld van het spel.
         /// </summary>
         public SpeelVlak SpeelVlak { get; private set; }
 
         /// <summary>
-        /// Gets the status of the game.
+        /// Gets het speelveld van het spel.
         /// </summary>
         public Status Status { get; private set; }
 
         /// <summary>
-        /// Gets the dimension of the speelvlak.
+        /// Gets het speelveld van het spel.
         /// </summary>
         public int Dimension { get; private set; }
 
         /// <summary>
-        /// Initialiseert Het Spel.
+        /// Initialisiert  Het Spel.
         /// change the status of the speler.
         /// </summary>
         /// <param name="gameController">De controller van het spel.</param>
@@ -72,12 +72,19 @@ namespace HenE.VierOPEenRij
         }
 
         /// <summary>
+        /// Voeg een nieuwe controller aan het spel toe.
+        /// </summary>
+        public void VoegEenControllerToe()
+        {
+            this.GameController = new GameController(this);
+        }
+
+        /// <summary>
         /// Gaat het spel starten.
         /// </summary>
         public void StartHetSpel()
         {
-            GameController gameController = new GameController(this);
-            gameController.GameStart();
+            this.GameController.GameStart();
         }
 
         /// <summary>
@@ -109,7 +116,7 @@ namespace HenE.VierOPEenRij
         /// Zet een situatie van het spel.
         /// </summary>
         /// <param name="status">de nieuwe situatie van het spel.</param>
-        public void ZetSitauatie(Status status)
+        public void ZetSituatie(Status status)
         {
             this.Status = status;
         }
@@ -147,7 +154,7 @@ namespace HenE.VierOPEenRij
         {
             if (teken == Teken.Undefined)
             {
-                // throw new ArgumentOutOfRangeException("Mag niet de teken Umdefined zijn of null.");
+                 throw new ArgumentOutOfRangeException("Mag niet de teken Undefined zijn of null.");
             }
 
             if (speelVlak == null)
@@ -261,7 +268,7 @@ namespace HenE.VierOPEenRij
         /// </summary>
         /// <param name="naam">De naam van de nieuwe speler.</param>
         /// <returns>bestaat deze naam al of niet.</returns>
-        public bool BestaalDezeNaam(string naam)
+        public bool BestaatDezeNaam(string naam)
         {
             foreach (Speler speler in this.spelers)
             {
@@ -280,7 +287,7 @@ namespace HenE.VierOPEenRij
         /// <param name="socket">De client van de speler.</param>
         /// <param name="tekenVanSpeler">De teken die de speler heeft gekozen.</param>
         /// <returns>De naam van de speler.</returns>
-        public string TekenenBehandler(Socket socket, Teken tekenVanSpeler)
+        public string TekenenBehandl(Socket socket, Teken tekenVanSpeler)
         {
             if (socket == null)
             {
@@ -315,10 +322,9 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// Verwijdert Een speler van het spel.
         /// </summary>
-        /// <param name="socket">De tcp client van het spel.</param>
-        public void VerWijdertEenSpeler(Socket socket)
+        /// <param name="speler">De speler die wordt verwijderd.</param>
+        public void VerWijdertEenSpeler(Speler speler)
         {
-            Speler speler = this.GetSpelerViaTcp(socket);
             this.spelers.Remove(speler);
         }
 

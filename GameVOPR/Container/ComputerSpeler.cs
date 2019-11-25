@@ -5,7 +5,6 @@
 namespace HenE.GameVOPR
 {
     using System;
-    using System.Threading;
     using HenE.VierOPEenRij;
 
     /// <summary>
@@ -28,16 +27,15 @@ namespace HenE.GameVOPR
         /// <inheritdoc/>
         public override int DoeZet(string deInzet, SpeelVlak speelVlak, Game game)
         {
-            int veldOpKolom = 0;
             for (int kolom = 0; kolom < speelVlak.Dimension; kolom++)
             {
                 if (!speelVlak.MagInzetten(kolom))
                 {
-                    break;
+                    continue;
                 }
 
                 // Controleert of kan de computer winnen.
-                veldOpKolom = speelVlak.ZetTekenOpSpeelvlak(kolom, this.GebruikTeken);
+                int veldOpKolom = speelVlak.ZetTekenOpSpeelvlak(kolom, this.GebruikTeken);
                 if (speelVlak.HeeftGewonnen(this.GebruikTeken))
                 {
                     // Als ja, dan reset deze veld en return het nummer van de kolom.
@@ -50,9 +48,8 @@ namespace HenE.GameVOPR
                 {
                     // reset eerst de oude teken en daarna ga verder.
                     speelVlak.ResetVeld(kolom, veldOpKolom);
-                    Thread.Sleep(500);
 
-                    // Hier breng ik de tegen speler want ik heb zijn teken nodig om te controleren of kan hij winnen.
+                    // Hier breng ik de tegenspeler want ik heb zijn teken nodig om te controleren of kan hij winnen.
                     Speler tegenSpeler = game.TegenSpeler(this);
                     veldOpKolom = speelVlak.ZetTekenOpSpeelvlak(kolom, tegenSpeler.GebruikTeken);
                     if (speelVlak.HeeftGewonnen(tegenSpeler.GebruikTeken))
@@ -66,10 +63,21 @@ namespace HenE.GameVOPR
                 speelVlak.ResetVeld(kolom, veldOpKolom);
             }
 
-            // Als de computer speler heeft geen goede veld gevonden, dan geef de eerste kolom terug om te teken te zeten op het speelvlak.
-            return this.GeefRandomNummer(speelVlak);
+            // Als de computer speler heeft geen goede veld gevangen, dan geef de eerste kolom terug om te teken te zeten op het speelvlak.
+            int random = 0;
+            do
+            {
+                random = this.GeefRandomNummer(speelVlak);
+            } while (!speelVlak.MagInzetten(random));
+
+            return random;
         }
 
+        /// <summary>
+        /// Geeft een random nummer.
+        /// </summary>
+        /// <param name="speelVlak">Het speelvlak van het huidige spel.</param>
+        /// <returns>Een random nummer.</returns>
         private int GeefRandomNummer(SpeelVlak speelVlak)
         {
             Random random = new Random();

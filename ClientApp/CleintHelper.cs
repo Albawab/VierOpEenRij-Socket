@@ -25,32 +25,41 @@ namespace HenE.ClientApp
 
                 // gaat en maakt een contact met de server.
                 client.Connect();
-                ColorConsole.WriteLine(ConsoleColor.Red, "Welkom Bij Vier op een rijn!");
+                ColorConsole.WriteLine(ConsoleColor.Red, "Welkom Bij Vier op een rij!");
+
+                Console.WriteLine();
+                ColorConsole.WriteLine(ConsoleColor.Yellow, "Wat leuk dat je komt spelen.");
 
                 // krijgt de naam van de speler.
                 string naam = string.Empty;
                 bool isGeldigValue = true;
                 do
                 {
-                    Console.WriteLine();
-                    ColorConsole.WriteLine(ConsoleColor.Yellow, "Wat leuk dat je komt spelen.");
                     Thread.Sleep(1000);
                     Console.WriteLine("Wat is je naam?");
                     Console.WriteLine("Je mag alleen letters gebruiken.");
                     naam = Console.ReadLine();
                     char[] letters = naam.ToCharArray();
-                    for (int index = 0; index < letters.Length; index++)
+                    if (letters.Length < 15)
                     {
-                        if (!char.IsLetter(letters[index]))
+                        for (int index = 0; index < letters.Length; index++)
                         {
-                            // nu de naam is niet geldig.
-                            isGeldigValue = false;
+                            if (!char.IsLetter(letters[index]))
+                            {
+                                // nu de naam is niet geldig.
+                                isGeldigValue = false;
+                            }
+                            else
+                            {
+                                // als de naam geldig is dan laat de program doorgaat.
+                                isGeldigValue = true;
+                            }
                         }
-                        else
-                        {
-                            // als de naam geldig is dan laat de program doorgaat.
-                            isGeldigValue = true;
-                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Je mag niet meer dan 15 letters gebruiken.");
+                        isGeldigValue = false;
                     }
 
                     if (!isGeldigValue || naam == string.Empty)

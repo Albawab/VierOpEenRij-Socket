@@ -12,11 +12,11 @@ namespace HenE.GameVierOpEenRij
     using HenE.VierOPEenRij.Interface;
 
     /// <summary>
-    /// gaat de stream die van een speler komt behandlen.
+    /// gaat de stream die van een speler komt behandelen.
     /// </summary>
     public class Handler : ICanHandelen
     {
-        private SpelHandler spelHandler = new SpelHandler();
+        private readonly SpelHandler spelHandler = new SpelHandler();
 
         /// <inheritdoc/>
         public override string StreamOntvanger(string stream, Socket socket)
@@ -97,7 +97,7 @@ namespace HenE.GameVierOpEenRij
 
             bool wilTegenComputerSpel = this.ConvertBoolea(wilTegenComputerSpelen);
 
-            // Het nummer mag aleen teussen 4 en 10.
+            // Het nummer mag alleen tussen 4 en 10.
             if (dimension < 4 || dimension > 10)
             {
                 // de dimension is ongeldig.
