@@ -52,3 +52,5 @@ C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2
 C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\HenE.GameVOPR.pdb
 C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\HenE.GameVOPR.xml
 C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\Communicator.xml
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\HenE.GameVOPR.xml
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\Communicator.xml

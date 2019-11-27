@@ -74,3 +74,7 @@ C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3
 C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\HenE.SocketClient.xml
 C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\Communicator.xml
 C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\HenE.GameVOPR.xml
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\ClientApp.xml
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\HenE.SocketClient.xml
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\Communicator.xml
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\ClientApp\bin\Debug\netcoreapp3.0\HenE.GameVOPR.xml

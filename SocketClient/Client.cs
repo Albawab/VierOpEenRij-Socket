@@ -106,6 +106,12 @@ namespace HenE.SocketClient
                     this.StartHetSpelCommando();
                     break;
 
+                case Events.TegenSpelerHeeftTekenIngezet:
+                    Console.WriteLine();
+                    Console.WriteLine($"De tegenspeler heeft{opgeknipt[2]}");
+                    Console.WriteLine($"dus je gaat{opgeknipt[4]} gbruiken.");
+                    break;
+
                 case Events.NaamVeranderd:
                     Console.WriteLine();
                     Console.WriteLine("Omdat je tegenspeler dezelfde naam heeft, wordt je naam automatisch verandert.");
@@ -168,7 +174,7 @@ namespace HenE.SocketClient
                     Console.WriteLine("Er is een spel gevonden.");
                     break;
 
-                case Events.HeeftGewonnenTegen:
+                case Events.HeeftGewonnenTegenSpeler:
                     Console.WriteLine($"{opgeknipt[3]} heeft gewonnen.");
                     Thread.Sleep(1000);
                     if (opgeknipt[3] == "Computer")

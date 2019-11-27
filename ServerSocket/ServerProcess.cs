@@ -50,7 +50,7 @@ namespace HenE.ServerSocket
             this.serverSocket.Bind(new IPEndPoint(IPAddress.Any, 5000));
 
             // De hoeveel client mag de server ontvangen.
-            this.serverSocket.Listen(0);
+            this.serverSocket.Listen(2);
 
             // begint hier de server de cliënt accepteren.
             this.serverSocket.BeginAccept(this.AcceptCallback, null);
@@ -96,8 +96,13 @@ namespace HenE.ServerSocket
                         // Geef een teken aan een speler.
                         // en geef de andere speler de andere teken.
                     case Commandos.ZetTeken:
+                        string msg = string.Empty;
                         Teken teken = EnumHelperl.EnumConvert<Teken>(opgeknipt[1].ToString());
-                        this.GetGame(socket).TekenenBehandl(socket, teken);
+                        game = this.GetGame(socket);
+                        game.TekenenBehandl(socket, teken);
+                        msg = $"{Events.TegenSpelerHeeftTekenIngezet.ToString()}%%{opgeknipt[1]}%%{game.TegenSpeler(game.GetSpelerViaTcp(socket)).GebruikTeken.ToString()}";
+                        this.SendBerichtNaarDeTegenSpeler(game, msg, socket);
+                        Thread.Sleep(1000);
                         this.Send(socket, Events.TekenIngezet.ToString());
                         break;
 
@@ -292,9 +297,9 @@ namespace HenE.ServerSocket
         /// Send een berichtje naar de tegen speler.
         /// </summary>
         /// <param name="game">Het huidige spel.</param>
-        /// <param name="events">Event die nnar de client gaat om iets te laten weten.</param>
+        /// <param name="message">de tekst die naar een speler wordt gestuurd.</param>
         /// <param name="socket">De tcp client van de huidige speler.</param>
-        private void SendBerichtNaarDeTegenSpeler(Game game, string events, Socket socket)
+        private void SendBerichtNaarDeTegenSpeler(Game game, string message, Socket socket)
         {
             if (game != null)
             {
@@ -307,7 +312,7 @@ namespace HenE.ServerSocket
                         if (tegenSpeler.IsHumanSpeler)
                         {
                             HumanSpeler humanSpeler = tegenSpeler as HumanSpeler;
-                            this.Send(humanSpeler.TcpClient, events);
+                            this.Send(humanSpeler.TcpClient, message);
                         }
                     }
                 }

@@ -656,9 +656,9 @@
             Het spel is gestopt.
             </summary>
         </member>
-        <member name="F:HenE.VierOPEenRij.Protocol.Events.HeeftGewonnenTegen">
+        <member name="F:HenE.VierOPEenRij.Protocol.Events.HeeftGewonnenTegenSpeler">
             <summary>
-            De tegen heeft gewonnen.
+            De tegenspeler heeft gewonnen.
             </summary>
         </member>
         <member name="F:HenE.VierOPEenRij.Protocol.Events.SpelVerwijderd">
@@ -685,6 +685,11 @@
         <member name="F:HenE.VierOPEenRij.Protocol.Events.SpelGevonden">
             <summary>
             Als er een spel heeft gevonden.
+            </summary>
+        </member>
+        <member name="F:HenE.VierOPEenRij.Protocol.Events.TegenSpelerHeeftTekenIngezet">
+            <summary>
+            De tegenspeler heeft zijn teken ingezet.
             </summary>
         </member>
         <member name="T:HenE.GameVierOpEenRij.Handler">

@@ -128,10 +128,10 @@ namespace HenE.VierOPEenRij
         /// <returns>Tegen huidige speler.</returns>
         public Speler TegenSpeler(Speler huidigeSpeler)
         {
-            if (huidigeSpeler == null)
+/*            if (huidigeSpeler == null)
             {
                 throw new ArgumentNullException("Er zijn geen speler.");
-            }
+            }*/
 
             foreach (Speler speler in this.spelers)
             {

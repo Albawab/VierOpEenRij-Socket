@@ -70,9 +70,9 @@ namespace HenE.VierOPEenRij.Protocol
         SpelGestopt,
 
         /// <summary>
-        /// De tegen heeft gewonnen.
+        /// De tegenspeler heeft gewonnen.
         /// </summary>
-        HeeftGewonnenTegen,
+        HeeftGewonnenTegenSpeler,
 
         /// <summary>
         /// Het spel is verwijderd.
@@ -99,5 +99,10 @@ namespace HenE.VierOPEenRij.Protocol
         /// Als er een spel heeft gevonden.
         /// </summary>
         SpelGevonden,
+
+        /// <summary>
+        /// De tegenspeler heeft zijn teken ingezet.
+        /// </summary>
+        TegenSpelerHeeftTekenIngezet,
     }
 }

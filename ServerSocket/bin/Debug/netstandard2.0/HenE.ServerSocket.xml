@@ -60,7 +60,7 @@
             Send een berichtje naar de tegen speler.
             </summary>
             <param name="game">Het huidige spel.</param>
-            <param name="events">Event die nnar de client gaat om iets te laten weten.</param>
+            <param name="message">de tekst die naar een speler wordt gestuurd.</param>
             <param name="socket">De tcp client van de huidige speler.</param>
         </member>
     </members>

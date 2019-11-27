@@ -53,3 +53,6 @@ C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\SocketClient\obj\Debug\netstand
 C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\HenE.SocketClient.xml
 C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\Communicator.xml
 C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\HenE.GameVOPR.xml
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\HenE.SocketClient.xml
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\Communicator.xml
+C:\Users\Abdul\Desktop\VierOpEenRij-Socket\SocketClient\bin\Debug\netstandard2.0\HenE.GameVOPR.xml

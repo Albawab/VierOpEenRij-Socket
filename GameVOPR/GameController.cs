@@ -216,7 +216,7 @@ namespace HenE.VierOPEenRij
                     }
                     else if (events == Events.HeeftGewonnen)
                     {
-                        this.SendEenBericht(Events.HeeftGewonnenTegen, msg, speler);
+                        this.SendEenBericht(Events.HeeftGewonnenTegenSpeler, msg, speler);
                     }
                     else if (events == Events.HetBordVolGeworden)
                     {
