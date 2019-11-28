@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>HenE.ServerApp</name>
+        <name>HenE.Games.VierOpEenRij.ServerApp</name>
     </assembly>
     <members>
-        <member name="T:HenE.Server.Program">
+        <member name="T:HenE.Games.VierOpEenRij.Server.Program">
             <summary>
             Class om de server te starten.
             </summary>

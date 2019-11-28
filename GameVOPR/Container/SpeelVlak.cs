@@ -2,12 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.VierOPEenRij
+namespace HenE.Games.VierOpEenRij.Container
 {
     using System;
-    using System.Collections.Generic;
     using System.Text;
-    using HenE.VierOPEenRij.Enum;
+    using HenE.Games.VierOpEenRij.Enum;
 
     /// <summary>
     /// Klas om speelvlak te teken.
@@ -127,12 +126,12 @@ namespace HenE.VierOPEenRij
         {
             if (columnNummer > this.Dimension)
             {
-                throw new ArgumentOutOfRangeException("Het nummer mag niet hoger dan de dimensie  van het speelvlak.");
+                throw new ArgumentException("Het nummer mag niet hoger dan de dimensie  van het speelvlak.");
             }
 
             if (columnNummer < 0)
             {
-                throw new ArgumentOutOfRangeException("Het nummer mag niet minder dan de dimensie  van het speelvlak.");
+                throw new ArgumentException("Het nummer mag niet minder dan de dimensie  van het speelvlak.");
             }
 
             for (int kolom = 0; kolom < this.Dimension; kolom++)
@@ -141,8 +140,10 @@ namespace HenE.VierOPEenRij
                 {
                     return true;
                 }
-
-                return false;
+                else
+                {
+                    return false;
+                }
             }
 
             return false;
@@ -333,7 +334,7 @@ namespace HenE.VierOPEenRij
             int aantalTekenOpEenRij = 0;
 
             // start van af kolom 3 t/m de grootte.
-            // Hier gaat |"""". boven++ naar links. boven -->
+            // Hier gaat |"""". boven naar links. boven - - >
             // linksboven naar beneden.
             for (int kolom = 3; kolom < this.Dimension; kolom++)
             {
@@ -366,7 +367,7 @@ namespace HenE.VierOPEenRij
 
             // Hier gaat de speelvlak naar onder __|.
             // vanaf boven naar beneden.
-            // links --> naar richt++.
+            // links --> naar richt.
             int doorKolomLopen = this.Dimension;
             for (int rij = 0; rij < this.Dimension - 1; rij++)
             {
@@ -469,6 +470,7 @@ namespace HenE.VierOPEenRij
                         return true;
                     }
                 }
+
                 aantalTekenOpEenRij = 0;
             }
 

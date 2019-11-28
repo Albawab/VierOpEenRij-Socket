@@ -29,14 +29,14 @@
       "StyleCop.Analyzers/1.1.118": {
         "type": "package"
       },
-      "Communicator/1.0.0": {
+      "HenE.Games.VierOpEenRij.Communicator/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "compile": {
-          "bin/placeholder/Communicator.dll": {}
+          "bin/placeholder/HenE.Games.VierOpEenRij.Communicator.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Communicator.dll": {}
+          "bin/placeholder/HenE.Games.VierOpEenRij.Communicator.dll": {}
         }
       }
     }
@@ -210,7 +210,7 @@
         "tools/uninstall.ps1"
       ]
     },
-    "Communicator/1.0.0": {
+    "HenE.Games.VierOpEenRij.Communicator/1.0.0": {
       "type": "project",
       "path": "../Communicator/Communicator.csproj",
       "msbuildProject": "../Communicator/Communicator.csproj"
@@ -218,7 +218,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
-      "Communicator >= 1.0.0",
+      "HenE.Games.VierOpEenRij.Communicator >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "StyleCop.Analyzers >= 1.1.118"
     ]
@@ -230,11 +230,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj",
-      "projectName": "HenE.GameVOPR",
-      "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj",
+      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\GameVOPR\\Games.VierOpEenRij.csproj",
+      "projectName": "HenE.Games.VierOpEenRij",
+      "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\GameVOPR\\Games.VierOpEenRij.csproj",
       "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\GameVOPR\\obj\\",
+      "outputPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\GameVOPR\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -253,8 +253,8 @@
       "frameworks": {
         "netstandard2.0": {
           "projectReferences": {
-            "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj": {
-              "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj"
+            "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj": {
+              "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj"
             }
           }
         }

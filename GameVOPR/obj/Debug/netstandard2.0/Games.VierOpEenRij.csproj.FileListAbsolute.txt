@@ -1,0 +1,12 @@
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\HenE.Games.VierOpEenRij.deps.json
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\HenE.Games.VierOpEenRij.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\HenE.Games.VierOpEenRij.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\HenE.GameVOPR.xml
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\HenE.Games.VierOpEenRij.Communicator.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\bin\Debug\netstandard2.0\HenE.Games.VierOpEenRij.Communicator.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\Games.VierOpEenRij.csprojAssemblyReference.cache
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\Games.VierOpEenRij.AssemblyInfoInputs.cache
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\Games.VierOpEenRij.AssemblyInfo.cs
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\Games.VierOpEenRij.csproj.CopyComplete
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\HenE.Games.VierOpEenRij.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\GameVOPR\obj\Debug\netstandard2.0\HenE.Games.VierOpEenRij.pdb

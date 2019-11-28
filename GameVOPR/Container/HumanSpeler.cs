@@ -2,10 +2,11 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.VierOPEenRij
+namespace HenE.Games.VierOpEenRij
 {
     using System;
     using System.Net.Sockets;
+    using HenE.Games.VierOpEenRij.Container;
 
     /// <summary>
     /// Gaat over de Humanspeler.
@@ -44,7 +45,7 @@ namespace HenE.VierOPEenRij
 
             if (keuzeNummer < 0 || keuzeNummer > speelVlak.Dimension)
             {
-                throw new ArgumentOutOfRangeException("Mag niet de inzet mider dan nul of hoger dan de dimension van het speelvlak");
+                throw new ArgumentException("Mag niet de inzet mider dan nul of hoger dan de dimension van het speelvlak");
             }
 
             // doet een nummer af want de array start van nummer nul.

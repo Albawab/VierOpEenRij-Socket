@@ -2,14 +2,14 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.ServerSocket
+namespace HenE.Games.VierOpEenRij.ServerSocket
 {
     using System;
     using System.Collections.Generic;
     using System.Net.Sockets;
-    using HenE.VierOPEenRij;
-    using HenE.VierOPEenRij.Enum;
-    using HenE.VierOPEenRij.Protocol;
+    using HenE.Games.VierOpEenRij.Container;
+    using HenE.Games.VierOpEenRij.Enum;
+    using HenE.Games.VierOpEenRij.Protocol;
 
     /// <summary>
     /// class om het spel te behandelen.
@@ -55,7 +55,7 @@ namespace HenE.ServerSocket
 
                 if (naam == string.Empty)
                 {
-                    throw new ArgumentNullException("Mag niet de naam leeg zijn.");
+                    throw new ArgumentException("Mag niet de naam leeg zijn.");
                 }
 
                 // Als de speler tegen computer wil spelen.
@@ -132,7 +132,7 @@ namespace HenE.ServerSocket
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw new ArgumentException(e.Message);
             }
         }
 

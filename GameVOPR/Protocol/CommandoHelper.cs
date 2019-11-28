@@ -2,10 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.GameVOPR.Protocol
+namespace HenE.Games.VierOpEenRij.Protocol
 {
-    using HenE.VierOPEenRij.Protocol;
-
     /// <summary>
     /// Stelt alle delen in een zin samen.
     /// </summary>
@@ -18,7 +16,7 @@ namespace HenE.GameVOPR.Protocol
         /// <param name="dimension">De dimension van het speelvlak die de speler wil mee spelen.</param>
         /// <param name="wilTegenComputerSpelen">Wil Tegen computer spelen of niet.</param>
         /// <returns>De zien die naar de server gaat sturen met de commando , de naam en de dimension.</returns>
-        public static string CreëertVerzoekTotDeelnameSpelCommando(string naam, int dimension, string wilTegenComputerSpelen)
+        public static string CreëertVerzoekTotDeelnameSpelCommando(string naam, int dimension, bool wilTegenComputerSpelen)
         {
             return string.Format($"{Commandos.VerzoekTotDeelnemenSpel.ToString()}%{naam}%{dimension}%{wilTegenComputerSpelen}");
         }

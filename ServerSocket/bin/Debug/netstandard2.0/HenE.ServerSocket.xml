@@ -1,61 +1,61 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>HenE.ServerSocket</name>
+        <name>HenE.Games.VierOpEenRij.ServerSocket</name>
     </assembly>
     <members>
-        <member name="T:HenE.ServerSocket.ServerProcess">
+        <member name="T:HenE.Games.VierOpEenRij.Server.ServerProcess">
             <summary>
             class om nieuwe server te creëren.
             stuurt mesaage naar de cliet.
             Ontvangt mesaage vanuit de cliet.
             </summary>
         </member>
-        <member name="M:HenE.ServerSocket.ServerProcess.#ctor(System.Net.Sockets.Socket)">
+        <member name="M:HenE.Games.VierOpEenRij.Server.ServerProcess.#ctor(System.Net.Sockets.Socket)">
             <summary>
-            Initializes a new instance of the <see cref="T:HenE.ServerSocket.ServerProcess"/> class.
+            Initializes a new instance of the <see cref="T:HenE.Games.VierOpEenRij.Server.ServerProcess"/> class.
             </summary>
             <param name="server">De server.</param>
         </member>
-        <member name="M:HenE.ServerSocket.ServerProcess.SetupServer">
+        <member name="M:HenE.Games.VierOpEenRij.Server.ServerProcess.SetupServer">
             <summary>
             Start de server.
             Ontvang een cleint.
             </summary>
         </member>
-        <member name="M:HenE.ServerSocket.ServerProcess.ProcessStream(System.String,System.Net.Sockets.Socket)">
+        <member name="M:HenE.Games.VierOpEenRij.Server.ServerProcess.ProcessStream(System.String,System.Net.Sockets.Socket)">
             <summary>
             behanelt het berichtje die uit een cleint wordt gestuurd.
             </summary>
             <param name="message">De bericht.</param>
             <param name="socket">De client.</param>
         </member>
-        <member name="M:HenE.ServerSocket.ServerProcess.ReadCallback(System.IAsyncResult)">
+        <member name="M:HenE.Games.VierOpEenRij.Server.ServerProcess.ReadCallback(System.IAsyncResult)">
             <summary>
             Read a message form a client.
             </summary>
             <param name="ar">result.</param>
         </member>
-        <member name="M:HenE.ServerSocket.ServerProcess.VerWijdertHetSpelMetSpeller(System.Net.Sockets.Socket)">
+        <member name="M:HenE.Games.VierOpEenRij.Server.ServerProcess.VerWijdertHetSpelMetSpeller(System.Net.Sockets.Socket)">
             <summary>
             Verwijdert het spel en de spelers.
             </summary>
             <param name="socket">De client van een speler.Die hebben we nodig om de speler te roepen.</param>
         </member>
-        <member name="M:HenE.ServerSocket.ServerProcess.AcceptCallback(System.IAsyncResult)">
+        <member name="M:HenE.Games.VierOpEenRij.Server.ServerProcess.AcceptCallback(System.IAsyncResult)">
             <summary>
             Accepteert een clietn.
             </summary>
             <param name="aR">The result.</param>
         </member>
-        <member name="M:HenE.ServerSocket.ServerProcess.GetGame(System.Net.Sockets.Socket)">
+        <member name="M:HenE.Games.VierOpEenRij.Server.ServerProcess.GetGame(System.Net.Sockets.Socket)">
             <summary>
             Zoek naar een game via de client.
             </summary>
             <param name="socket">De client van de speler.</param>
             <returns>Het spel waar de speler mee bezig zijn.</returns>
         </member>
-        <member name="M:HenE.ServerSocket.ServerProcess.SendBerichtNaarDeTegenSpeler(HenE.VierOPEenRij.Game,System.String,System.Net.Sockets.Socket)">
+        <member name="M:HenE.Games.VierOpEenRij.Server.ServerProcess.SendBerichtNaarDeTegenSpeler(HenE.Games.VierOpEenRij.Game,System.String,System.Net.Sockets.Socket)">
             <summary>
             Send een berichtje naar de tegen speler.
             </summary>

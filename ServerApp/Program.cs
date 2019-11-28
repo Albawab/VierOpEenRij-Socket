@@ -2,18 +2,16 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.Server
+namespace HenE.Games.VierOpEenRij.Server
 {
-    using System;
     using System.Net.Sockets;
-    using HenE.ServerSocket;
 
     /// <summary>
     /// Class om de server te starten.
     /// </summary>
-    public class Program
+    public static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             ServerProcess server = new ServerProcess(serverSocket);

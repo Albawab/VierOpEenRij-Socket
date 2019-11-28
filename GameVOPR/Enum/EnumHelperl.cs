@@ -2,11 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.VierOPEenRij.Enum
+namespace HenE.Games.VierOpEenRij.Enum
 {
     using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     /// <summary>
     /// helpt de situatie.

@@ -5,3 +5,12 @@ dotnet_diagnostic.CS0162.severity = none
 
 # SA1618: Generic type parameters should be documented
 dotnet_diagnostic.SA1618.severity = none
+
+# S2589: Boolean expressions should not be gratuitous
+dotnet_diagnostic.S2589.severity = none
+
+# S1643: Strings should not be concatenated using '+' in a loop
+dotnet_diagnostic.S1643.severity = none
+
+# IDE0052: Remove unread private members
+dotnet_diagnostic.IDE0052.severity = none

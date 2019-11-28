@@ -2,12 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.ConnectionHelper
-{
-    using System;
-    using System.Net.Sockets;
-    using System.Text;
+using System;
+using System.Net.Sockets;
+using System.Text;
 
+namespace HenE.Games.VierOpEenRij.ConnectionHelper
+{
     /// <summary>
     /// Doe conection tussen de server en een client.
     /// </summary>
@@ -51,13 +51,10 @@ namespace HenE.ConnectionHelper
 
                 // Complete sending the data to the remote device.
                 handler.EndSend(ar);
-
-                /*                handler.Shutdown(SocketShutdown.Both);
-                                handler.Close();*/
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw new ArgumentOutOfRangeException(e.Message);
             }
         }
     }

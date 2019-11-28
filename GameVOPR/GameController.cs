@@ -2,14 +2,15 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.VierOPEenRij
+namespace HenE.Games.VierOpEenRij
 {
     using System;
     using System.Net.Sockets;
     using System.Text;
     using System.Threading;
-    using HenE.ConnectionHelper;
-    using HenE.VierOPEenRij.Protocol;
+    using HenE.Games.VierOpEenRij.ConnectionHelper;
+    using HenE.Games.VierOpEenRij.Container;
+    using HenE.Games.VierOpEenRij.Protocol;
 
     /// <summary>
     /// Doet controle op het spel.
@@ -69,7 +70,7 @@ namespace HenE.VierOPEenRij
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw new ArgumentOutOfRangeException(e.Message);
             }
         }
 
@@ -196,8 +197,6 @@ namespace HenE.VierOPEenRij
                 // Als de speler human is dan stuur een bericht naar hem.
                 if (speler.IsHumanSpeler)
                 {
-                    HumanSpeler humanSpeler = speler as HumanSpeler;
-
                     // stuur bericht naar de huidige speler
                     if (speler == huidigeSpeler
                         || events == Events.BordGetekend)

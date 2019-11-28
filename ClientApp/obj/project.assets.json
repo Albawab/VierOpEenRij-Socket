@@ -5,41 +5,41 @@
       "StyleCop.Analyzers/1.1.118": {
         "type": "package"
       },
-      "Communicator/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "compile": {
-          "bin/placeholder/Communicator.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Communicator.dll": {}
-        }
-      },
-      "HenE.GameVOPR/1.0.0": {
+      "HenE.Games.VierOpEenRij/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Communicator": "1.0.0"
+          "HenE.Games.VierOpEenRij.Communicator": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/HenE.GameVOPR.dll": {}
+          "bin/placeholder/HenE.Games.VierOpEenRij.dll": {}
         },
         "runtime": {
-          "bin/placeholder/HenE.GameVOPR.dll": {}
+          "bin/placeholder/HenE.Games.VierOpEenRij.dll": {}
         }
       },
-      "HenE.SocketClient/1.0.0": {
+      "HenE.Games.VierOpEenRij.Communicator/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/HenE.Games.VierOpEenRij.Communicator.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/HenE.Games.VierOpEenRij.Communicator.dll": {}
+        }
+      },
+      "HenE.Games.VierOpEenRij.SocketClient/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Communicator": "1.0.0",
-          "HenE.GameVOPR": "1.0.0"
+          "HenE.Games.VierOpEenRij": "1.0.0",
+          "HenE.Games.VierOpEenRij.Communicator": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/HenE.SocketClient.dll": {}
+          "bin/placeholder/HenE.Games.VierOpEenRij.SocketClient.dll": {}
         },
         "runtime": {
-          "bin/placeholder/HenE.SocketClient.dll": {}
+          "bin/placeholder/HenE.Games.VierOpEenRij.SocketClient.dll": {}
         }
       }
     }
@@ -70,17 +70,17 @@
         "tools/uninstall.ps1"
       ]
     },
-    "Communicator/1.0.0": {
+    "HenE.Games.VierOpEenRij/1.0.0": {
+      "type": "project",
+      "path": "../GameVOPR/Games.VierOpEenRij.csproj",
+      "msbuildProject": "../GameVOPR/Games.VierOpEenRij.csproj"
+    },
+    "HenE.Games.VierOpEenRij.Communicator/1.0.0": {
       "type": "project",
       "path": "../Communicator/Communicator.csproj",
       "msbuildProject": "../Communicator/Communicator.csproj"
     },
-    "HenE.GameVOPR/1.0.0": {
-      "type": "project",
-      "path": "../GameVOPR/GameVOPR.csproj",
-      "msbuildProject": "../GameVOPR/GameVOPR.csproj"
-    },
-    "HenE.SocketClient/1.0.0": {
+    "HenE.Games.VierOpEenRij.SocketClient/1.0.0": {
       "type": "project",
       "path": "../SocketClient/SocketClient.csproj",
       "msbuildProject": "../SocketClient/SocketClient.csproj"
@@ -88,7 +88,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.0": [
-      "HenE.SocketClient >= 1.0.0",
+      "HenE.Games.VierOpEenRij.SocketClient >= 1.0.0",
       "StyleCop.Analyzers >= 1.1.118"
     ]
   },
@@ -99,11 +99,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj",
-      "projectName": "ClientApp",
-      "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj",
+      "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj",
+      "projectName": "HenE.Games.VierOpEenRij.ClientApp",
+      "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj",
       "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\ClientApp\\obj\\",
+      "outputPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\ClientApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -122,8 +122,8 @@
       "frameworks": {
         "netcoreapp3.0": {
           "projectReferences": {
-            "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj": {
-              "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj"
+            "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj": {
+              "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj"
             }
           }
         }

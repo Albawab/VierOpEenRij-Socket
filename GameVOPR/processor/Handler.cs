@@ -2,19 +2,18 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.GameVierOpEenRij
+namespace HenE.Games.VierOpEenRij
 {
     using System;
     using System.Collections.Generic;
     using System.Net.Sockets;
-    using HenE.ServerSocket;
-    using HenE.VierOPEenRij;
-    using HenE.VierOPEenRij.Interface;
+    using HenE.Games.VierOpEenRij.Interface;
+    using HenE.Games.VierOpEenRij.ServerSocket;
 
     /// <summary>
     /// gaat de stream die van een speler komt behandelen.
     /// </summary>
-    public class Handler : ICanHandelen
+    public class Handler : CanHandelen
     {
         private readonly SpelHandler spelHandler = new SpelHandler();
 
@@ -23,7 +22,7 @@ namespace HenE.GameVierOpEenRij
         {
             if (stream == string.Empty)
             {
-                throw new ArgumentNullException("De stream mag niet empty zijn.");
+                throw new ArithmeticException("De stream mag niet empty zijn.");
             }
 
             return this.SplitsDeStream(stream, socket);
@@ -56,22 +55,22 @@ namespace HenE.GameVierOpEenRij
 
             if (opgeknipt[0] == null)
             {
-                throw new ArgumentNullException("Ietem mag niet null zijn.");
+                throw new ArgumentException("Ietem mag niet null zijn.");
             }
 
             if (opgeknipt[1] == null)
             {
-                throw new ArgumentNullException("Ietem mag niet null zijn.");
+                throw new ArgumentException("Ietem mag niet null zijn.");
             }
 
             if (opgeknipt[1] == null)
             {
-                throw new ArgumentNullException("Ietem mag niet null zijn.");
+                throw new ArgumentException("Ietem mag niet null zijn.");
             }
 
             if (opgeknipt[2] == null)
             {
-                throw new ArgumentNullException("Ietem mag niet null zijn.");
+                throw new ArgumentException("Ietem mag niet null zijn.");
             }
 
             return this.Handel(opgeknipt[1], opgeknipt[2], opgeknipt[3], socket);
@@ -102,7 +101,7 @@ namespace HenE.GameVierOpEenRij
             {
                 // de dimension is ongeldig.
                 // stuur een bericht naar de speler terug en vraag hem op een nieuwe dimension.
-                throw new ArgumentOutOfRangeException("De dimension moet tussen 4 en 10.");
+                throw new ArgumentException("De dimension moet tussen 4 en 10.");
             }
             else
             {
@@ -122,12 +121,12 @@ namespace HenE.GameVierOpEenRij
         {
             if (dimension == string.Empty)
             {
-                throw new ArgumentNullException("Mag niet dimebnsion empty zijn.");
+                throw new ArgumentException("Mag niet dimebnsion empty zijn.");
             }
 
             if (!int.TryParse(dimension, out int number))
             {
-                throw new ArgumentNullException("Mag niet dimension nul zijn.");
+                throw new ArgumentException("Mag niet dimension nul zijn.");
             }
 
             return number;
@@ -138,6 +137,6 @@ namespace HenE.GameVierOpEenRij
         /// </summary>
         /// <param name="wilTegenComputerSpelen">De text die veranderd wordt.</param>
         /// <returns>Wil tegen computer of niet.</returns>
-        private bool ConvertBoolea(string wilTegenComputerSpelen) => wilTegenComputerSpelen == "true";
+        private bool ConvertBoolea(string wilTegenComputerSpelen) => wilTegenComputerSpelen == "True";
     }
 }

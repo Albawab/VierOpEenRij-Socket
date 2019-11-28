@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game-VierOpEenRij", "Game-VierOpEenRij", "{F11988F2-B3AF-434C-9334-C7BAD5255B9C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameVOPR", "GameVOPR\GameVOPR.csproj", "{C1D72EC8-0836-4BE6-A10F-345E3BA6B94B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Games.VierOpEenRij", "GameVOPR\Games.VierOpEenRij.csproj", "{C1D72EC8-0836-4BE6-A10F-345E3BA6B94B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{02B56AFF-BE56-47D7-B0DE-A1EA9CF936F8}"
 EndProject
@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerSocket", "ServerSocke
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{85AAD681-912E-4FF0-BA63-504E42708AA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communicator", "Communicator\Communicator.csproj", "{D6B2CC03-83AB-4BBE-8021-FD4D413EEF1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Communicator", "Communicator\Communicator.csproj", "{D6B2CC03-83AB-4BBE-8021-FD4D413EEF1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

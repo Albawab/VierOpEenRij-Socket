@@ -2,13 +2,13 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.VierOPEenRij
+namespace HenE.Games.VierOpEenRij
 {
     using System;
     using System.Collections.Generic;
     using System.Net.Sockets;
-    using HenE.GameVOPR;
-    using HenE.VierOPEenRij.Enum;
+    using HenE.Games.VierOpEenRij.Container;
+    using HenE.Games.VierOpEenRij.Enum;
 
     /// <summary>
     /// Gaat over het spel.
@@ -128,11 +128,6 @@ namespace HenE.VierOPEenRij
         /// <returns>Tegen huidige speler.</returns>
         public Speler TegenSpeler(Speler huidigeSpeler)
         {
-/*            if (huidigeSpeler == null)
-            {
-                throw new ArgumentNullException("Er zijn geen speler.");
-            }*/
-
             foreach (Speler speler in this.spelers)
             {
                 if (huidigeSpeler != speler)
@@ -154,17 +149,17 @@ namespace HenE.VierOPEenRij
         {
             if (teken == Teken.Undefined)
             {
-                 throw new ArgumentOutOfRangeException("Mag niet de teken Undefined zijn of null.");
+                 throw new ArgumentException("Mag niet de teken Undefined zijn of null.");
             }
 
             if (speelVlak == null)
             {
-                throw new ArgumentNullException("mag niet het speelvlak null zijn.");
+                throw new ArgumentException("mag niet het speelvlak null zijn.");
             }
 
             if (inzet < 0)
             {
-                throw new ArgumentOutOfRangeException("Mag niet het inzet nul of minder zijn.");
+                throw new ArgumentException("Mag niet het inzet nul of minder zijn.");
             }
 
             speelVlak.ZetTekenOpSpeelvlak(inzet, teken);
@@ -178,7 +173,7 @@ namespace HenE.VierOPEenRij
         /// <returns>Heeft vier op een rij of niet.</returns>
         public bool HeeftGewonnen(SpeelVlak speelVlak, Teken teken)
         {
-            return speelVlak.HeeftGewonnen(teken) ? true : false;
+            return speelVlak.HeeftGewonnen(teken);
         }
 
         /// <summary>
@@ -226,7 +221,7 @@ namespace HenE.VierOPEenRij
         {
             if (speler == null)
             {
-                throw new ArgumentNullException("Mag niet de speler null zijn.");
+                throw new ArgumentException("Mag niet de speler null zijn.");
             }
 
             if (speler.IsHumanSpeler)
@@ -291,7 +286,7 @@ namespace HenE.VierOPEenRij
         {
             if (socket == null)
             {
-                throw new ArgumentNullException("Mag speler niet null zijn");
+                throw new ArgumentException("Mag speler niet null zijn");
             }
 
             Speler deSpeler = null;
@@ -315,8 +310,13 @@ namespace HenE.VierOPEenRij
             Teken teken = this.TegenDezeTeken(tekenVanSpeler);
 
             // geef de andere teken aan de de andere speler.
-            this.ZetEenTekenVoorAnderSpeler(deSpeler, teken);
-            return deSpeler.Naam;
+            if (deSpeler != null)
+            {
+                this.ZetEenTekenVoorAnderSpeler(deSpeler, teken);
+                return deSpeler.Naam;
+            }
+
+            return null;
         }
 
         /// <summary>

@@ -2,10 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.GameVOPR
+namespace HenE.Games.VierOpEenRij
 {
     using System;
-    using HenE.VierOPEenRij;
+    using HenE.Games.VierOpEenRij.Container;
 
     /// <summary>
     /// Gaat met de computer om.
@@ -25,7 +25,7 @@ namespace HenE.GameVOPR
         public override bool IsHumanSpeler => false;
 
         /// <inheritdoc/>
-        public override int DoeZet(string deInzet, SpeelVlak speelVlak, Game game)
+        public override int DoeZet(string inzet, SpeelVlak speelVlak, Game game)
         {
             for (int kolom = 0; kolom < speelVlak.Dimension; kolom++)
             {
@@ -64,11 +64,12 @@ namespace HenE.GameVOPR
             }
 
             // Als de computer speler heeft geen goede veld gevangen, dan geef de eerste kolom terug om te teken te zeten op het speelvlak.
-            int random = 0;
+            int random;
             do
             {
                 random = this.GeefRandomNummer(speelVlak);
-            } while (!speelVlak.MagInzetten(random));
+            }
+            while (!speelVlak.MagInzetten(random));
 
             return random;
         }

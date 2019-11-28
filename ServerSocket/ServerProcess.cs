@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.ServerSocket
+namespace HenE.Games.VierOpEenRij.Server
 {
     using System;
     using System.Collections.Generic;
@@ -10,12 +10,11 @@ namespace HenE.ServerSocket
     using System.Net.Sockets;
     using System.Text;
     using System.Threading;
-    using HenE.ConnectionHelper;
-    using HenE.GameVierOpEenRij;
-    using HenE.VierOPEenRij;
-    using HenE.VierOPEenRij.Enum;
-    using HenE.VierOPEenRij.Interface;
-    using HenE.VierOPEenRij.Protocol;
+    using HenE.Games.VierOpEenRij.ConnectionHelper;
+    using HenE.Games.VierOpEenRij.Container;
+    using HenE.Games.VierOpEenRij.Enum;
+    using HenE.Games.VierOpEenRij.Interface;
+    using HenE.Games.VierOpEenRij.Protocol;
 
     /// <summary>
     /// class om nieuwe server te creëren.
@@ -27,7 +26,7 @@ namespace HenE.ServerSocket
         private readonly byte[] buffer = new byte[10000];
         private readonly Socket serverSocket = null;
         private readonly List<Socket> clienten = new List<Socket>();
-        private readonly ICanHandelen handler = new Handler();
+        private readonly CanHandelen handler = new Handler();
         private readonly bool connected = false;
 
         /// <summary>
@@ -73,16 +72,18 @@ namespace HenE.ServerSocket
             {
                 if (message == string.Empty)
                 {
-                    throw new ArgumentException("Mag niet messagen empty zijn.");
-                }
-                else if (socket == null)
-                {
-                    throw new ArgumentNullException("Mag niet een client null zijn.");
+                    throw new ArgumentException("Mag niet message empty zijn.");
                 }
 
-                Game game = null;
+                if (socket == null)
+                {
+                    throw new ArgumentException("Mag niet een client null zijn.");
+                }
+
+                Game game;
 
                 // [0] is altijd de commando.
+                // [1.....] is de rest van de bericht.
                 string[] opgeknipt = message.Split(new char[] { '%' });
 
                 // change the string to enum.
@@ -90,6 +91,7 @@ namespace HenE.ServerSocket
                 switch (commando)
                 {
                     case Commandos.VerzoekTotDeelnemenSpel:
+
                         this.Send(socket, this.handler.StreamOntvanger(message, socket));
                         break;
 
@@ -124,8 +126,6 @@ namespace HenE.ServerSocket
                         }
 
                         break;
-                    default:
-                        break;
 
                     case Commandos.NieuwRonde:
                         game = this.GetGame(socket);
@@ -152,21 +152,7 @@ namespace HenE.ServerSocket
                         game = this.GetGame(socket);
                         if (game != null)
                         {
-                            if (game.GetSpelers().Count == 1)
-                            {
                                 this.VerWijdertHetSpelMetSpeller(socket);
-                            }
-                            else
-                            {
-                                // stuur een bericht naar de tegen speler dat deze speler wil niet meer spelen.
-                                this.SendBerichtNaarDeTegenSpeler(game, Events.TegenSpelerVerlaten.ToString(), socket);
-
-                                // verwijder de speler.
-                                game.VerWijdertEenSpeler(game.GetSpelerViaTcp(socket));
-
-                                // Zet het situatie van het spel op een speler wachten.
-                                game.ZetSituatie(Status.Wachten);
-                            }
                         }
 
                         socket.Close();
@@ -176,7 +162,7 @@ namespace HenE.ServerSocket
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw new ArgumentException(e.Message);
             }
         }
 
@@ -226,13 +212,12 @@ namespace HenE.ServerSocket
             if (game != null)
             {
                 // Stuur een bericht naar de tegen speler.
-                // this.SendBerichtNaarDeTegenSpeler(game, Events.TegenSpelerVerlaten.ToString(), socket);
                 Thread.Sleep(1000);
                 this.SendBerichtNaarDeTegenSpeler(game, Events.SpelVerwijderd.ToString(), socket);
                 game.VerWijdertEenSpeler(game.TegenSpeler(game.GetSpelerViaTcp(socket)));
                 game.VerWijdertEenSpeler(game.GetSpelerViaTcp(socket));
-                Handler handler = new Handler();
-                handler.DeleteGame(game);
+                Handler deHandeler = new Handler();
+                deHandeler.DeleteGame(game);
 
                 // verwijdert deze cliënt.
                 this.clienten.Remove(socket);
@@ -258,7 +243,7 @@ namespace HenE.ServerSocket
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                throw new ArgumentException(e.Message);
             }
         }
 
@@ -271,11 +256,11 @@ namespace HenE.ServerSocket
         {
             if (socket == null)
             {
-                throw new ArgumentNullException("Client mag niet null zijn.");
+                throw new ArgumentException("Client mag niet null zijn.");
             }
 
-            Handler handler = this.handler as Handler;
-            foreach (Game game in handler.GetSpellen())
+            Handler deHandler = this.handler as Handler;
+            foreach (Game game in deHandler.GetSpellen())
             {
                 foreach (Speler speler in game.GetSpelers())
                 {
@@ -307,13 +292,10 @@ namespace HenE.ServerSocket
                 if (speler != null)
                 {
                     Speler tegenSpeler = game.TegenSpeler(speler);
-                    if (tegenSpeler != null)
+                    if (tegenSpeler != null && tegenSpeler.IsHumanSpeler)
                     {
-                        if (tegenSpeler.IsHumanSpeler)
-                        {
-                            HumanSpeler humanSpeler = tegenSpeler as HumanSpeler;
-                            this.Send(humanSpeler.TcpClient, message);
-                        }
+                        HumanSpeler humanSpeler = tegenSpeler as HumanSpeler;
+                        this.Send(humanSpeler.TcpClient, message);
                     }
                 }
             }

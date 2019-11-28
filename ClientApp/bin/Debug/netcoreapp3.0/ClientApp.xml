@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>ClientApp</name>
+        <name>HenE.Games.VierOpEenRij.ClientApp</name>
     </assembly>
     <members>
-        <member name="T:HenE.ClientApp.CleintHelper">
+        <member name="T:HenE.Games.VierOpEenRij.ClientApp.ClientHelper">
             <summary>
             klas om de cliënt application te helpen.
             </summary>
         </member>
-        <member name="M:HenE.ClientApp.CleintHelper.Start(System.Net.Sockets.Socket)">
+        <member name="M:HenE.Games.VierOpEenRij.ClientApp.ClientHelper.Start(System.Net.Sockets.Socket)">
             <summary>
             Vraagt een speler om zijn naam te geven, ook om de dimension te geven.
             </summary><param name="clientSocket">De cleint van de speler.</param>
         </member>
-        <member name="T:HenE.ClientApp.Program">
+        <member name="T:HenE.Games.VierOpEenRij.ClientApp.Program">
             <summary>
             Class om de server te starten.
             </summary>

@@ -1,0 +1,72 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {
+      "HenE.Games.VierOpEenRij.ClientApp/1.0.0": {
+        "dependencies": {
+          "HenE.Games.VierOpEenRij.SocketClient": "1.0.0",
+          "StyleCop.Analyzers": "1.1.118"
+        },
+        "runtime": {
+          "HenE.Games.VierOpEenRij.ClientApp.dll": {}
+        }
+      },
+      "StyleCop.Analyzers/1.1.118": {},
+      "HenE.Games.VierOpEenRij/1.0.0": {
+        "dependencies": {
+          "HenE.Games.VierOpEenRij.Communicator": "1.0.0"
+        },
+        "runtime": {
+          "HenE.Games.VierOpEenRij.dll": {}
+        }
+      },
+      "HenE.Games.VierOpEenRij.Communicator/1.0.0": {
+        "runtime": {
+          "HenE.Games.VierOpEenRij.Communicator.dll": {}
+        }
+      },
+      "HenE.Games.VierOpEenRij.SocketClient/1.0.0": {
+        "dependencies": {
+          "HenE.Games.VierOpEenRij": "1.0.0",
+          "HenE.Games.VierOpEenRij.Communicator": "1.0.0"
+        },
+        "runtime": {
+          "HenE.Games.VierOpEenRij.SocketClient.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "HenE.Games.VierOpEenRij.ClientApp/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "StyleCop.Analyzers/1.1.118": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Onx6ovGSqXSK07n/0eM3ZusiNdB6cIlJdabQhWGgJp3Vooy9AaLS/tigeybOJAobqbtggTamoWndz72JscZBvw==",
+      "path": "stylecop.analyzers/1.1.118",
+      "hashPath": "stylecop.analyzers.1.1.118.nupkg.sha512"
+    },
+    "HenE.Games.VierOpEenRij/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HenE.Games.VierOpEenRij.Communicator/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HenE.Games.VierOpEenRij.SocketClient/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -2,11 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>HenE.SocketClient</RootNamespace>
-    <AssemblyName>HenE.SocketClient</AssemblyName>
+    <RootNamespace>HenE.Games.VierOpEenRij.SocketClient</RootNamespace>
+    <AssemblyName>HenE.Games.VierOpEenRij.SocketClient</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\SocketClient\HenE.SocketClient.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\SocketClient\HenE.SocketClient.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -19,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Communicator\Communicator.csproj" />
-    <ProjectReference Include="..\GameVOPR\GameVOPR.csproj" />
+    <ProjectReference Include="..\GameVOPR\Games.VierOpEenRij.csproj" />
   </ItemGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.VierOPEenRij.Enum
+namespace HenE.Games.VierOpEenRij.Enum
 {
     /// <summary>
     /// Have de tekeningen van het spel die de speler heeft nogdig om te inzetten.

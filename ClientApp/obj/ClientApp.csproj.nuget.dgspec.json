@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj": {}
+    "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj": {
+    "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj",
-        "projectName": "ClientApp",
-        "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj",
+        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj",
+        "projectName": "HenE.Games.VierOpEenRij.ClientApp",
+        "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\ClientApp\\ClientApp.csproj",
         "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\ClientApp\\obj\\",
+        "outputPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\ClientApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -30,8 +30,8 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj": {
-                "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj"
+              "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj": {
+                "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj"
               }
             }
           }
@@ -71,14 +71,14 @@
         }
       }
     },
-    "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj": {
+    "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj",
-        "projectName": "Communicator",
-        "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj",
+        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj",
+        "projectName": "HenE.Games.VierOpEenRij.Communicator",
+        "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj",
         "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\obj\\",
+        "outputPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -113,6 +113,12 @@
               "target": "Package",
               "version": "[2.0.3, )",
               "autoReferenced": true
+            },
+            "StyleCop.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.1.118, )"
             }
           },
           "imports": [
@@ -129,14 +135,14 @@
         }
       }
     },
-    "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj": {
+    "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\GameVOPR\\Games.VierOpEenRij.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj",
-        "projectName": "HenE.GameVOPR",
-        "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj",
+        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\GameVOPR\\Games.VierOpEenRij.csproj",
+        "projectName": "HenE.Games.VierOpEenRij",
+        "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\GameVOPR\\Games.VierOpEenRij.csproj",
         "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\GameVOPR\\obj\\",
+        "outputPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\GameVOPR\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -155,8 +161,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj": {
-                "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj"
+              "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj": {
+                "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj"
               }
             }
           }
@@ -197,14 +203,14 @@
         }
       }
     },
-    "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj": {
+    "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj",
-        "projectName": "HenE.SocketClient",
-        "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj",
+        "projectUniqueName": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj",
+        "projectName": "HenE.Games.VierOpEenRij.SocketClient",
+        "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\SocketClient\\SocketClient.csproj",
         "packagesPath": "C:\\Users\\Abdul\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\SocketClient\\obj\\",
+        "outputPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\SocketClient\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -223,11 +229,11 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj": {
-                "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj"
+              "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj": {
+                "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\Communicator\\Communicator.csproj"
               },
-              "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj": {
-                "projectPath": "C:\\Users\\Abdul\\Desktop\\VierOpEenRij-Socket\\GameVOPR\\GameVOPR.csproj"
+              "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\GameVOPR\\Games.VierOpEenRij.csproj": {
+                "projectPath": "C:\\Users\\Abdul\\Desktop\\Sharp\\VierOpEenRij-Socket\\GameVOPR\\Games.VierOpEenRij.csproj"
               }
             }
           }

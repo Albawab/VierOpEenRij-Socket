@@ -1,0 +1,9 @@
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Release\netstandard2.0\Communicator.AssemblyInfoInputs.cache
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Release\netstandard2.0\Communicator.AssemblyInfo.cs
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\bin\Release\netstandard2.0\Communicator.xml
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.Communicator.deps.json
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.Communicator.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.Communicator.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Release\netstandard2.0\Communicator.csprojAssemblyReference.cache
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Release\netstandard2.0\HenE.Games.VierOpEenRij.Communicator.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\Communicator\obj\Release\netstandard2.0\HenE.Games.VierOpEenRij.Communicator.pdb

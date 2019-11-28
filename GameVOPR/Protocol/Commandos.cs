@@ -2,12 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.VierOPEenRij.Protocol
+namespace HenE.Games.VierOpEenRij.Protocol
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-
     /// <summary>
     /// Hier staan de Commandos van het spel.
     /// </summary>

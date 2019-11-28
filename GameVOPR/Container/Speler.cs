@@ -2,10 +2,9 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace HenE.VierOPEenRij
+namespace HenE.Games.VierOpEenRij.Container
 {
-    using System.Threading.Tasks;
-    using HenE.VierOPEenRij.Enum;
+    using HenE.Games.VierOpEenRij.Enum;
 
     /// <summary>
     /// Vraagt de speler om inzet te doen.
@@ -17,7 +16,7 @@ namespace HenE.VierOPEenRij
         /// Initializes a new instance of the <see cref="Speler"/> class.
         /// </summary>
         /// <param name="naam">De naam van de speler.</param>
-        public Speler(string naam)
+        protected Speler(string naam)
         {
             this.Naam = naam;
         }

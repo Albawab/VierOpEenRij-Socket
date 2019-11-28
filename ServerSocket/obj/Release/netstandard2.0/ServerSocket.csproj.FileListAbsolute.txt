@@ -6,3 +6,17 @@ C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\obj\Release\netstandard2.0\Serv
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\bin\Release\netstandard2.0\HenE.ServerSocket.pdb
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\obj\Release\netstandard2.0\HenE.ServerSocket.dll
 C:\Users\Abdul\Desktop\VierOpEenRij\ServerSocket\obj\Release\netstandard2.0\HenE.ServerSocket.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\obj\Release\netstandard2.0\ServerSocket.csprojAssemblyReference.cache
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\obj\Release\netstandard2.0\ServerSocket.AssemblyInfoInputs.cache
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\obj\Release\netstandard2.0\ServerSocket.AssemblyInfo.cs
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\obj\Release\netstandard2.0\ServerSocket.csproj.CopyComplete
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\bin\Release\netstandard2.0\HenE.ServerSocket.xml
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.ServerSocket.deps.json
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.ServerSocket.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.ServerSocket.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.Communicator.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.Communicator.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\bin\Release\netstandard2.0\HenE.Games.VierOpEenRij.pdb
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\obj\Release\netstandard2.0\HenE.Games.VierOpEenRij.ServerSocket.dll
+C:\Users\Abdul\Desktop\Sharp\VierOpEenRij-Socket\ServerSocket\obj\Release\netstandard2.0\HenE.Games.VierOpEenRij.ServerSocket.pdb
